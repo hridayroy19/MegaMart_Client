@@ -11,13 +11,14 @@ import {
 import Topbar from "../topbar/topbar";
 import SecoundNavbar, { categoriesData } from "./secoundNavbar";
 import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
+import logo from "@/assets/icons/webisteLogo.png";
 
 export default function Navbar() {
   const [openCategory, setOpenCategory] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const [searchOpen, setSearchOpen] = useState(false);
 
-  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -27,164 +28,195 @@ export default function Navbar() {
         setOpenCategory(false);
       }
     };
-
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
-    <header className="w-full bg-card shadow-md">
+    <header className="w-full bg-card shadow-sm sticky top-0 z-[100]">
       <Topbar />
 
-      <div className="max-content-width mx-auto px-4 py-4 flex items-center justify-between border-b border-border bg-card relative">
-        {/* Logo */}
-        <div className="flex items-center gap-7">
-          <span className="lg:text-4xl md:text-3xl text-2xl font-extrabold text-primary">
-            Al-Riwaa
-          </span>
+      <div className="max-w-[1440px] mx-auto px-4 lg:px-8 py-3 flex items-center justify-between bg-card relative">
+        {/* Logo Section */}
+        <div className="flex items-center gap-8">
+          <motion.div whileHover={{ scale: 1.02 }} className="cursor-pointer">
+            <Image
+              src={logo}
+              width={140}
+              height={50}
+              alt="MegaMart Logo"
+              className="object-contain"
+            />
+          </motion.div>
 
-          {/* Tablet md category button */}
           <div
-            className="hidden md:flex lg:hidden bg-primary/20 items-center gap-2 border border-border rounded-full p-2 cursor-pointer"
+            className="hidden md:flex lg:hidden items-center gap-2 bg-primary/5 hover:bg-primary/10 border border-primary/20 rounded-full px-4 py-2 transition-colors cursor-pointer"
             onClick={() => setOpenCategory(!openCategory)}
           >
-            <span className="font-medium text-sm text-primary">
-              All Categories
+            <span className="text-sm font-semibold text-primary">
+              Categories
             </span>
-            <ChevronDown className="w-5 h-5 font-bold" />
+            <ChevronDown
+              className={`w-4 h-4 text-primary transition-transform ${openCategory ? "rotate-180" : ""}`}
+            />
           </div>
         </div>
 
-        {/* Desktop: Full search & categories */}
-        <div className="hidden lg:flex items-center xl:w-[896px] w-[630px]">
-          <div
-            className="flex xl:w-[300px] w-[270px] bg-primary/20 items-center xl:gap-12 gap-5 border border-border rounded-l-lg px-4 xl:py-4 py-3 cursor-pointer"
-            onClick={() => setOpenCategory(!openCategory)}
-          >
-            <span className="font-bold text-primary">All Categories</span>
-            <ChevronDown className="w-5 h-5 font-bold" />
-          </div>
+        {/* Desktop Search & Category */}
+        <div className="hidden lg:flex items-center flex-1 max-w-[800px] mx-10">
+          <div className="flex items-center w-full group">
+            <div
+              className="flex items-center gap-3 bg-primary/5 hover:bg-primary/10 border border-r-0 border-border rounded-l-xl px-5 py-[14px] cursor-pointer transition-all"
+              onClick={() => setOpenCategory(!openCategory)}
+            >
+              <span className="font-bold text-sm text-primary whitespace-nowrap">
+                All Categories
+              </span>
+              <ChevronDown
+                className={`w-4 h-4 text-primary transition-transform ${openCategory ? "rotate-180" : ""}`}
+              />
+            </div>
 
-          <div className="relative w-full">
-            <input
-              type="text"
-              placeholder="Search for products, categories or brands..."
-              className="w-full border-border border px-4 xl:py-4 py-3 pr-16 rounded-md outline-none placeholder:text-muted"
-            />
-            <div className="absolute right-2 top-1/2 -translate-y-1/2 bg-primary xl:h-12 h-10 xl:w-12 w-10 rounded-md flex items-center justify-center">
-              <Search className="text-background h-6 w-5" />
+            <div className="relative w-full">
+              <input
+                type="text"
+                placeholder="Search for products, brands..."
+                className="w-full border-border border px-5 py-[14px] rounded-r-xl outline-none focus:border-primary transition-all placeholder:text-muted-foreground/60 text-sm"
+              />
+              <button className="absolute right-2 top-1/2 -translate-y-1/2 bg-primary hover:bg-primary/90 transition-colors h-10 w-10 rounded-lg flex items-center justify-center">
+                <Search className="text-white h-5 w-5" />
+              </button>
             </div>
           </div>
         </div>
 
-        {/* Tablet/Mobile Icons */}
-        <div className="flex items-center gap-4 lg:hidden">
-          {/* <Search className="w-6 h-6 cursor-pointer transition-all duration-200 hover:scale-110 hover:text-primary" /> */}
-          <Search
-            onClick={() => setSearchOpen(true)}
-            className="w-6 h-6 cursor-pointer transition-all duration-200 hover:scale-110 hover:text-primary"
+        {/* Action Icons */}
+        <div className="flex items-center  gap-2">
+          <div className="flex lg:hidden">
+            <IconButton
+              onClick={() => setSearchOpen(true)}
+              icon={<Search className="w-5 h-5" />}
+            />
+          </div>
+
+          <IconButton
+            icon={<Heart className="w-6 h-6" />}
+            className="hidden sm:flex"
           />
 
-          <ShoppingCart className="w-6 h-6 cursor-pointer transition-all duration-200 hover:scale-110 hover:text-primary" />
-          <Heart className="w-6 h-6 cursor-pointer transition-all duration-200 hover:scale-110 hover:text-primary" />
-          <User className="w-6 h-6 cursor-pointer transition-all duration-200 hover:scale-110 hover:text-primary" />
-        </div>
-
-        {/* Desktop Icons */}
-        <div className="hidden lg:flex items-center gap-4 mr-3">
-          <Heart className="w-8 h-8 cursor-pointer transition-all duration-200 hover:scale-110 hover:text-primary" />
-          <User className="w-8 h-8 cursor-pointer transition-all duration-200 hover:scale-110 hover:text-primary" />
-          <div className="relative">
-            <ShoppingCart className="w-8 h-8 cursor-pointer transition-all duration-200 hover:scale-110 hover:text-primary" />
-            <span className="absolute -top-2 -right-2 text-xs bg-secondary text-background w-4 h-4 rounded-full flex items-center justify-center">
-              2
-            </span>
+          <div className="relative group">
+            <IconButton
+              icon={<ShoppingCart className="w-6 h-6" />}
+              badge={2}
+              className="bg-primary/5 text-primary hover:bg-primary hover:text-white"
+            />
           </div>
+          <IconButton icon={<User className="w-6 h-6" />} />
         </div>
 
-        {/* Category dropdown (all devices) */}
-        {openCategory && (
-          <div
-            ref={dropdownRef}
-            className="absolute top-full left-0 md:left-[20%] lg:left-[18%] w-[90%] sm:w-[400px] md:w-[450px] lg:w-[550px] bg-card shadow-lg border border-border rounded-lg max-h-64 overflow-y-auto z-50 mt-2"
-          >
-            {/* Search inside categories */}
-            <div className="p-4 rounded-2xl">
-              <div className="flex items-center border rounded-lg border-primary px-3 py-2">
-                <input
-                  type="text"
-                  placeholder="Search"
-                  className="w-full outline-none"
-                />
-                <Search className="text-foreground" />
+        {/* Modern Category Dropdown */}
+        <AnimatePresence>
+          {openCategory && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              ref={dropdownRef}
+              className="absolute top-[90%] left-4 lg:left-8 w-[280px] md:w-[350px] bg-card/95 backdrop-blur-md shadow-2xl border border-border rounded-2xl z-50 mt-2 overflow-hidden"
+            >
+              <div className="p-4 border-b border-border/50">
+                <div className="relative">
+                  <input
+                    type="text"
+                    placeholder="Filter categories..."
+                    className="w-full bg-muted/50 border-none rounded-lg py-2 pl-9 pr-4 text-sm outline-none focus:ring-1 focus:ring-primary/30"
+                  />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                </div>
               </div>
-            </div>
 
-            {/* Categories list */}
-            <div className="p-3 space-y-3">
-              {categoriesData.map((cat) => (
-                <button
-                  key={cat.name}
-                  className="flex items-center gap-3 w-full px-2 py-2 rounded-lg border-border text-left hover:bg-primary/25 hover:border-b hover:border hover:shadow-[0_10px_15px_-3px_rgba(0,0,0,0.3),0_4px_6px_-2px_rgba(0,0,0,0.2)] transition-shadow duration-300"
-                >
-                  <span className="text-xl font-semibold">{cat.icon}</span>
-                  <span className="text-foreground font-semibold">
-                    {cat.name}
-                  </span>
-                </button>
-              ))}
-            </div>
-          </div>
-        )}
+              <div className="p-2 max-h-[400px] overflow-y-auto custom-scrollbar">
+                {categoriesData.map((cat) => (
+                  <motion.button
+                    key={cat.name}
+                    whileHover={{ x: 4 }}
+                    className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl hover:bg-primary/10 text-left transition-colors group"
+                  >
+                    <span className="text-xl grayscale group-hover:grayscale-0 transition-all">
+                      {cat.icon}
+                    </span>
+                    <span className="text-sm font-medium text-foreground/80 group-hover:text-primary transition-colors">
+                      {cat.name}
+                    </span>
+                  </motion.button>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
+
+      {/* Mobile Full Screen Search */}
       <AnimatePresence>
         {searchOpen && (
-          <>
-            {/* 🔵 Dark Deep Overlay */}
+          <div className="fixed inset-0 z-[200] flex items-start justify-center pt-20 px-4">
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.3 }}
-              className="fixed inset-0 bg-[#121535] z-[10]"
+              onClick={() => setSearchOpen(false)}
+              className="absolute inset-0 bg-background/80 backdrop-blur-xl"
             />
 
-            {/* 🔍 Center Search Field */}
             <motion.div
-              initial={{ scale: 0.8, opacity: 0, y: -20 }}
-              animate={{ scale: 1, opacity: 1, y: 0 }}
-              exit={{ scale: 0.8, opacity: 0, y: -20 }}
-              transition={{ duration: 0.35, ease: "easeOut" }}
-              className="fixed top-1/2 left-1/2 z-[1000] -translate-x-1/2 -translate-y-1/2 w-[90%] sm:w-[550px]"
+              initial={{ scale: 0.95, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="relative w-full max-w-2xl"
             >
-              <div className="relative w-full">
-                {/* Search Icon */}
-
-                {/* Input */}
+              <div className="relative group">
                 <input
                   autoFocus
-                  type="text"
-                  placeholder="Search products..."
-                  className="w-full pl-12 pr-5 py-4 rounded-full text-xl bg-white outline-none shadow-lg focus:ring-2 focus:ring-primary"
+                  placeholder="Search for anything..."
+                  className="w-full bg-card border-2 border-primary/20 rounded-2xl py-5 pl-14 pr-6 text-xl shadow-2xl outline-none focus:border-primary"
                 />
-                <div className="absolute right-3 top-1/2 -translate-y-1/2 bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-md">
-                  <Search className="w-6 h-6" />
-                </div>
+                <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-6 h-6 text-primary" />
+                <button
+                  onClick={() => setSearchOpen(false)}
+                  className="absolute -top-12 right-0 text-foreground/60 hover:text-primary transition-colors"
+                >
+                  <X className="w-8 h-8" />
+                </button>
               </div>
             </motion.div>
-
-            {/* ❌ Top-Right Close Icon */}
-            <button
-              onClick={() => setSearchOpen(false)}
-              className="fixed top-6 right-6 z-[1001] text-white"
-            >
-              <X className="w-10 h-10 hover:scale-110 transition-transform duration-200" />
-            </button>
-          </>
+          </div>
         )}
       </AnimatePresence>
 
       <SecoundNavbar />
     </header>
+  );
+}
+
+interface IconButtonProps {
+  icon: React.ReactNode;
+  badge?: number;
+  className?: string;
+  onClick?: () => void;
+}
+
+function IconButton({ icon, badge, className, onClick }: IconButtonProps) {
+  return (
+    <button
+      onClick={onClick}
+      className={`relative p-2.5 rounded-xl transition-all active:scale-95 text-foreground/70 hover:text-primary hover:bg-primary/10 ${className}`}
+    >
+      {icon}
+      {badge && (
+        <span className="absolute top-1 right-1 bg-secondary text-[10px] font-bold text-white w-4 h-4 rounded-full flex items-center justify-center shadow-sm">
+          {badge}
+        </span>
+      )}
+    </button>
   );
 }
