@@ -122,7 +122,7 @@ export default function Navbar() {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
               ref={dropdownRef}
-              className="absolute top-[90%] left-4 lg:left-8 w-[280px] md:w-[350px] bg-card/95 backdrop-blur-md shadow-2xl border border-border rounded-2xl z-50 mt-2 overflow-hidden"
+              className="absolute top-[82%] left-0 lg:left-[20%] w-[280px] md:w-[350px] bg-card/95 backdrop-blur-md shadow-2xl border border-border rounded-2xl z-50 mt-2 overflow-hidden"
             >
               <div className="p-4 border-b border-border/50">
                 <div className="relative">
@@ -131,7 +131,7 @@ export default function Navbar() {
                     placeholder="Filter categories..."
                     className="w-full bg-muted/50 border-none rounded-lg py-2 pl-9 pr-4 text-sm outline-none focus:ring-1 focus:ring-primary/30"
                   />
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground" />
                 </div>
               </div>
 
@@ -140,12 +140,12 @@ export default function Navbar() {
                   <motion.button
                     key={cat.name}
                     whileHover={{ x: 4 }}
-                    className="flex items-center gap-3 w-full px-3 py-2.5 rounded-xl hover:bg-primary/10 text-left transition-colors group"
+                    className="flex items-center hover:cursor-pointer gap-3 w-full px-3 py-2.5 rounded-xl hover:bg-primary/10 text-left transition-colors group"
                   >
-                    <span className="text-xl grayscale group-hover:grayscale-0 transition-all">
+                    <span className="text-xl group-hover:grayscale-0 transition-all">
                       {cat.icon}
                     </span>
-                    <span className="text-sm font-medium text-foreground/80 group-hover:text-primary transition-colors">
+                    <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
                       {cat.name}
                     </span>
                   </motion.button>

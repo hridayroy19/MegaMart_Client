@@ -124,11 +124,10 @@ const SecoundNavbar = () => {
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 15 }}
-            className="absolute left-0 right-0 mx-auto mt-4 w-[95%] lg:w-[1000px] xl:w-[1200px] z-[100]"
+            className="absolute left-0 right-0 mx-auto mt-4 w-[95%] lg:w-250 xl:w-300 z-100"
           >
             <div className="bg-card/95 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.15)] rounded-2xl border border-border p-8">
               <div className="flex flex-col md:flex-row gap-8">
-                {/* Search & Sidebar inside menu */}
                 <div className="w-full md:w-1/4 space-y-4">
                   <h3 className="text-xl font-extrabold text-foreground">
                     Explore Products
@@ -148,14 +147,14 @@ const SecoundNavbar = () => {
                   {categoriesData.map((cat, i) => (
                     <motion.div
                       key={i}
-                      whileHover={{ scale: 1.03, y: -2 }}
-                      className="flex items-center gap-4 p-4 rounded-xl border border-border/50 bg-card hover:bg-white hover:shadow-lg transition-all cursor-pointer group"
+                      whileHover={{ scale: 1.03, y: -10 }}
+                      className="flex items-center gap-4 p-2 rounded-xl border border-border/50 bg-card hover:bg-primary/10  hover:shadow-lg  transition-all cursor-pointer group"
                     >
                       <div className="text-3xl bg-muted/30 p-2 rounded-lg group-hover:bg-secondary/10 transition-colors">
                         {cat.icon}
                       </div>
                       <div>
-                        <p className="text-sm font-bold text-foreground group-hover:text-secondary transition-colors">
+                        <p className="text-lg font-bold  text-foreground group-hover:text-secondary transition-colors">
                           {cat.name}
                         </p>
                         <p className="text-[10px] text-muted-foreground">
