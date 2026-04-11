@@ -2,8 +2,8 @@
 
 import { useEffect, useState } from "react";
 
-import bg1 from "@/assets/images/homePage/flashSaleCounter/flash-sale-bg1.png";
-import bg2 from "@/assets/images/homePage/flashSaleCounter/flash-sale-bg2.png";
+import bg1 from "@/assets/images/homePage/flashSaleCounter/Cms-Banner-7.jpg";
+import bg2 from "@/assets/images/homePage/flashSaleCounter/Cms-Banner-8.jpg";
 
 import styles from "./flashSaleCounter.module.css";
 
@@ -71,11 +71,9 @@ const FlashSaleCounter = () => {
           backgroundImage: `url(${bg1.src})`,
         }}
       >
-        <div className="w-full  flex flex-col  justify-end py-10  text-center   sm:translate-x-20 md:translate-x-6 md:ml-20   -lg:translate-x-20 xl:translate-x-10 items-center ml-0 lg:ml-32">
-          <h2 className="  ">
-            X-Connect Smart Television
-          </h2>
-          <p className="text-sm mt-1">
+        <div className="w-full  flex flex-col  justify-end py-10  text-center   items-start px-10 md:px-16 lg:px-20 xl:px-24 2xl:px-32">
+          <h2 className=" text-background ">X-Connect Smart Television</h2>
+          <p className="text-sm text-background mt-1">
             Time remaining until the end of the offer.
           </p>
 
@@ -95,9 +93,7 @@ const FlashSaleCounter = () => {
         }}
       >
         <div className="max-w-md">
-          <h2 className=" text-foreground">
-            Vegetables Combo Box
-          </h2>
+          <h2 className=" text-foreground">Vegetables Combo Box</h2>
           <p className="text-foreground">
             Time remaining until the end of the offer.
           </p>
