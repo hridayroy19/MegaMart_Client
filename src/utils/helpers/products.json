@@ -1,0 +1,123 @@
+[
+  {
+    "_id": "67b7e1f1a91c12001a200001",
+    "name": "C-500 Antioxidant Protect Dietary Supplement",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img3.png",
+    "badge": { "text": "New", "color": "red" },
+    "seller": "Lucky Supermarket",
+    "price": 14.99,
+    "originalPrice": 28.99,
+    "rating": 4.8,
+    "reviews": 17
+  },
+  {
+    "_id": "67b7e1f1a91c12001a200002",
+    "name": "Marcel's Modern Pantry Almond Unsweetened",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img1.png",
+    "badge": { "text": "Sale 50%", "color": "red" },
+    "seller": "Lucky Supermarket",
+    "price": 14.99,
+    "originalPrice": 28.99,
+    "rating": 4.8,
+    "reviews": 17
+  },
+  {
+    "_id": "67b7e1f1a91c12001a200003",
+    "name": "O Organics Milk, Whole, Vitamin D",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img2.png",
+    "badge": { "text": "Sale 50%", "color": "red" },
+    "seller": "Lucky Supermarket",
+    "price": 14.99,
+    "originalPrice": 28.99,
+    "rating": 4.8,
+    "reviews": 17
+  },
+  {
+    "_id": "67b7e1f1a91c12001a200004",
+    "name": "Whole Grains and Seeds Organic Bread",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img4.png",
+    "badge": { "text": "Best Sale", "color": "blue" },
+    "seller": "Lucky Supermarket",
+    "price": 14.99,
+    "originalPrice": 28.99,
+    "rating": 4.8,
+    "reviews": 17
+  },
+  {
+    "_id": "67b7e1f1a91c12001a200005",
+    "name": "Fresh Organic Strawberries 1lb",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img6.png",
+    "badge": { "text": "New", "color": "orange" },
+    "seller": "Green Valley Farms",
+    "price": 5.49,
+    "originalPrice": 7.99,
+    "rating": 4.7,
+    "reviews": 42
+  },
+  {
+    "_id": "67b7e1f1a91c12001a200006",
+    "name": "Premium Dishwasher Liquid Lemon 1L",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img7.png",
+    "badge": { "text": "Best Sale", "color": "blue" },
+    "seller": "HomeCare Supplies",
+    "price": 3.99,
+    "originalPrice": 5.99,
+    "rating": 4.6,
+    "reviews": 29
+  },
+  {
+    "_id": "67b7e1f1a91c12001a200007",
+    "name": "Organic Free-Range Brown Eggs (12 Pack)",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img8.png",
+    "badge": { "text": "Best Sale", "color": "blue" },
+    "seller": "Lucky Supermarket",
+    "price": 6.99,
+    "originalPrice": 9.49,
+    "rating": 4.9,
+    "reviews": 54
+  },
+  {
+    "_id": "67b7e1f1a91c12001a200008",
+    "name": "Gluten-Free Oatmeal Cookies",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img9.png",
+    "badge": { "text": "Sale", "color": "red" },
+    "seller": "Healthy Snacks Co.",
+    "price": 4.49,
+    "originalPrice": 6.99,
+    "rating": 4.5,
+    "reviews": 33
+  },
+  {
+    "_id": "67b7e1f1a91c12001a200009",
+    "name": "Fresh Atlantic Salmon Fillet 500g",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img10.png",
+    "badge": { "text": "Best Sale", "color": "blue" },
+    "seller": "OceanFresh Market",
+    "price": 12.49,
+    "originalPrice": 18.99,
+    "rating": 4.9,
+    "reviews": 61
+  },
+  {
+    "_id": "67b7e1f1a91c12001a20000a",
+    "name": "Premium Roasted Coffee Beans 1kg",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img12.png",
+    "badge": { "text": "Top Rated", "color": "orange" },
+    "seller": "Coffee Roasters",
+    "price": 19.99,
+    "originalPrice": 29.99,
+    "rating": 4.8,
+    "reviews": 112
+  },
+  {
+    "_id": "67b7e1f1a91c12001a20000a",
+    "name": "Premium Roasted Coffee Beans 1kg",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img11.png",
+    "badge": { "text": "Top Rated", "color": "orange" },
+    "seller": "Coffee Roasters",
+    "price": 19.99,
+    "originalPrice": 29.99,
+    "rating": 4.8,
+    "reviews": 112
+  }
+]

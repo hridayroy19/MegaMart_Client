@@ -1,0 +1,883 @@
+[
+  {
+    "_id": "66f1a7d2c5b4a9012a10f001",
+    "name": "Instax Mini 11 Instant Camera",
+    "slug": "instax-mini-11",
+    "productKey": "Safeway12145871442",
+    "category": "Action Camera",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304530/9f0e81c4-69f3-4084-ad96-f504f475e643.png",
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304514/62a3b3f4-1656-4c04-bfe9-661f778e61c7.png",
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304501/b1ec712e-db8a-47fb-8cba-24992f967dff.png",
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304474/0cf04931-b395-43a5-899b-fb3bbc7622f6.png"
+    ],
+    "price": 14.99,
+    "originalPrice": 28.99,
+    "rating": 4.8,
+    "reviewsCount": 17000,
+    "sold": 18,
+    "stock": 35,
+    "isBestSale": true,
+    "discountPercentage": 0,
+    "description": "Capture memories instantly with this cute camera.",
+    "brand": "Fujifilm",
+    "color": "Purple",
+    "specifications": [
+      { "key": "Material", "value": "High-Quality Plastic" },
+      { "key": "Dimensions", "value": "107.6 x 121.2 x 67.3 mm" },
+      { "key": "Weight", "value": "293g" },
+      { "key": "Battery", "value": "2 x AA Batteries" },
+      { "key": "Warranty", "value": "1 Year Official" }
+    ],
+
+    "keyFeatures": [
+      "Automatic Exposure function",
+      "Selfie Mode via pull-out lens",
+      "Customizable shutter buttons",
+      "High-performance flash"
+    ],
+
+    "faqs": [
+      {
+        "question": "Is film included?",
+        "answer": "No, film is sold separately."
+      },
+      {
+        "question": "Does it need batteries?",
+        "answer": "Yes, two AA batteries are required."
+      }
+    ]
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f002",
+    "name": "Galaxy Watch 4 Classic",
+    "slug": "galaxy-watch-4",
+
+    "category": "Smart Watch",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304514/62a3b3f4-1656-4c04-bfe9-661f778e61c7.png"
+    ],
+    "price": 145.0,
+    "originalPrice": 199.0,
+    "rating": 4.5,
+    "reviewsCount": 540,
+    "sold": 120,
+    "stock": 150,
+    "isBestSale": false,
+    "discountPercentage": 0,
+    "description": "Stay connected and track your fitness.",
+    "brand": "Samsung",
+    "color": "Black"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f003",
+    "name": "iPhone 14 Pro Max Case",
+    "slug": "iphone-14-case",
+    "productKey": "Safeway12145871442",
+    "category": "Mobile & Accessories",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304501/b1ec712e-db8a-47fb-8cba-24992f967dff.png"
+    ],
+    "price": 12.5,
+    "originalPrice": 25.0,
+    "rating": 4.9,
+    "reviewsCount": 2300,
+    "sold": 45,
+    "stock": 50,
+    "isBestSale": false,
+    "discountPercentage": 50,
+    "description": "Durable and stylish protection for your phone.",
+    "brand": "Apple",
+    "color": "Black"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f004",
+    "name": "Xiaomi Redmi Note 12",
+    "slug": "xiaomi-note-12",
+    "productKey": "Safeway12145871442",
+    "category": "Mobile & Accessories",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304481/1f83ae3a-6a75-461a-8a69-75456deac1e5.png"
+    ],
+    "price": 199.99,
+    "originalPrice": 220.0,
+    "rating": 4.7,
+    "reviewsCount": 1200,
+    "sold": 80,
+    "stock": 200,
+    "isBestSale": false,
+    "discountPercentage": 0,
+    "description": "Great performance with a stunning display.",
+    "brand": "Redmi",
+    "color": "Black"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f005",
+    "name": "Wireless Earbuds Pro",
+    "slug": "wireless-earbuds-pro",
+    "productKey": "lucky-supermarket-98451236",
+    "category": "Electronics",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304492/f5e17c8e-47b8-4bbc-a6b4-b1cb37186031.png"
+    ],
+    "price": 49.99,
+    "originalPrice": 99.98,
+    "rating": 4.6,
+    "reviewsCount": 850,
+    "sold": 300,
+    "stock": 500,
+    "isBestSale": false,
+    "discountPercentage": 50,
+    "description": "Noise cancellation and long battery life.",
+    "brand": "Samsung",
+    "color": "White"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f006",
+    "name": "MacBook Air M2 Chip",
+    "slug": "macbook-air-m2",
+    "productKey": "lucky-supermarket-98451236",
+
+    "category": "Laptop",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304474/0cf04931-b395-43a5-899b-fb3bbc7622f6.png"
+    ],
+    "price": 999.0,
+    "originalPrice": 1199.0,
+    "rating": 4.9,
+    "reviewsCount": 5600,
+    "sold": 450,
+    "stock": 600,
+    "isBestSale": true,
+    "discountPercentage": 16,
+    "description": "Supercharged by M2 chip with 18 hours battery life.",
+    "brand": "Apple",
+    "color": "Gray"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f007",
+    "name": "GoPro Hero 11 Black",
+    "slug": "gopro-hero-11",
+    "productKey": "lucky-supermarket-98451236",
+
+    "category": "Action Camera",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304455/7f698102-014a-4836-a0cc-06726bb7560a.png"
+    ],
+    "price": 399.99,
+    "originalPrice": 499.99,
+    "rating": 4.7,
+    "reviewsCount": 3200,
+    "sold": 150,
+    "stock": 200,
+    "isBestSale": false,
+    "discountPercentage": 20,
+    "description": "Incredible image quality and video stabilization.",
+    "brand": "GoPro",
+    "color": "Black"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f008",
+    "name": "DJI Mini 3 Pro Drone",
+    "slug": "dji-mini-3",
+    "productKey": "lucky-supermarket-98451236",
+
+    "category": "Smart Gadget",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304445/f87b0760-1c00-40f9-8ad4-c97627351f9b.png"
+    ],
+    "price": 759.0,
+    "originalPrice": 859.0,
+    "rating": 4.8,
+    "reviewsCount": 890,
+    "sold": 45,
+    "stock": 80,
+    "isBestSale": false,
+    "discountPercentage": 0,
+    "description": "Lightweight camera drone with 4K video.",
+    "brand": "DJI",
+    "color": "White"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f009",
+    "name": "Samsung T7 Portable SSD 1TB",
+    "slug": "samsung-t7-ssd",
+    "category": "Storage",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304438/13dcd8fa-1657-4237-91f6-fe77fcb4bb2f.png"
+    ],
+    "price": 89.99,
+    "originalPrice": 129.99,
+    "rating": 4.9,
+    "reviewsCount": 12000,
+    "sold": 850,
+    "stock": 1000,
+    "isBestSale": true,
+    "discountPercentage": 30,
+    "description": "Light pocket-sized storage with fast transfer speeds.",
+    "brand": "Samsung",
+    "color": "Blue"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f010",
+    "name": "LG UltraGear Gaming Monitor",
+    "slug": "lg-ultragear-monitor",
+    "category": "Monitor",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304431/20cb95eb-465f-413a-b98e-811688f40c84.png"
+    ],
+    "price": 299.0,
+    "originalPrice": 349.0,
+    "rating": 4.6,
+    "reviewsCount": 450,
+    "sold": 88,
+    "stock": 120,
+    "isBestSale": false,
+    "discountPercentage": 14,
+    "description": "27-inch QHD IPS monitor with 144Hz refresh rate.",
+    "brand": "LG",
+    "color": "Black"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f011",
+    "name": "Anker 737 Power Bank",
+    "slug": "anker-737-powerbank",
+    "category": "Mobile & Accessories",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304384/41184820-0990-436e-b6d8-8eb0db9664b3.png"
+    ],
+    "price": 149.99,
+    "originalPrice": 149.99,
+    "rating": 4.8,
+    "reviewsCount": 2100,
+    "sold": 600,
+    "stock": 800,
+    "isBestSale": false,
+    "discountPercentage": 0,
+    "description": "Ultra-powerful two-way charging for laptops and phones.",
+    "brand": "Anker",
+    "color": "Black"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f012",
+    "name": "JBL Flip 6 Bluetooth Speaker",
+    "slug": "jbl-flip-6",
+    "category": "Electronics",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304360/fba53e42-694e-4281-82c9-ffe9ea9ab9ab.png"
+    ],
+    "price": 129.95,
+    "originalPrice": 129.95,
+    "rating": 4.7,
+    "reviewsCount": 5300,
+    "sold": 1200,
+    "stock": 1500,
+    "isBestSale": true,
+    "discountPercentage": 0,
+    "description": "Bold sound for every adventure, waterproof and dustproof.",
+    "brand": "JBL",
+    "color": "Red"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f013",
+    "name": "Apple Watch Ultra",
+    "slug": "apple-watch-ultra",
+    "category": "Smart Watch",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304339/7ba251e3-0246-4746-ad18-d0af4fae26bc.png"
+    ],
+    "price": 799.0,
+    "originalPrice": 799.0,
+    "rating": 4.9,
+    "reviewsCount": 980,
+    "sold": 120,
+    "stock": 200,
+    "isBestSale": false,
+    "discountPercentage": 0,
+    "description": "Rugged and capable, built for endurance athletes.",
+    "brand": "Apple",
+    "color": "Black"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f014",
+    "name": "Dell XPS 15 Laptop",
+    "slug": "dell-xps-15",
+    "category": "Laptop",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304339/7ba251e3-0246-4746-ad18-d0af4fae26bc.png"
+    ],
+    "price": 1499.0,
+    "originalPrice": 1899.0,
+    "rating": 4.5,
+    "reviewsCount": 340,
+    "sold": 25,
+    "stock": 50,
+    "isBestSale": false,
+    "discountPercentage": 21,
+    "description": "High performance creator laptop with 4K display.",
+    "brand": "DELL",
+    "color": "Purple"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f015",
+    "name": "iPad Air 5th Gen",
+    "slug": "ipad-air-5",
+    "category": "Portable Devices",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304339/7ba251e3-0246-4746-ad18-d0af4fae26bc.png"
+    ],
+    "price": 559.0,
+    "originalPrice": 599.0,
+    "rating": 4.8,
+    "reviewsCount": 4100,
+    "sold": 300,
+    "stock": 450,
+    "isBestSale": false,
+    "discountPercentage": 7,
+    "description": "Light. Bright. Full of might. Powered by M1.",
+    "brand": "Apple",
+    "color": "Blue"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f016",
+    "name": "Apple Watch Ultra (Series 2)",
+    "slug": "apple-watch-ultra-2",
+    "category": "Smart Watch",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304339/7ba251e3-0246-4746-ad18-d0af4fae26bc.png"
+    ],
+    "price": 799.0,
+    "originalPrice": 799.0,
+    "rating": 4.9,
+    "reviewsCount": 980,
+    "sold": 120,
+    "stock": 200,
+    "isBestSale": false,
+    "discountPercentage": 0,
+    "description": "Rugged and capable, built for endurance athletes.",
+    "brand": "Apple",
+    "color": "Red"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f017",
+    "name": "Dell XPS 17 Laptop",
+    "slug": "dell-xps-17",
+    "category": "Laptop",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304339/7ba251e3-0246-4746-ad18-d0af4fae26bc.png"
+    ],
+    "price": 1699.0,
+    "originalPrice": 1999.0,
+    "rating": 4.6,
+    "reviewsCount": 340,
+    "sold": 25,
+    "stock": 50,
+    "isBestSale": false,
+    "discountPercentage": 15,
+    "description": "High performance creator laptop with 4K display.",
+    "brand": "DELL",
+    "color": "Gray"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f018",
+    "name": "iPad Pro 11",
+    "slug": "ipad-pro-11",
+    "productKey": "FoodMax1286565466",
+    "category": "Portable Devices",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304339/7ba251e3-0246-4746-ad18-d0af4fae26bc.png"
+    ],
+    "price": 799.0,
+    "originalPrice": 899.0,
+    "rating": 4.9,
+    "reviewsCount": 4100,
+    "sold": 300,
+    "stock": 450,
+    "isBestSale": false,
+    "discountPercentage": 11,
+    "description": "The ultimate iPad experience with M2 chip.",
+    "brand": "Apple",
+    "color": "Green"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f019",
+    "name": "Apple Watch Ultra (Refurbished)",
+    "slug": "apple-watch-ultra-refurb",
+    "productKey": "FoodMax1286565466",
+    "category": "Smart Watch",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304339/7ba251e3-0246-4746-ad18-d0af4fae26bc.png"
+    ],
+    "price": 699.0,
+    "originalPrice": 799.0,
+    "rating": 3.9,
+    "reviewsCount": 980,
+    "sold": 120,
+    "stock": 200,
+    "isBestSale": false,
+    "discountPercentage": 12,
+    "description": "Rugged and capable, built for endurance athletes.",
+    "brand": "HP",
+    "color": "Gray"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f020",
+    "name": "Dell XPS 13 Plus",
+    "productKey": "daily-mart-90871234",
+
+    "slug": "dell-xps-13-plus",
+    "category": "Laptop",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304339/7ba251e3-0246-4746-ad18-d0af4fae26bc.png"
+    ],
+    "price": 1299.0,
+    "originalPrice": 1499.0,
+    "rating": 4.4,
+    "reviewsCount": 340,
+    "sold": 25,
+    "stock": 50,
+    "isBestSale": false,
+    "discountPercentage": 13,
+    "description": "Minimalist and modern design with powerful performance.",
+    "brand": "DELL",
+    "color": "White"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f021",
+    "name": "Samsung Galaxy S23 Ultra Case",
+    "slug": "samsung-s23-ultra-case",
+    "productKey": "daily-mart-90871234",
+
+    "category": "Mobile & Accessories",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304501/b1ec712e-db8a-47fb-8cba-24992f967dff.png"
+    ],
+    "price": 25.0,
+    "originalPrice": 35.0,
+    "rating": 2.5,
+    "reviewsCount": 150,
+    "sold": 65,
+    "stock": 100,
+    "isBestSale": false,
+    "discountPercentage": 28,
+    "description": "Rugged protection with a sleek design.",
+    "brand": "Samsung",
+    "color": "Green"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f022",
+    "name": "Sony WH-1000XM5 Headphones",
+    "productKey": "daily-mart-90871234",
+
+    "slug": "sony-wh1000xm5",
+    "category": "Headphone",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304492/f5e17c8e-47b8-4bbc-a6b4-b1cb37186031.png"
+    ],
+    "price": 348.0,
+    "originalPrice": 399.0,
+    "rating": 4.8,
+    "reviewsCount": 3500,
+    "sold": 500,
+    "stock": 200,
+    "isBestSale": true,
+    "discountPercentage": 13,
+    "description": "Industry-leading noise cancellation.",
+    "brand": "Sony",
+    "color": "Black"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f023",
+    "name": "HP Pavilion 15 Laptop",
+    "slug": "hp-pavilion-15",
+    "productKey": "daily-mart-90871234",
+
+    "category": "Laptop",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304339/7ba251e3-0246-4746-ad18-d0af4fae26bc.png"
+    ],
+    "price": 649.99,
+    "originalPrice": 799.99,
+    "rating": 3.8,
+    "reviewsCount": 200,
+    "sold": 60,
+    "stock": 90,
+    "isBestSale": false,
+    "discountPercentage": 19,
+    "description": "Reliable performance for everyday tasks.",
+    "brand": "HP",
+    "color": "Silver"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f024",
+    "name": "Logitech MX Master 3S Mouse",
+    "slug": "logitech-mx-master-3s",
+    "category": "Mouse",
+    "productKey": "daily-mart-90871234",
+
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304431/20cb95eb-465f-413a-b98e-811688f40c84.png"
+    ],
+    "price": 99.0,
+    "originalPrice": 99.0,
+    "rating": 4.9,
+    "reviewsCount": 8500,
+    "sold": 1500,
+    "stock": 300,
+    "isBestSale": true,
+    "discountPercentage": 0,
+    "description": "Performance wireless mouse with ultra-fast scrolling.",
+    "brand": "Logitech",
+    "color": "Gray"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f025",
+    "name": "Generic USB Cable Type-C",
+    "slug": "generic-usb-c",
+    "productKey": "daily-mart-90871234",
+
+    "category": "Mobile & Accessories",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304384/41184820-0990-436e-b6d8-8eb0db9664b3.png"
+    ],
+    "price": 5.99,
+    "originalPrice": 9.99,
+    "rating": 2.1,
+    "reviewsCount": 50,
+    "sold": 100,
+    "stock": 500,
+    "isBestSale": false,
+    "discountPercentage": 40,
+    "description": "Basic charging cable.",
+    "brand": "Generic",
+    "color": "White"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f026",
+    "name": "Microsoft Surface Pro 9",
+    "slug": "microsoft-surface-pro-9",
+    "productKey": "daily-mart-90871234",
+
+    "category": "Laptop",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304339/7ba251e3-0246-4746-ad18-d0af4fae26bc.png"
+    ],
+    "price": 1099.0,
+    "originalPrice": 1299.0,
+    "rating": 4.5,
+    "reviewsCount": 420,
+    "sold": 110,
+    "stock": 80,
+    "isBestSale": false,
+    "discountPercentage": 15,
+    "description": "Tablet versatility and laptop power.",
+    "brand": "Microsoft",
+    "color": "Blue"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f027",
+    "name": "Redmi Watch 3 Active",
+    "slug": "redmi-watch-3",
+    "productKey": "daily-mart-90871234",
+
+    "category": "Smart Watch",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304514/62a3b3f4-1656-4c04-bfe9-661f778e61c7.png"
+    ],
+    "price": 45.0,
+    "originalPrice": 60.0,
+    "rating": 3.9,
+    "reviewsCount": 890,
+    "sold": 300,
+    "stock": 250,
+    "isBestSale": true,
+    "discountPercentage": 25,
+    "description": "Large display and long battery life.",
+    "brand": "Redmi",
+    "color": "Black"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f028",
+    "name": "Canon EOS R50 Camera",
+    "slug": "canon-eos-r50",
+    "productKey": "daily-mart-90871234",
+
+    "category": "Camera",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304455/7f698102-014a-4836-a0cc-06726bb7560a.png"
+    ],
+    "price": 679.0,
+    "originalPrice": 799.0,
+    "rating": 4.7,
+    "reviewsCount": 120,
+    "sold": 40,
+    "stock": 30,
+    "isBestSale": false,
+    "discountPercentage": 15,
+    "description": "Compact mirrorless camera for creators.",
+    "brand": "Canon",
+    "color": "White"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f029",
+    "name": "Budget Wired Earphones",
+    "slug": "budget-wired-earphones",
+    "productKey": "fresh-basket-33548721",
+
+    "category": "Headphone",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304492/f5e17c8e-47b8-4bbc-a6b4-b1cb37186031.png"
+    ],
+    "price": 8.0,
+    "originalPrice": 10.0,
+    "rating": 1.5,
+    "reviewsCount": 30,
+    "sold": 200,
+    "stock": 1000,
+    "isBestSale": false,
+    "discountPercentage": 20,
+    "description": "Standard wired earphones.",
+    "brand": "Generic",
+    "color": "Black"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f030",
+    "name": "SanDisk 128GB SD Card",
+    "slug": "sandisk-128gb",
+    "productKey": "fresh-basket-33548721",
+
+    "category": "Storage",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304438/13dcd8fa-1657-4237-91f6-fe77fcb4bb2f.png"
+    ],
+    "price": 19.99,
+    "originalPrice": 35.0,
+    "rating": 4.9,
+    "reviewsCount": 5000,
+    "sold": 1200,
+    "stock": 800,
+    "isBestSale": true,
+    "discountPercentage": 43,
+    "description": "Fast speeds for capturing 4K video.",
+    "brand": "SanDisk",
+    "color": "Black"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f031",
+    "name": "Keychron K2 Mechanical Keyboard",
+    "slug": "keychron-k2",
+    "productKey": "fresh-basket-33548721",
+
+    "category": "Keyboard",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304431/20cb95eb-465f-413a-b98e-811688f40c84.png"
+    ],
+    "price": 89.0,
+    "originalPrice": 99.0,
+    "rating": 4.8,
+    "reviewsCount": 950,
+    "sold": 400,
+    "stock": 150,
+    "isBestSale": false,
+    "discountPercentage": 10,
+    "description": "Wireless mechanical keyboard for Mac and Windows.",
+    "brand": "Keychron",
+    "color": "Gray"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f032",
+    "name": "Amazon Fire TV Stick",
+    "slug": "amazon-fire-stick",
+    "productKey": "fresh-basket-33548721",
+    "category": "Smart TV",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304384/41184820-0990-436e-b6d8-8eb0db9664b3.png"
+    ],
+    "price": 39.99,
+    "originalPrice": 49.99,
+    "rating": 4.7,
+    "reviewsCount": 15000,
+    "sold": 5000,
+    "stock": 2000,
+    "isBestSale": true,
+    "discountPercentage": 20,
+    "description": "Streaming media player with Alexa Voice Remote.",
+    "brand": "Amazon",
+    "color": "Black"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f033",
+    "name": "Cheap Action Cam 4K",
+    "slug": "cheap-action-cam",
+    "productKey": "green-valley-78451296",
+
+    "category": "Action Camera",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304455/7f698102-014a-4836-a0cc-06726bb7560a.png"
+    ],
+    "price": 45.0,
+    "originalPrice": 60.0,
+    "rating": 3.2,
+    "reviewsCount": 80,
+    "sold": 50,
+    "stock": 120,
+    "isBestSale": false,
+    "discountPercentage": 25,
+    "description": "Entry level 4K action camera.",
+    "brand": "Generic",
+    "color": "Yellow"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f034",
+    "name": "LG 32-inch Smart Monitor",
+    "slug": "lg-smart-monitor-32",
+    "productKey": "green-valley-78451296",
+
+    "category": "Monitor",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304431/20cb95eb-465f-413a-b98e-811688f40c84.png"
+    ],
+    "price": 250.0,
+    "originalPrice": 300.0,
+    "rating": 4.4,
+    "reviewsCount": 210,
+    "sold": 70,
+    "stock": 60,
+    "isBestSale": false,
+    "discountPercentage": 17,
+    "description": "Monitor with webOS smart features built-in.",
+    "brand": "LG",
+    "color": "White"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f035",
+    "name": "Basic Laptop Stand",
+    "slug": "basic-laptop-stand",
+    "productKey": "green-valley-78451296",
+
+    "category": "Monitor Stand",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304384/41184820-0990-436e-b6d8-8eb0db9664b3.png"
+    ],
+    "price": 15.0,
+    "originalPrice": 20.0,
+    "rating": 4.1,
+    "reviewsCount": 600,
+    "sold": 300,
+    "stock": 400,
+    "isBestSale": false,
+    "discountPercentage": 25,
+    "description": "Aluminum foldable laptop stand.",
+    "brand": "Generic",
+    "color": "Silver"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f036",
+    "name": "Google Pixel 7a",
+    "slug": "google-pixel-7a",
+    "productKey": "arico-farmer-45871236",
+
+    "category": "Mobile & Accessories",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304481/1f83ae3a-6a75-461a-8a69-75456deac1e5.png"
+    ],
+    "price": 449.0,
+    "originalPrice": 499.0,
+    "rating": 4.6,
+    "reviewsCount": 850,
+    "sold": 200,
+    "stock": 150,
+    "isBestSale": false,
+    "discountPercentage": 10,
+    "description": "Google's budget-friendly phone with amazing camera.",
+    "brand": "Google",
+    "color": "Blue"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f037",
+    "name": "Dell 24 Monitor",
+    "slug": "dell-24-monitor",
+    "productKey": "arico-farmer-45871236",
+
+    "category": "Monitor",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304431/20cb95eb-465f-413a-b98e-811688f40c84.png"
+    ],
+    "price": 119.0,
+    "originalPrice": 149.0,
+    "rating": 4.5,
+    "reviewsCount": 1100,
+    "sold": 600,
+    "stock": 200,
+    "isBestSale": true,
+    "discountPercentage": 20,
+    "description": "Affordable IPS monitor for work.",
+    "brand": "DELL",
+    "color": "Black"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f038",
+    "name": "Refurbished iPhone 11",
+    "slug": "refurb-iphone-11",
+    "productKey": "arico-farmer-45871236",
+    "category": "Mobile & Accessories",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304481/1f83ae3a-6a75-461a-8a69-75456deac1e5.png"
+    ],
+    "price": 250.0,
+    "originalPrice": 599.0,
+    "rating": 3.5,
+    "reviewsCount": 500,
+    "sold": 150,
+    "stock": 80,
+    "isBestSale": false,
+    "discountPercentage": 58,
+    "description": "Pre-owned iPhone in good condition.",
+    "brand": "Apple",
+    "color": "Purple"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f039",
+    "name": "RGB Gaming Mouse Pad",
+    "slug": "rgb-mouse-pad",
+    "productKey": "lucky-supermarket-98451236",
+
+    "category": "Mouse",
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304431/20cb95eb-465f-413a-b98e-811688f40c84.png"
+    ],
+    "price": 18.0,
+    "originalPrice": 25.0,
+    "rating": 4.3,
+    "reviewsCount": 700,
+    "sold": 450,
+    "stock": 200,
+    "isBestSale": false,
+    "discountPercentage": 28,
+    "description": "Large mouse pad with customizable RGB lighting.",
+    "brand": "Generic",
+    "color": "Black"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f040",
+    "name": "Travel Tech Pouch",
+    "slug": "travel-tech-pouch",
+    "category": "Portable Devices",
+    "productKey": "lucky-supermarket-98451236",
+
+    "images": [
+      "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765304384/41184820-0990-436e-b6d8-8eb0db9664b3.png"
+    ],
+    "price": 22.0,
+    "originalPrice": 30.0,
+    "rating": 4.6,
+    "reviewsCount": 180,
+    "sold": 90,
+    "stock": 150,
+    "isBestSale": false,
+    "discountPercentage": 27,
+    "description": "Organize your cables and chargers easily.",
+    "brand": "Generic",
+    "color": "Green"
+  }
+]

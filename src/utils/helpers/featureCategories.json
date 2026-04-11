@@ -1,0 +1,34 @@
+[
+  {
+    "_id": "66f1a7d2c5b4a9012a10f101",
+    "title": "Everyday Fresh Meat",
+    "startingPrice": 60.99,
+    "buttonText": "Shop Now",
+    "image": "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765188657/promotional-banner-img2_arytcs.png",
+    "slug": "fresh-meat"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f102",
+    "title": "Daily Fresh Vegetables",
+    "startingPrice": 60.99,
+    "buttonText": "Shop Now",
+    "image": "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765188657/promotional-banner-img4_ejkxbq.png",
+    "slug": "fresh-vegetables"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f103",
+    "title": "Everyday Fresh Milk",
+    "startingPrice": 60.99,
+    "buttonText": "Shop Now",
+    "image": "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765188657/promotional-banner-img1_ikxobe.png",
+    "slug": "fresh-milk"
+  },
+  {
+    "_id": "66f1a7d2c5b4a9012a10f104",
+    "title": "Everyday Fresh Fruits",
+    "startingPrice": 40.99,
+    "buttonText": "Shop Now",
+    "image": "https://res.cloudinary.com/dh2eg5h3h/image/upload/v1765188657/promotional-banner-img3_ck4jpf.png",
+    "slug": "fresh-fruits"
+  }
+]

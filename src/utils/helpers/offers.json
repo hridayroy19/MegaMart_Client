@@ -1,0 +1,36 @@
+[
+  {
+    "id": "67b6cfa5a91c12001a000001",
+    "title": "$5 off your first order",
+    "discount": "$5",
+    "description": "off your first order",
+    "deliveryTime": "Delivery by 6:15am",
+    "expireDate": "Expire Aug 5",
+    "expireDateColor": "text-gray-700",
+    "bgColor": "bg-pink-100",
+    "bgImage": "https://marketpro.theme.picode.in/assets/images/bg/offer-bg-img1.png",
+    "productImage": "https://marketpro.theme.picode.in/assets/images/bg/offer-bg-img1.png",
+    "logoImage": "https://marketpro.theme.picode.in/assets/images/thumbs/offer-logo.png",
+    "logoAlt": "Nature Food",
+    "buttonColor": "bg-green-500 hover:bg-green-600",
+    "imagePosition": "left",
+    "logoPosition": "top-right"
+  },
+  {
+    "id": "67b6cfa5a91c12001a000002",
+    "title": "$5 off your first order",
+    "discount": "$5",
+    "description": "off your first order",
+    "deliveryTime": "Delivery by 6:15am",
+    "expireDate": "Expire Aug 5",
+    "expireDateColor": "text-green-500",
+    "bgColor": "bg-yellow-50",
+    "bgImage": "https://marketpro.theme.picode.in/assets/images/bg/offer-bg-img2.png",
+    "productImage": "https://marketpro.theme.picode.in/assets/images/bg/offer-bg-img2.png",
+    "logoImage": "https://marketpro.theme.picode.in/assets/images/thumbs/offer-logo.png",
+    "logoAlt": "Nature Food",
+    "buttonColor": "bg-gray-800 hover:bg-gray-900",
+    "imagePosition": "right",
+    "logoPosition": "top-left"
+  }
+]

@@ -1,0 +1,182 @@
+[
+  {
+    "_id": "67b6d4fba91c12001a100001",
+    "productName": "Taylor Farms Broccoli Florets",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img3.png",
+    "rating": 4.8,
+    "reviews": "17k",
+    "price": 1500,
+    "oldPrice": 1500,
+    "tag": "featured"
+  },
+  {
+    "_id": "67b6d4fba91c12001a100004",
+    "productName": "Taylor Farms Broccoli Florets",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img2.png",
+    "rating": 4.8,
+    "reviews": "17k",
+    "price": 1500,
+    "oldPrice": 1500,
+    "tag": "featured"
+  },
+  {
+    "_id": "67b6d4fba91c12001a100005",
+    "productName": "Taylor Farms Broccoli Florets",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img4.png",
+    "rating": 4.8,
+    "reviews": "17k",
+    "price": 1500,
+    "oldPrice": 1500,
+    "tag": "featured"
+  },
+  {
+    "_id": "67b6d4fba91c12001a100002",
+    "productName": "Taylor Farms Broccoli Florets",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img5.png",
+    "rating": 4.8,
+    "reviews": "17k",
+    "price": 1500,
+    "oldPrice": 1500,
+    "tag": "topSelling"
+  },
+  {
+    "_id": "67b6d4fba91c12001a100003",
+    "productName": "Taylor Farms Broccoli Florets",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img6.png",
+    "rating": 4.8,
+    "reviews": "17k",
+    "price": 1500,
+    "oldPrice": 1500,
+    "tag": "onSale"
+  },
+  {
+    "_id": "67b6d4fba91c12001a10000m",
+    "productName": "Taylor Farms Broccoli Florets",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img7.png",
+    "rating": 4.8,
+    "reviews": "17k",
+    "price": 1500,
+    "oldPrice": 1500,
+    "tag": "featured"
+  },
+  {
+    "_id": "67b6d4fba91c12001a100005",
+    "productName": "Taylor Farms Broccoli Florets",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img8.png",
+    "rating": 4.8,
+    "reviews": "17k",
+    "price": 1500,
+    "oldPrice": 1500,
+    "tag": "topSelling"
+  },
+  {
+    "_id": "67b6d4fba91c12001a100006",
+    "productName": "Taylor Farms Broccoli Florets",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img8.png",
+    "rating": 4.8,
+    "reviews": "17k",
+    "price": 1500,
+    "oldPrice": 1500,
+    "tag": "onSale"
+  },
+  {
+    "_id": "67b6d4fba91c12001a100007",
+    "productName": "Taylor Farms Broccoli Florets",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img10.png",
+    "rating": 4.8,
+    "reviews": "17k",
+    "price": 1500,
+    "oldPrice": 1500,
+    "tag": "featured"
+  },
+  {
+    "_id": "67b6d4fba91c12001a100008",
+    "productName": "Taylor Farms Broccoli Florets",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img11.png",
+    "rating": 4.8,
+    "reviews": "17k",
+    "price": 1500,
+    "oldPrice": 1500,
+    "tag": "topSelling"
+  },
+  {
+    "_id": "67b6d4fba91c12001a100009",
+    "productName": "Taylor Farms Broccoli Florets",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img12.png",
+    "rating": 4.8,
+    "reviews": "17k",
+    "price": 1500,
+    "oldPrice": 1500,
+    "tag": "onSale"
+  },
+  {
+    "_id": "67b6d4fba91c12001a10000a",
+    "productName": "Taylor Farms Broccoli Florets",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img13.png",
+    "rating": 4.8,
+    "reviews": "17k",
+    "price": 1500,
+    "oldPrice": 1500,
+    "tag": "featured"
+  },
+  {
+    "_id": "67b6d4fba91c12001a10000b",
+    "productName": "Taylor Farms Broccoli Florets",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img14.png",
+    "rating": 4.8,
+    "reviews": "17k",
+    "price": 1500,
+    "oldPrice": 1500,
+    "tag": "topSelling"
+  },
+  {
+    "_id": "67b6d4fba91c12001a10000d",
+    "productName": "Taylor Farms Broccoli Florets",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img15.png",
+    "rating": 4.8,
+    "reviews": "17k",
+    "price": 1500,
+    "oldPrice": 1500,
+    "tag": "onSale"
+  },
+  {
+    "_id": "67b6d4fba91c12001a10000f",
+    "productName": "Taylor Farms Broccoli Florets",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img16.png",
+    "rating": 4.8,
+    "reviews": "17k",
+    "price": 1500,
+    "oldPrice": 1500,
+    "tag": "onSale"
+  },
+  {
+    "_id": "67b6d4fba91c12001a100009",
+    "productName": "Taylor Farms Broccoli Florets",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/short-product-img17.png",
+    "rating": 4.8,
+    "reviews": "17k",
+    "price": 1500,
+    "oldPrice": 1500,
+    "tag": "onSale"
+  },
+  {
+    "_id": "67b6d4fba91c12001a10000a",
+    "productName": "Taylor Farms Broccoli Florets",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img18.png",
+    "rating": 4.8,
+    "reviews": "17k",
+    "price": 1500,
+    "oldPrice": 1500,
+    "tag": "onSale"
+  },
+  {
+    "_id": "67b6d4fba91c12001a100008",
+    "productName": "Taylor Farms Broccoli Florets",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img19.png",
+    "rating": 4.8,
+    "reviews": "17k",
+    "price": 1500,
+    "oldPrice": 1500,
+    "tag": "onSale"
+  }
+]

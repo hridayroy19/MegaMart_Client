@@ -1,0 +1,52 @@
+.leftCard {
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* default desktop style */
+  background-color: var(--background);
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: auto 100%;
+    background-color: #fbf5f7;
+
+}
+
+@media (max-width: 667px) {
+  .leftCard {
+    background-image: none !important;
+    background-color: #fbf5f7;
+    background-position: -110px center;
+     border-radius: 0;
+
+  }
+}
+
+@media (min-width: 668px) and (max-width: 1024px) {
+  .leftCard {
+    background-position: -110px center;
+    background-size: auto 110%;
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .leftCard {
+    background-position: 0px center;
+    background-size: auto 110%;
+  }
+}
+@media (min-width: 1025px) and (max-width: 1440px) {
+  .leftCard {
+    background-position: -50px center;
+    background-size: auto 110%;
+  }
+}
+
+@media (max-width: 768px){
+  .leftCard {
+    background-position: -20px center;
+    background-size: auto 110%;
+  }
+}

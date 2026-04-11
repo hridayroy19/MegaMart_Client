@@ -1,0 +1,74 @@
+[
+  {
+    "_id": "prod001",
+    "sale": "50%",
+    "oldPrice": 28.99,
+    "newPrice": 14.99,
+    "rating": 4.8,
+    "reviews": "17k",
+    "title": "Taylor Farms Broccoli Florets Vegetables",
+    "seller": "Lucky Supermarket",
+    "sold": "18/35",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img8.png",
+    "timer": {
+      "days": 723,
+      "hours": 18,
+      "minutes": 54,
+      "seconds": 46
+    }
+  },
+  {
+    "_id": "prod002",
+    "sale": "50%",
+    "oldPrice": 28.99,
+    "newPrice": 14.99,
+    "rating": 4.8,
+    "reviews": "17k",
+    "title": "Taylor Farms Broccoli Florets Vegetables",
+    "seller": "Lucky Supermarket",
+    "sold": "18/35",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img3.png",
+    "timer": {
+      "days": 705,
+      "hours": 18,
+      "minutes": 54,
+      "seconds": 46
+    }
+  },
+  {
+    "_id": "prod003",
+    "sale": "40%",
+    "oldPrice": 19.99,
+    "newPrice": 11.99,
+    "rating": 4.6,
+    "reviews": "9k",
+    "title": "Fresh Organic Baby Spinach Leaves",
+    "seller": "Green Market",
+    "sold": "25/40",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img5.png",
+    "timer": {
+      "days": 512,
+      "hours": 12,
+      "minutes": 33,
+      "seconds": 20
+    }
+  },
+  {
+    "_id": "prod004",
+    "sale": "30%",
+    "oldPrice": 15.49,
+    "newPrice": 10.79,
+    "rating": 4.5,
+    "reviews": "5k",
+    "title": "Fresh Farm Carrots - Organic Produce",
+    "seller": "Healthy Foods Store",
+    "sold": "14/28",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img9.png",
+    "timer": {
+      "days": 634,
+      "hours": 9,
+      "minutes": 12,
+      "seconds": 55
+    }
+  }
+]
