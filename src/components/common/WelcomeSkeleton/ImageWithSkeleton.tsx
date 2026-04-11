@@ -15,8 +15,6 @@ interface ImageWithSkeletonProps {
 const ImageWithSkeleton: React.FC<ImageWithSkeletonProps> = ({
   src,
   alt,
-  width,
-  height,
   className,
 }) => {
   const [loaded, setLoaded] = useState(false);
@@ -31,8 +29,8 @@ const ImageWithSkeleton: React.FC<ImageWithSkeletonProps> = ({
       <Image
         src={src}
         alt={alt}
-        width={width}
-        height={height}
+        width={200}
+        height={200}
         onLoadingComplete={() => setLoaded(true)}
         className={`${className} ${
           !loaded ? "opacity-0" : "opacity-100"

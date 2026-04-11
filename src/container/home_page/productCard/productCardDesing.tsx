@@ -10,7 +10,6 @@ export function ProductCard({ product }: { product: IProduct }) {
 
   return (
     <div className="group flex flex-col justify-between border rounded-2xl border-border bg-card md:p-4 p-1 hover:shadow-lg hover:border-primary transition-all min-h-[480px] relative">
-      {/* Wishlist Icon - Hidden Until Hover */}
       <button
         onClick={() => setIsWishlisted(!isWishlisted)}
         className="absolute right-3 top-3 opacity-0 group-hover:opacity-100 transition-opacity z-10 p-2 border border-border hover:border-primary rounded-full shadow-sm"

@@ -31,7 +31,7 @@ const features = [
 
 export default function FeatureSection() {
   return (
-    <div className="w-full px-4 py-6">
+    <div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
 
         {features.map((item) => {
@@ -40,19 +40,19 @@ export default function FeatureSection() {
           return (
             <div
               key={item.id}
-              className="flex items-center gap-4 p-4 border rounded-xl bg-white hover:shadow-md transition-all duration-300"
+              className="flex items-center gap-4 p-4 border border-border rounded-xl bg-background hover:shadow-md transition-all duration-300"
             >
               {/* Icon */}
-              <div className="text-yellow-500">
-                <Icon size={28} />
+              <div className="text-primary">
+                <Icon size={35} />
               </div>
 
               {/* Text */}
               <div>
-                <h4 className="font-semibold text-gray-900">
+                <h4>
                   {item.title}
                 </h4>
-                <p className="text-sm text-gray-500">
+                <p>
                   {item.subtitle}
                 </p>
               </div>

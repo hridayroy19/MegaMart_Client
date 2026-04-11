@@ -18,7 +18,7 @@ const Homepage = () => {
       <section className="section-content-top ">
         <Banner />
       </section>
-      <section className="section-padding-x">
+      <section className="section-padding-x pt-10">
         <FeatureSection />
       </section>
       <section className="section-padding-t section-padding-x">
