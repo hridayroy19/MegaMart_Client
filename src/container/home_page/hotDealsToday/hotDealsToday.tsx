@@ -16,7 +16,6 @@ const AUTO_SLIDE_INTERVAL = 4000;
 
 export const HotDealsToday = () => {
   const { data, isLoading, isError } = useGetHotDealsTodayQuery();
-  console.log(data);
   const items = (data ?? []) as IHotDealsToday[];
 
   const dispatch = useAppDispatch();
