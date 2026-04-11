@@ -23,7 +23,7 @@ const products = [
 
 export default function ProductShowcase() {
   return (
-    <div className="flex flex-row gap-8 justify-center bg-background">
+    <div className="lg:flex hidden flex-row gap-8 justify-center bg-background">
       {products?.map((product) => (
         <div
           key={product?.id}
@@ -42,12 +42,8 @@ export default function ProductShowcase() {
           </div>
 
           <div className="relative z-10 p-10 flex flex-col items-center text-center">
-            <h3 className="text-lg font-bold uppercase tracking-[0.2em] text-white/80 drop-shadow-md">
-              {product.category}
-            </h3>
-            <h2 className="mt-2 text-4xl font-black text-white drop-shadow-lg">
-              {product.title}
-            </h2>
+            <h3>{product.category}</h3>
+            <h2 className="mt-2">{product.title}</h2>
 
             <div className="mt-6 flex flex-wrap justify-center gap-2">
               {product.specs.map((spec, index) => (

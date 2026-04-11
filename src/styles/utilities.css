@@ -17,6 +17,6 @@
     @apply pt-8 md:pt-10 lg:pt-20;
   }
   .section-content-top {
-    @apply mt-42 md:mt-8 lg:mt-40;
+    @apply mt-42 md:mt-8 lg:mt-48;
   }
 }

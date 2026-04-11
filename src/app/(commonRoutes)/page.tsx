@@ -11,13 +11,14 @@ import { HotDealsToday } from "@/container/home_page/hotDealsToday/hotDealsToday
 import NewsletterSection from "@/container/home_page/newsletterSection/newsletterSection";
 import ProductSection from "@/container/home_page/productCard/productSection";
 import FeatureSection from "@/container/home_page/subBannerSlider/subBannerSlider";
+
 const Homepage = () => {
   return (
     <div className="max-content-width">
       <section className="section-content-top ">
         <Banner />
       </section>
-      <section className="section-padding-t section-padding-x">
+      <section className="section-padding-x">
         <FeatureSection />
       </section>
       <section className="section-padding-t section-padding-x">
