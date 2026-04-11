@@ -1,11 +1,47 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import Image from "next/image";
-import { Star } from "lucide-react";
+import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useGetSellProductQuery } from "@/redux/features/sellsProduct/sellProductApi";
-
+import PromoCard from "./promoCard";
+import { Button } from "@/components/ui/button";
+import cctv from "@/assets/images/homePage/hotDealsToday/ccTv.png";
 export default function DailyBestSells() {
+  const { data = [], isLoading, isError, error } = useGetSellProductQuery();
+
+  const [products, setProducts] = useState<any[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Responsive items per page
+  const [itemsPerPage, setItemsPerPage] = useState(4);
+  const slideStep = 2;
+
+  useEffect(() => {
+    const updateItemsPerPage = () => {
+      const w = window.innerWidth;
+      if (w < 640) setItemsPerPage(1);       
+      else if (w < 1024) setItemsPerPage(2);  
+      else setItemsPerPage(4);                 
+    };
+
+    updateItemsPerPage();
+    window.addEventListener("resize", updateItemsPerPage);
+    return () => window.removeEventListener("resize", updateItemsPerPage);
+  }, []);
+
+  useEffect(() => {
+    if (data.length) {
+      setProducts(data);
+    }
+  }, [data]);
+
+  useEffect(() => {
+    setCurrentIndex(0);
+  }, [itemsPerPage]);
+
+  // Timer logic
   useEffect(() => {
     const interval = setInterval(() => {
       setProducts((prev) =>
@@ -26,122 +62,185 @@ export default function DailyBestSells() {
             }
           }
 
-          return { ...item, timer: { days, hours, minutes, seconds } };
-        })
+          return {
+            ...item,
+            timer: { days, hours, minutes, seconds },
+          };
+        }),
       );
     }, 1000);
 
     return () => clearInterval(interval);
   }, []);
 
-  const { data, isLoading, isError, error } = useGetSellProductQuery();
-  const [products, setProducts] = useState(data || []);
+  // Slider controls
+  const handleNext = () => {
+    if (currentIndex + itemsPerPage < products.length) {
+      setCurrentIndex((prev) => Math.min(prev + slideStep, products.length - itemsPerPage));
+    }
+  };
 
-  if (isLoading)
-    return <p className="py-6 text-sm text-muted-foreground">Loading...</p>;
+  const handlePrev = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex((prev) => Math.max(prev - slideStep, 0));
+    }
+  };
+
+  const visibleProducts = products.slice(currentIndex, currentIndex + itemsPerPage);
+
+  const canPrev = currentIndex > 0;
+  const canNext = currentIndex + itemsPerPage < products.length;
+
+  if (isLoading) return <p className="py-6 text-sm">Loading...</p>;
 
   if (isError) {
-    console.log("Offer error:", error);
-    return <p className="py-6 text-sm text-error">Failed to load product.</p>;
+    console.log(error);
+    return <p className="py-6 text-sm">Failed to load product.</p>;
   }
 
-  if (!data?.length) {
-    return <p className="py-6 text-sm text-error">No product available.</p>;
+  if (!products.length) {
+    return <p className="py-6 text-sm">No product available.</p>;
   }
 
   return (
-    <div className="w-full bg-background">
-      <h2 className="mb-6">Daily Best Sells</h2>
+    <div className="w-full">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-4 sm:mb-6">
+        <h2 className="text-base sm:text-lg font-semibold">Daily Best Sells</h2>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-6">
-        {data.map((item) => (
-          <div
-            key={item._id}
-            className="border border-border hover:border-primary rounded-xl p-1 shadow-sm hover:shadow-lg 
-            transition-all duration-300 relative bg-card"
+        <div className="flex gap-2">
+          <button
+            onClick={handlePrev}
+            disabled={!canPrev}
+            aria-label="Previous"
+            className="p-2 rounded-full bg-primary/20 hover:bg-primary hover:text-background transition disabled:opacity-40 disabled:cursor-not-allowed"
           >
-            {/* Sale Tag */}
-            <span className="absolute top-4 left-4 bg-error text-background text-sm font-semibold px-3 py-1 rounded-md">
-              Sale {item.sale}
-            </span>
+            <ChevronLeft size={18} />
+          </button>
 
-            {/* Product Section */}
-            <div className="flex gap-6 p-2 items-center flex-nowrap">
-              {/* IMAGE + HOVER ZOOM */}
-              <div className="w-[140px] lg:w-[180px] xl:w-[250px] h-[200px] flex justify-center items-center overflow-hidden rounded-lg">
-                <Image
-                  src={item.image}
-                  width={140}
-                  height={220}
-                  alt="product"
-                  className="transition-transform duration-300 ease-in-out hover:scale-120"
-                />
-              </div>
+          <button
+            onClick={handleNext}
+            disabled={!canNext}
+            aria-label="Next"
+            className="p-2 rounded-full bg-primary/20 hover:bg-primary hover:text-background transition disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            <ChevronRight size={18} />
+          </button>
+        </div>
+      </div>
 
-              <div className="flex-1">
-                {/* Price Row */}
-                <div className="flex items-center gap-2">
-                  <span className="line-through text-mute text-sm">
-                    ${item.oldPrice}
-                  </span>
-                  <span className="text-lg font-bold text-foreground">
-                    ${item.newPrice}
-                  </span>
-                  <span className="text-muted text-sm">/Qty</span>
-                </div>
+      {/* Main layout */}
+      <div className="flex flex-col lg:flex-row items-stretch gap-5">
 
-                {/* Rating */}
-                <div className="flex items-center gap-1 mt-1">
-                  <Star
-                    size={16}
-                    className="text-popover-foreground fill-popover-foreground"
+        {/* Promo Card — hidden on mobile/tablet, visible on lg+ */}
+        <div className="hidden lg:block lg:w-[250px] xl:w-70 shrink-0">
+          <PromoCard
+            discount="50% Discount"
+            title="Best Shopping"
+            subtitle="Iphone's"
+            imageSrc={cctv}
+            bgColor="bg-primary"
+          />
+        </div>
+
+        {/* Product Grid */}
+        <div
+          className="
+            grid gap-4 sm:gap-5 flex-1 transition-all duration-500 w-full
+            grid-cols-1
+            sm:grid-cols-2
+            lg:grid-cols-2
+          "
+        >
+          {visibleProducts.map((item) => (
+            <div
+              key={item._id}
+              className="flex flex-col justify-between border rounded-xl p-3 sm:p-4 shadow-sm hover:shadow-lg transition"
+            >
+              {/* Sale badge */}
+              <span className="bg-destructive text-background text-xs px-2 py-1 rounded w-fit">
+                Sale {item.sale}
+              </span>
+
+              {/* Content row */}
+              <div className="flex gap-3 sm:gap-5 mt-2">
+                {/* Image */}
+                <div className="shrink-0">
+                  <Image
+                    src={item.image}
+                    width={80}
+                    height={80}
+                    alt={item.title}
+                    className="rounded object-contain w-[72px] h-[72px] sm:w-[90px] sm:h-[90px]"
                   />
-                  <span className="text-sm font-semibold">{item.rating}</span>
-                  <span className="text-xs text-mute">({item.reviews})</span>
                 </div>
 
-                {/* Title */}
-                <h3 className="mt-2 hover:text-primary cursor-pointer font-semibold">{item.title}</h3>
-
-                {/* Seller */}
-                <p className="text-sm font-semibold text-muted mt-1">
-                  By {item.seller}
-                </p>
-
-                {/* Sold Bar */}
-                <div className="mt-3">
-                  <div className="w-full bg-muted/20 h-2 rounded-full mt-1">
-                    <div className="bg-primary h-2 rounded-full w-1/2"></div>
+                {/* Info */}
+                <div className="flex-1 min-w-0">
+                  {/* Price */}
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="line-through text-sm text-muted-foreground">
+                      ${item.oldPrice}
+                    </span>
+                    <span className="font-bold text-sm">${item.newPrice}</span>
                   </div>
-                  <p className="text-[16px] mt-1 text-foreground font-bold">
-                    Sold: {item.sold}
-                  </p>
-                </div>
 
-                {/* Add to Cart Button */}
-                <button className="mt-4 w-full bg-primary/15 hover:text-background hover:bg-primary text-primary py-2 rounded-lg text-sm font-medium transition">
-                  Add To Cart
-                </button>
+                  {/* Rating */}
+                  <div className="flex items-center gap-1 text-xs sm:text-sm mt-0.5">
+                    <Star size={13} className="fill-black shrink-0" />
+                    <span>{item.rating}</span>
+                    <span className="text-muted-foreground">({item.reviews})</span>
+                  </div>
+
+                  {/* Title */}
+                  <h3 className="mt-1 text-sm font-medium leading-snug line-clamp-2">
+                    {item.title.slice(0, 40)}...
+                  </h3>
+
+                  <p className="text-xs sm:text-sm mt-0.5 text-muted-foreground">
+                    By {item.seller}
+                  </p>
+
+                  {/* Progress */}
+                  <div className="mt-2">
+                    <div className="w-full bg-gray-200 h-2 rounded">
+                      <div className="bg-primary h-2 w-1/2 rounded" />
+                    </div>
+                    <p className="text-xs mt-1 text-muted-foreground">Sold: {item.sold}</p>
+                  </div>
+
+                  {/* Timer + Button */}
+                  <div className="flex overflow-hidden flex-col xs:flex-row sm:flex-col md:flex-row lg:flex-col xl:flex-row items-start gap-2 mt-2 flex-wrap">
+                    {/* Timer */}
+                    <div className="grid grid-cols-4 gap-1 text-[11px] sm:text-[12px] font-semibold shrink-0">
+                      {[
+                        { label: "Day", value: item.timer.days },
+                        { label: "Hrs", value: item.timer.hours },
+                        { label: "Min", value: item.timer.minutes },
+                        { label: "Sec", value: item.timer.seconds },
+                      ].map(({ label, value }) => (
+                        <span
+                          key={label}
+                          className="bg-primary/15 px-2 py-1 rounded-sm text-center whitespace-nowrap"
+                        >
+                          {String(value).padStart(2, "0")} {label}
+                        </span>
+                      ))}
+                    </div>
+
+                    {/* Add to Cart */}
+                    <Button
+                      size="sm"
+                      className="text-background text-xs sm:text-sm whitespace-nowrap w-full xs:w-auto"
+                    >
+                      Add To Cart
+                    </Button>
+                  </div>
+                </div>
               </div>
             </div>
-
-            {/* Timer */}
-            <div className="grid lg:w-[340px] md:w-[170px] w-[170px] grid-cols-2 lg:grid-cols-4 gap-2 py-2 px-2 text-[12px] text-foreground font-semibold">
-              <span className="bg-primary/15 px-3 py-1 rounded-sm">
-                {item.timer.days} Day
-              </span>
-              <span className="bg-primary/15 px-3 py-1 rounded-md">
-                {item.timer.hours} Hrs
-              </span>
-              <span className="bg-primary/15 px-3 py-1 rounded-md">
-                {item.timer.minutes} Min
-              </span>
-              <span className="bg-primary/15 px-3 py-1 rounded-md">
-                {item.timer.seconds} Sec
-              </span>
-            </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );
