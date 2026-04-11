@@ -2,7 +2,7 @@ import Image from "next/image";
 
 const products = [
   {
-    id: 1,
+    id: "67b7e1f1a91c12001a20000a",
     category: "Smart Entertainment",
     title: "Ultra HD TV",
     specs: ["4K Resolution", "HDR10+", "Smart OS"],
@@ -11,7 +11,7 @@ const products = [
     bgColor: "bg-[#7021FF]",
   },
   {
-    id: 2,
+    id: "67b7e1f1a91c12001a20000b",
     category: "Battery Life",
     title: "Truly Wireless",
     specs: ["4GB RAM", "64GB ROM", "20MP"],
@@ -23,16 +23,16 @@ const products = [
 
 export default function ProductShowcase() {
   return (
-    <div className="flex flex-row gap-8 p-10 justify-center bg-gray-100 min-h-screen">
+    <div className="flex flex-row gap-8 justify-center bg-background">
       {products?.map((product) => (
         <div
-          key={product.id}
-          className={`relative w-full max-w-[380px] h-[500px] overflow-hidden rounded-[40px] ${product.bgColor} shadow-2xl transition-all duration-300 hover:-translate-y-2`}
+          key={product?.id}
+          className={`relative w-full max-w-[380px] h-[450px] overflow-hidden rounded-sm ${product.bgColor} shadow-2xl transition-all duration-300 hover:-translate-y-2`}
         >
           <div className="absolute inset-0 flex items-end justify-center">
-            <div className="relative w-full h-[70%] transition-transform duration-500 hover:scale-110">
+            <div className="relative w-full h-[80%] transition-transform duration-500 hover:scale-110">
               <Image
-                src={product.image}
+                src={product?.image}
                 alt={product.title}
                 fill
                 className="object-contain object-bottom p-4"

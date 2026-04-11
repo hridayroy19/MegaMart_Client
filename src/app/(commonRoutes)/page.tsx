@@ -10,7 +10,7 @@ import { FlashSaleSliderMain } from "@/container/home_page/flashSaleSliderMain/f
 import { HotDealsToday } from "@/container/home_page/hotDealsToday/hotDealsToday";
 import NewsletterSection from "@/container/home_page/newsletterSection/newsletterSection";
 import ProductSection from "@/container/home_page/productCard/productSection";
-import SubBannerSlider from "@/container/home_page/subBannerSlider/subBannerSlider";
+import FeatureSection from "@/container/home_page/subBannerSlider/subBannerSlider";
 const Homepage = () => {
   return (
     <div className="max-content-width">
@@ -18,7 +18,7 @@ const Homepage = () => {
         <Banner />
       </section>
       <section className="section-padding-t section-padding-x">
-        <SubBannerSlider />
+        <FeatureSection />
       </section>
       <section className="section-padding-t section-padding-x">
         <FeatureCategory />
