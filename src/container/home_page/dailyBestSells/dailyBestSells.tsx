@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useGetSellProductQuery } from "@/redux/features/sellsProduct/sellProductApi";
 import PromoCard from "./promoCard";
 import { Button } from "@/components/ui/button";
-import cctv from "@/assets/images/homePage/hotDealsToday/ccTv.png";
+
 export default function DailyBestSells() {
   const { data = [], isLoading, isError, error } = useGetSellProductQuery();
 
@@ -138,7 +138,6 @@ export default function DailyBestSells() {
             discount="50% Discount"
             title="Best Shopping"
             subtitle="Iphone's"
-            imageSrc={cctv}
             bgColor="bg-primary"
           />
         </div>

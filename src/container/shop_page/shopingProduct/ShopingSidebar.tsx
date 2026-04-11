@@ -300,6 +300,7 @@ const ShopingSidebar: React.FC<ShopingSidebarProps> = ({
           }
           alt="Special Offer"
           className="w-full h-auto rounded-lg object-cover hover:opacity-95 transition-opacity cursor-pointer"
+          style={{ width: 'auto' }}
         />
       </div>
     </aside>
