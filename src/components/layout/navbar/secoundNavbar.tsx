@@ -72,7 +72,7 @@ const SecoundNavbar = () => {
                   `}
                 >
                   {item.name}
-                  {item.children && (
+                  {item && (
                     <ChevronDown className="w-3.5 h-3.5 opacity-50" />
                   )}
 
@@ -86,7 +86,7 @@ const SecoundNavbar = () => {
                 </a>
 
                 {/* Refined Dropdown */}
-                {item.children && (
+                {/* {item && (
                   <div className="absolute left-0 top-full mt-1 hidden group-hover:block bg-card border border-border rounded-xl shadow-xl z-50 min-w-[200px] overflow-hidden p-1">
                     {item.children.map((child) => (
                       <a
@@ -98,7 +98,7 @@ const SecoundNavbar = () => {
                       </a>
                     ))}
                   </div>
-                )}
+                )} */}
               </div>
             ))}
           </nav>

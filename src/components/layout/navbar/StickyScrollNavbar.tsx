@@ -74,13 +74,13 @@ const StickyScrollNavbar = () => {
                       }`}
                       >
                         {item.name}
-                        {item.children && <ChevronDown className="w-4 h-4" />}
+                        {item && <ChevronDown className="w-4 h-4" />}
                       </a>
 
                       {/* Hover Dropdown */}
-                      {item.children && (
+                      {/* {item && (
                         <div className="absolute left-0 top-full mt-2 hidden group-hover:block bg-card border border-border rounded-md shadow-lg z-50 min-w-[180px]">
-                          {item.children.map((child) => (
+                          {item.map((child) => (
                             <a
                               key={child.id}
                               href={child.link}
@@ -95,7 +95,7 @@ const StickyScrollNavbar = () => {
                             </a>
                           ))}
                         </div>
-                      )}
+                      )} */}
                     </div>
                   ))}
                 </nav>
