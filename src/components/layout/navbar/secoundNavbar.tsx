@@ -12,7 +12,6 @@ export const categoriesData = [
   { name: "Grocery", icon: "🛒" },
   { name: "Beauty", icon: "💄" },
   { name: "Wines & Drinks", icon: "🍷" },
-  { name: "Snacks", icon: "🍪" },
   { name: "Juice", icon: "🧃" },
   { name: "Fruits", icon: "🍎" },
   { name: "Tea & Coffee", icon: "☕" },

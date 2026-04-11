@@ -1,167 +1,305 @@
 "use client";
 
-import {
-  ChevronLeft,
-  ChevronRight,
-  ChevronsDownIcon,
-  ShoppingCart,
-} from "lucide-react";
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import ProductCard from "./bannerCard";
 
-const Banner = () => {
-  const [currentSlide, setCurrentSlide] = useState(0);
+interface Product {
+  id: number;
+  title: string;
+  subtitle: string;
+  price: string;
+  description: string;
+  image: string;
+  cta: string;
+  bgColor: string;
+  textColor: string;
+}
 
-  const slides = [
-    {
-      id: 1,
-      image:
-        "https://marketpro.theme.picode.in/assets/images/thumbs/banner-two-img.png",
-      subTitle: "Save Up To 50% Off On Your First Order",
-      title: "Daily Grocery Order and Get",
-      highlightText: "Express",
-      titleEnd: "Delivery",
-      price: "60.99",
-      bgHighlight: "#0E88B9",
-    },
-    {
-      id: 2,
-      image:
-        "https://marketpro.theme.picode.in/assets/images/thumbs/banner-two-img.png",
-      subTitle: "Fresh & Organic Food For Your Health",
-      title: "Daily Grocery Order and Get",
-      highlightText: "Express",
-      titleEnd: "Delivery",
-      price: "45.00",
-      bgHighlight: "#2BBF6D",
-    },
-  ];
+const PRODUCTS: Product[] = [
+  {
+    id: 1,
+    title: "Apple Kit's iPad Pro Max",
+    subtitle: "Flat Online Deal",
+    price: "$225.00",
+    description: "Most powerful iPad ever",
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-1xvPm72mC2W937wpq30Z7ejsGH5ddv.png",
+    cta: "Shop Now",
+    bgColor: "from-gray-100 to-gray-200",
+    textColor: "text-gray-900",
+  },
+  {
+    id: 2,
+    title: "Truly Wireless",
+    subtitle: "Battery Life",
+    price: "Premium Sound",
+    description: "4GB RAM | 64GB ROM | 20MP",
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-1xvPm72mC2W937wpq30Z7ejsGH5ddv.png",
+    cta: "Explore",
+    bgColor: "from-yellow-300 to-yellow-400",
+    textColor: "text-gray-900",
+  },
+  {
+    id: 3,
+    title: "For 4K Ultra Smart HD TV's",
+    subtitle: "Crystal Clear Display",
+    price: "Safe & Enjoy Life !!",
+    description: "Experience immersive entertainment",
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-1xvPm72mC2W937wpq30Z7ejsGH5ddv.png",
+    cta: "Discover",
+    bgColor: "from-purple-600 to-purple-700",
+    textColor: "text-white",
+  },
+  {
+    id: 4,
+    title: "Premium Headphones",
+    subtitle: "Noise Cancellation",
+    price: "$399.00",
+    description: "Studio-grade audio quality",
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-1xvPm72mC2W937wpq30Z7ejsGH5ddv.png",
+    cta: "Shop Now",
+    bgColor: "from-blue-500 to-blue-600",
+    textColor: "text-white",
+  },
+  {
+    id: 5,
+    title: "Smart Watch Pro",
+    subtitle: "Health Monitoring",
+    price: "$299.00",
+    description: "Track your fitness journey",
+    image:
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-1xvPm72mC2W937wpq30Z7ejsGH5ddv.png",
+    cta: "Learn More",
+    bgColor: "from-green-500 to-green-600",
+    textColor: "text-white",
+  },
+];
 
-  const nextSlide = () => {
-    setCurrentSlide((prev) => (prev === slides.length - 1 ? 0 : prev + 1));
-  };
+export default function Banner() {
+  const products = PRODUCTS;
+  const [current, setCurrent] = useState(0);
+  const [direction, setDirection] = useState(0);
 
-  const prevSlide = () => {
-    setCurrentSlide((prev) => (prev === 0 ? slides.length - 1 : prev - 1));
-  };
-
+  // Auto-slide every 5 seconds
   useEffect(() => {
-    const interval = setInterval(() => nextSlide(), 5000);
+    const interval = setInterval(() => {
+      setCurrent((prev) => (prev + 1) % products.length);
+      setDirection(1);
+    }, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [products.length]);
 
-  const slide = slides[currentSlide];
+  const slideVariants = {
+    enter: (dir: number) => ({
+      x: dir > 0 ? 1000 : -1000,
+      opacity: 0,
+    }),
+    center: {
+      zIndex: 1,
+      x: 0,
+      opacity: 1,
+    },
+    exit: (dir: number) => ({
+      zIndex: 0,
+      x: dir < 0 ? 1000 : -1000,
+      opacity: 0,
+    }),
+  };
+
+  const imageVariants = {
+    enter: {
+      x: 100,
+      opacity: 0,
+    },
+    center: {
+      x: 0,
+      opacity: 1,
+    },
+    exit: {
+      x: -100,
+      opacity: 0,
+    },
+  };
+
+  const textVariants = {
+    enter: {
+      y: 50,
+      opacity: 0,
+    },
+    center: (i: number) => ({
+      y: 0,
+      opacity: 1,
+      transition: {
+        delay: i * 0.1,
+        duration: 0.5,
+      },
+    }),
+    exit: {
+      y: -50,
+      opacity: 0,
+    },
+  };
+
+  const handlePrevious = () => {
+    setDirection(-1);
+    setCurrent((prev) => (prev - 1 + products.length) % products.length);
+  };
+
+  const handleNext = () => {
+    setDirection(1);
+    setCurrent((prev) => (prev + 1) % products.length);
+  };
+
+  const product = products[current];
+  const gradientClass = product.bgColor;
 
   return (
-    <div className="relative  w-full bg-primary/10 overflow-hidden font-sans">
-      {/* Main Container — automatic height on mobile, fixed on desktop */}
-      <div className="relative z-10 flex items-center min-h-[580px] md:h-[500px] lg:h-[550px] pt-10 md:pt-0">
-        <div
-          key={slide.id}
-          className="flex flex-col md:flex-row items-center justify-between w-full 
-          lg:px-6 md:px-5 px-7 xl:px-16 gap-12 md:gap-6 animate-in fade-in slide-in-from-right-4 duration-500"
-        >
-          {/* LEFT CONTENT */}
-          <div className="w-full md:w-1/2 space-y-4 text-left md:pl-6">
-            {/* Subtitle */}
-            <h4 className="text-[#2BBF6D] font-medium text-lg tracking-wide">
-              {slide.subTitle}
-            </h4>
+    <div className="flex items-center">
+      <div className="w-2xl  bg-gray-50 flex items-center justify-center px-4 sm:px-6 lg:px-8 overflow-hidden">
+        <div className="w-full max-w-7xl">
+          {/* Main Carousel */}
+          <div className="relative w-full h-[70vh] sm:h-[60vh] lg:h-[500px] rounded-2xl overflow-hidden shadow-2xl">
+            <AnimatePresence initial={false} custom={direction} mode="wait">
+              <motion.div
+                key={current}
+                custom={direction}
+                variants={slideVariants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={{
+                  x: { type: "spring", stiffness: 300, damping: 30 },
+                  opacity: { duration: 0.5 },
+                }}
+                className={`absolute inset-0 bg-gradient-to-r ${gradientClass} flex items-center justify-between px-4 sm:px-8 lg:px-16 py-8`}
+              >
+                {/* Left Content */}
+                <div className="flex flex-col justify-center flex-1 space-y-3 sm:space-y-4">
+                  <motion.p
+                    custom={0}
+                    variants={textVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    className={`text-xs sm:text-sm font-medium ${product.textColor} opacity-75`}
+                  >
+                    {product.subtitle}
+                  </motion.p>
 
-            {/* Title */}
-            <h1 className="text-3xl md:text-4xl lg:text-[46px] xl:text-[50px] font-bold leading-tight">
-              {slide.title}{" "}
-              <span style={{ color: slide.bgHighlight }}>
-                {slide.highlightText}
-              </span>{" "}
-              {slide.titleEnd}
-            </h1>
+                  <motion.h1
+                    custom={1}
+                    variants={textVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    className={`text-2xl sm:text-4xl lg:text-5xl font-bold ${product.textColor} leading-tight break-words`}
+                  >
+                    {product.title}
+                  </motion.h1>
 
-            {/* CTA + Price */}
-            <div className="flex flex-row items-center justify-start gap-4 lg:gap-6 mt-6">
-              <button className="bg-[#1F7C90] hover:bg-[#186676] rounded-full flex items-center gap-2 py-3 px-5 text-background">
-                Explore Shop
-                <ShoppingCart
-                  size={20}
-                  className="group-hover:translate-x-1 transition-transform"
-                />
-              </button>
+                  <motion.p
+                    custom={2}
+                    variants={textVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    className={`text-lg sm:text-2xl font-semibold ${product.textColor}`}
+                  >
+                    only {product.price}
+                  </motion.p>
 
-              <div className="flex items-center gap-2 text-sm md:text-lg whitespace-nowrap">
-                <span className="text-gray-500 italic font-medium">
-                  Starting at
-                </span>
-                <span className="text-[#E94646]">${slide.price}</span>
-              </div>
-            </div>
+                  <motion.p
+                    custom={3}
+                    variants={textVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    className={`text-xs sm:text-sm ${product.textColor} opacity-80`}
+                  >
+                    {product.description}
+                  </motion.p>
+
+                  <motion.button
+                    custom={4}
+                    variants={textVariants}
+                    initial="enter"
+                    animate="center"
+                    exit="exit"
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="mt-4 sm:mt-6 w-fit px-6 sm:px-8 py-2 sm:py-3 bg-yellow-400 hover:bg-yellow-500 text-gray-900 font-semibold rounded-full transition-colors duration-300 text-sm sm:text-base"
+                  >
+                    {product.cta}
+                  </motion.button>
+                </div>
+
+                {/* Right Image */}
+                <motion.div
+                  variants={imageVariants}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                  transition={{
+                    duration: 0.6,
+                    ease: "easeOut",
+                  }}
+                  className="flex-1 flex items-center justify-center"
+                >
+                  <img
+                    src={product.image}
+                    alt={product.title}
+                    className="w-2/3 h-auto max-h-96 object-contain drop-shadow-2xl"
+                  />
+                </motion.div>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Navigation Buttons */}
+            <button
+              onClick={handlePrevious}
+              className="absolute left-4 sm:left-8 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-gray-900 p-2 sm:p-3 rounded-full transition-all duration-300 shadow-lg"
+              aria-label="Previous slide"
+            >
+              <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" />
+            </button>
+
+            <button
+              onClick={handleNext}
+              className="absolute right-4 sm:right-8 top-1/2 -translate-y-1/2 z-10 bg-white/80 hover:bg-white text-gray-900 p-2 sm:p-3 rounded-full transition-all duration-300 shadow-lg"
+              aria-label="Next slide"
+            >
+              <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" />
+            </button>
           </div>
 
-          {/* RIGHT IMAGE (FULL RESPONSIVE) */}
-          <div className="w-full md:w-1/2 flex justify-center md:justify-end relative">
-            <div
-              className="
-                relative 
-                w-full 
-                max-w-[320px]
-                sm:max-w-[420px]
-                md:max-w-[480px]
-                lg:max-w-[420px]
-                xl:max-w-[550px]
-                aspect-square 
-                sm:aspect-[4/3]
-              "
-            >
-              <Image
-                src={slide.image}
-                alt="Banner Product"
-                fill
-                priority
-                className="object-contain drop-shadow-xl"
-                sizes="(max-width: 768px) 95vw, 50vw"
+          {/* Indicators */}
+          <div className="flex justify-center gap-2 mt-6 sm:mt-8">
+            {products.map((_, index) => (
+              <motion.button
+                key={index}
+                onClick={() => {
+                  setDirection(index > current ? 1 : -1);
+                  setCurrent(index);
+                }}
+                className={`transition-all duration-300 rounded-full ${
+                  index === current
+                    ? "bg-primary w-8 h-2"
+                    : "bg-gray-300 w-2 h-2 hover:bg-gray-400"
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
               />
-            </div>
+            ))}
           </div>
         </div>
       </div>
-
-      {/* Navigation Arrows */}
-      <button
-        onClick={prevSlide}
-        className="absolute left-4 top-1/2 -translate-y-1/2 
-        bg-white/80 hover:bg-[#1F7C90] hover:text-white text-gray-700 
-        p-3 rounded-full shadow-md transition-all hidden md:block 
-        border border-gray-100 z-20"
-      >
-        <ChevronLeft size={24} />
-      </button>
-
-      <button
-        onClick={nextSlide}
-        className="absolute right-4 top-1/2 -translate-y-1/2 
-        bg-white/80 hover:bg-[#1F7C90] hover:text-white text-gray-700 
-        p-3 rounded-full shadow-md transition-all hidden md:block 
-        border border-gray-100 z-20"
-      >
-        <ChevronRight size={24} />
-      </button>
-
-      {/* Bottom Curve + Arrow */}
-      <div className="absolute bottom-0 left-0 w-full z-20 pointer-events-none">
-        <svg
-          viewBox="0 0 1440 100"
-          className="w-full h-auto text-background fill-current"
-        >
-          <path d="M0,100 L0,60 C240,60 480,60 640,60 C680,60 680,100 720,100 C760,100 760,60 800,60 C960,60 1200,60 1440,60 L1440,100 Z" />
-        </svg>
-
-        <div className="absolute left-1/2 -translate-x-1/2 bottom-[20px] z-30 pointer-events-auto">
-          <button className="bg-[#1F7C90] text-white p-3 rounded-full hover:bg-[#186676] transition-colors border-4 border-white">
-            <ChevronsDownIcon className="animate-bounce" size={35} />
-          </button>
-        </div>
+      <div>
+        <ProductCard />
       </div>
     </div>
   );
-};
-
-export default Banner;
+}
