@@ -6,7 +6,6 @@ import { FeatureCategoryCard } from "./_featureCategoryCard";
 export const FeatureCategory = () => {
   const { data, isLoading, isError, error } = useGetFeatureCategoriesQuery();
 
-  console.log(" featureCategories data:", data);
   if (isError) {
     console.log(" featureCategories error:", error);
   }
@@ -36,7 +35,7 @@ export const FeatureCategory = () => {
       </div>
 
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        {data.map((item) => (
+        {data?.map((item) => (
           <FeatureCategoryCard key={item._id} item={item} />
         ))}
       </div>

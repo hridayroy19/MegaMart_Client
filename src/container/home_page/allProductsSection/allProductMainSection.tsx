@@ -7,6 +7,7 @@ import OnSaleProducts from "./onSaleProducts";
 
 const AllProductMainSection = () => {
   const { data, isLoading, isError, error } = useGetfeaturePrductsQuery();
+  console.log(data)
   if (isLoading)
     return <p className="py-6 text-sm text-muted-foreground">Loading...</p>;
 

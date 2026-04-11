@@ -5,11 +5,6 @@ export const menuData = [
     id: 2,
     name: "Shop",
     link: "/shop",
-    children: [
-      { id: 21, name: "All Products", link: "/shop/all" },
-      { id: 22, name: "New Arrivals", link: "/shop/new" },
-      { id: 23, name: "Best Sellers", link: "/shop/best" },
-    ],
   },
   { id: 4, name: "Vendor", link: "/vendor" },
   { id: 5, name: "Blog", link: "/blog" },

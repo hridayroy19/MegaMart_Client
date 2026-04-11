@@ -47,6 +47,7 @@ export default function Navbar() {
               alt="MegaMart Logo"
               className="object-contain"
               style={{ height: "auto" }}
+              loading="eager"
             />
           </motion.div>
 

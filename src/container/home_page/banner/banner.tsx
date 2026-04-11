@@ -125,6 +125,7 @@ export default function Banner() {
                   alt={product.title}
                   width={400}
                   height={300}
+                  loading="eager"
                   className="w-40 md:w-96 lg:w-[400px] object-contain drop-shadow-2xl"
                 />
               </div>

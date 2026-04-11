@@ -34,7 +34,8 @@ export default function ProductShowcase() {
               <Image
                 src={product?.image}
                 alt={product.title}
-                fill
+                width={300}
+                height={100}
                 className="object-contain object-bottom p-4"
                 priority
               />

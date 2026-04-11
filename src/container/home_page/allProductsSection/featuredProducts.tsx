@@ -35,7 +35,7 @@ export default function FeaturedProducts({
 
       <Swiper
         direction="horizontal"
-        slidesPerView={1} 
+        slidesPerView={1}
         loop={true}
         spaceBetween={20}
         autoplay={{

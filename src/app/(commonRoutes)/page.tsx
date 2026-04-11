@@ -7,6 +7,7 @@ import OfferSection from "@/container/home_page/fastOrderOffer/offerSection";
 import { FeatureCategory } from "@/container/home_page/featureCategory/featureCategory";
 import FlashSaleCounter from "@/container/home_page/flashSaleCounter/flashSaleCounter";
 import { FlashSaleSliderMain } from "@/container/home_page/flashSaleSliderMain/flashSaleSliderMain";
+import GallerySlider from "@/container/home_page/galerysidebar/gallerySlider";
 import { HotDealsToday } from "@/container/home_page/hotDealsToday/hotDealsToday";
 import NewsletterSection from "@/container/home_page/newsletterSection/newsletterSection";
 import ProductSection from "@/container/home_page/productCard/productSection";
@@ -51,8 +52,11 @@ const Homepage = () => {
       <section className="section-padding-t section-padding-x">
         <DailyBestSells />
       </section>
-      <section className="section-padding-t py-20 section-padding-x">
+      <section className="section-padding-t section-padding-x">
         <NewsletterSection />
+      </section>
+      <section className="section-padding-t py-20 section-padding-x">
+        <GallerySlider />
       </section>
     </div>
   );
