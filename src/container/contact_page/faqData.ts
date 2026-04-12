@@ -1,0 +1,98 @@
+
+export interface FAQItem {
+  id: number;
+  question: string;
+  answer: string;
+}
+
+export interface ShowroomData {
+  address: string;
+  phones: string[];
+}
+
+export interface QuickHelpData {
+  description: string;
+  emails: string[];
+}
+
+export interface SocialLink {
+  name: string;
+  href: string;
+}
+
+export const faqs: FAQItem[] = [
+  {
+    id: 1,
+    question: "How long/days will delivery take?",
+    answer:
+      "Venenatis duis tristique accumsan netus enim in posuere torquent ut ullamcorper integer aliquam a mi curse elementum. Maecenas iaculis viverra tellus ridiculus a sed vestibulum dapibus. Ante a mollis habitant duis uma cum iaculis ullamcorper luctus. Venenatis duis tristique accumsan netus enim in posuere torquent ut ullamcorper integer aliquam a mi curse elementum. Maecenas iaculis viverra tellus ridiculus a sed vestibulum dapibus.",
+  },
+  {
+    id: 2,
+    question: "What exactly happens after ordering?",
+    answer:
+      "Once your order is placed, you will receive a confirmation email with your order details. Our team processes orders within 1-2 business days before dispatching.",
+  },
+  {
+    id: 3,
+    question: "Do I receive an invoice for my order?",
+    answer:
+      "Yes, an invoice is automatically sent to your registered email address after each successful purchase.",
+  },
+  {
+    id: 4,
+    question: "Is refund possible?",
+    answer:
+      "Yes, we offer refunds within 30 days of purchase. Please contact our support team to initiate the process.",
+  },
+  {
+    id: 5,
+    question: "Tellus ridiclum eleifend ullamcorper?",
+    answer:
+      "Consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore et dolore magna aliqua ut enim ad minim veniam.",
+  },
+  {
+    id: 6,
+    question: "Delivery charges for orders from the Online Shop?",
+    answer:
+      "Standard delivery is free on orders over $50. For orders below that threshold, a flat rate of $5.99 applies.",
+  },
+  {
+    id: 7,
+    question: "What is 'package tracking' in my orders?",
+    answer:
+      "Package tracking allows you to monitor the real-time status and location of your shipment via a tracking number sent to your email.",
+  },
+  {
+    id: 8,
+    question: "Can I change or cancel my order?",
+    answer:
+      "Orders can be modified or cancelled within 2 hours of placement. After that, the order enters processing and changes may not be possible.",
+  },
+  {
+    id: 9,
+    question: "Can I change or cancel my order?",
+    answer:
+      "Please contact our support team as soon as possible if you need to make changes. We will do our best to accommodate your request.",
+  },
+];
+
+export const showroom: ShowroomData = {
+  address: "551 Water Color Green Ball St, New York, NY 2041, USA",
+  phones: ["+09000 000 34 35", "+09000 000 34 36"],
+};
+
+export const quickHelp: QuickHelpData = {
+  description: "You can ask anything you want to know about our products",
+  emails: ["help@themec.om", "refund@themec.om"],
+};
+
+export const socialLinks: SocialLink[] = [
+  { name: "Instagram", href: "#" },
+  { name: "Pinterest", href: "#" },
+  { name: "Twitter", href: "#" },
+  { name: "Whatsapp", href: "#" },
+];
+
+export const alertMessage =
+  "Venenatis duis tristique accumsan netus enim in posuere torquent ut ullamcorper integer aliquam a mi curse elementum. Maecenas iaculis viverra tellus ridiculus a sed vestibulum dapibus.";
