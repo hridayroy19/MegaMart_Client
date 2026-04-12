@@ -1,12 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { Star } from "lucide-react";
+import { Star, ChevronRight } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 import { IFeatureProduct } from "@/types";
 
-interface FeaturedProductsProps {
+interface TopSellingProduct {
   title: string;
   products: IFeatureProduct[];
 }
@@ -22,75 +22,98 @@ const chunkArray = <T,>(arr: T[], chunkSize: number): T[][] => {
 export default function TopSellingProduct({
   title,
   products,
-}: FeaturedProductsProps) {
+}: TopSellingProduct) {
   const slides = chunkArray(products, 4);
 
   return (
-    <div className="w-full hover:border-primary p-4 bg-card border border-border rounded-xl shadow-sm">
-      <div className="w-full mb-6 bg-primary/13 px-4 py-2 rounded-lg inline-block">
-        <h2  className="md:text-2xl text-xl">{title}</h2>
-        {/* underline bar */}
-        <div className="bg-primary h-0.5 w-[150px] mt-2 rounded"></div>
+    <div className="w-full bg-card border border-border rounded-2xl shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md hover:border-primary/30">
+      {/* Header Section */}
+      <div className="p-5 border-b border-border/50 flex justify-between items-center">
+        <div className="relative">
+          <h2 className="text-xl font-bold tracking-tight text-foreground">
+            {title}
+          </h2>
+          <div className="absolute -bottom-1 left-0 h-1 w-12 bg-primary rounded-full"></div>
+        </div>
+        <button className="text-muted-foreground hover:text-primary transition-colors">
+          <ChevronRight size={20} />
+        </button>
       </div>
 
-      <Swiper
-        direction="horizontal"
-        slidesPerView={1}
-        loop={slides.length > 1}
-        spaceBetween={20}
-        autoplay={{
-          delay: 2500,
-          disableOnInteraction: false,
-        }}
-        speed={1200}
-        modules={[Autoplay]}
-      >
-        {slides.map((group, index) => (
-          <SwiperSlide key={index}>
-            {/* 4 cards in a vertical column */}
-            <div className=" w-full flex flex-col p-2 gap-12">
-              {group.map((item) => (
-                <div
-                  key={item._id}
-                  className="flex items-center gap-3  hover:shadow-md transition"
-                >
-                  <Image
-                    src={item.image}
-                    alt="image"
-                    width={80}
-                    height={80}
-                    className="object-contain border w-[90px] border-border rounded-lg"
-                  />
-
-                  <div className="flex flex-col gap-1">
-                    <div className="flex items-center text-sm text-muted gap-1">
-                      <span>{item.rating}</span>
-                      <Star
-                        size={14}
-                        className="text-popover-foreground fill-popover-foreground"
+      <div className="p-4">
+        <Swiper
+          direction="horizontal"
+          slidesPerView={1}
+          loop={slides.length > 1}
+          spaceBetween={10}
+          autoplay={{
+            delay: 4000,
+            disableOnInteraction: false,
+          }}
+          speed={800}
+          modules={[Autoplay, Pagination]}
+          className="featured-swiper"
+        >
+          {slides.map((group, index) => (
+            <SwiperSlide key={index}>
+              <div className="flex flex-col gap-5">
+                {group.map((item) => (
+                  <div
+                    key={item._id}
+                    className="group flex items-center gap-4 p-2 rounded-xl transition-all duration-300 hover:bg-muted/50"
+                  >
+                    {/* Product Image */}
+                    <div className="relative flex-shrink-0 overflow-hidden rounded-lg border border-border bg-white w-[85px] h-[85px]">
+                      <Image
+                        src={item.image}
+                        alt={item.productName}
+                        fill
+                        className="object-contain p-2 transition-transform duration-500 group-hover:scale-110"
                       />
-                      <span>({item.reviews})</span>
                     </div>
 
-                    <h3 className="cursor-pointer hover:text-primary">
-                      {item.productName}
-                    </h3>
+                    {/* Product Info */}
+                    <div className="flex flex-col gap-0.5 flex-1 min-w-0">
+                      {/* Rating */}
+                      <div className="flex items-center gap-1.5">
+                        <div className="flex items-center">
+                          {[...Array(1)].map((_, i) => (
+                            <Star
+                              key={i}
+                              size={12}
+                              className="text-amber-400 fill-amber-400"
+                            />
+                          ))}
+                        </div>
+                        <span className="text-[11px] font-medium text-muted-foreground">
+                          {item.rating} ({item.reviews})
+                        </span>
+                      </div>
 
-                    <div className="flex items-center gap-2 text-md">
-                      <span className="font-semibold text-foreground">
-                        ${item.price}.00
-                      </span>
-                      <span className="line-through text-muted">
-                        ${item.oldPrice}.00
-                      </span>
+                      {/* Name */}
+                      <h3 className="text-[14px] font-semibold text-foreground truncate group-hover:text-primary transition-colors cursor-pointer">
+                        {item.productName}
+                      </h3>
+
+                      {/* Pricing */}
+                      <div className="flex items-center gap-2 mt-1">
+                        <span className="text-base font-bold text-primary">
+                          ${item.price.toFixed(2)}
+                        </span>
+                        {item.oldPrice && (
+                          <span className="text-xs text-muted-foreground line-through decoration-muted-foreground/50">
+                            ${item.oldPrice.toFixed(2)}
+                          </span>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
+                ))}
+              </div>
+            </SwiperSlide>
+          ))}
+        </Swiper>
+      </div>
     </div>
   );
 }
