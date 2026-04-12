@@ -5,7 +5,7 @@ import Subfooter from "./subfooter";
 export default function Footer() {
   return (
     <>
-      <footer className="bg-primary  text-background w-full pt-12 pb-6">
+      <footer className="bg-secondary text-background w-full pt-12 pb-6">
         <div className="flex flex-col px-4 max-content-width lg:flex-row gap-10 lg:gap-6 w-full">
           {/* Left Sections (80%) */}
           <div className="flex-1 grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -132,7 +132,6 @@ export default function Footer() {
           </div>
         </div>
       </footer>
-      {/* Bottom Bar */}
       <Subfooter />
     </>
   );

@@ -33,10 +33,10 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header className="w-full bg-card shadow-sm sticky top-0 z-[100]">
+    <header className="w-full bg-card shadow-sm sticky top-0 z-100">
       <Topbar />
 
-      <div className="max-w-[1440px] mx-auto px-4 lg:px-8 py-3 flex items-center justify-between bg-card relative">
+      <div className="max-w-[1440px] mx-auto px-4 lg:py-2 lg:px-4 flex items-center justify-between bg-card relative">
         {/* Logo Section */}
         <div className="flex items-center gap-8">
           <motion.div whileHover={{ scale: 1.02 }} className="cursor-pointer">
