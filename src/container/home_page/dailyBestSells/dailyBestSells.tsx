@@ -106,7 +106,7 @@ export default function DailyBestSells() {
     <div className="w-full">
       {/* Header */}
       <div className="flex items-center justify-between mb-4 sm:mb-6">
-        <h2 className="text-base sm:text-lg font-semibold">Daily Best Sells</h2>
+        <h2>Daily Best Sells</h2>
 
         <div className="flex gap-2">
           <button
