@@ -34,7 +34,7 @@ export const FeatureCategory = () => {
         <h2 className="heading-3  font-semibold">Featured Categories</h2>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
         {data?.map((item) => (
           <FeatureCategoryCard key={item._id} item={item} />
         ))}
