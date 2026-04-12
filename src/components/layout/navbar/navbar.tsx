@@ -39,17 +39,16 @@ export default function Navbar() {
       <div className="max-w-[1440px] mx-auto px-4 lg:py-2 lg:px-4 flex items-center justify-between bg-card relative">
         {/* Logo Section */}
         <div className="flex items-center gap-8">
-          <motion.div whileHover={{ scale: 1.02 }} className="cursor-pointer">
+          <div className="cursor-pointer ">
             <Image
               src={logo}
-              width={140}
-              height={50}
+              width={300}
+              height={100}
               alt="MegaMart Logo"
-              className="object-contain"
-              style={{ width: "auto", height: "auto" }}
+              className="object-contain w-[200px] h-[80px]"
               loading="eager"
             />
-          </motion.div>
+          </div>
 
           <div
             className="hidden md:flex lg:hidden items-center gap-2 bg-primary/5 hover:bg-primary/10 border border-primary/20 rounded-full px-4 py-2 transition-colors cursor-pointer"
@@ -215,7 +214,7 @@ function IconButton({ icon, badge, className, onClick }: IconButtonProps) {
     >
       {icon}
       {badge && (
-        <span className="absolute top-1 right-1 bg-secondary text-[10px] font-bold text-white w-4 h-4 rounded-full flex items-center justify-center shadow-sm">
+        <span className="absolute top-1 right-1 bg-secondary text-[10px] font-bold text-background w-4 h-4 rounded-full flex items-center justify-center shadow-sm">
           {badge}
         </span>
       )}

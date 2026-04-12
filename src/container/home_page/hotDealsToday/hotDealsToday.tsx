@@ -159,7 +159,7 @@ export const HotDealsToday = () => {
           grid-cols-1
           md:grid-cols-[360px_minmax(0,1fr)]
           lg:grid-cols-[400px_minmax(0,1fr)]
-          xl:grid-cols-[430px_minmax(0,1fr)]
+          xl:grid-cols-[350px_minmax(0,1fr)]
           items-stretch"
       >
         <HotDealsTodayCounterCard />
