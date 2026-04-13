@@ -4,7 +4,8 @@ import products from "./data.json";
 const ProductList = () => {
   return (
     <div className="max-w-6xl mx-auto section-padding-t">
-      <div className="hidden md:grid grid-cols-12 border-b border-border pb-4 mb-4 text-md">
+      <h3 className="mb-7">Home/Wishlist</h3>
+      <div className="hidden md:grid grid-cols-12 border-b border-border pb-4 mb-4 text-lg">
         <div className="col-span-6 pl-12">Product name</div>
         <div className="col-span-2">Price</div>
         <div className="col-span-2">Stock status</div>
@@ -19,10 +20,10 @@ const ProductList = () => {
           >
             {/* Product Info Section */}
             <div className="col-span-1 md:col-span-6 flex items-center gap-4">
-              <button className="text-gray-400 hover:text-error transition-colors">
-                <span className="text-xl">×</span>
+              <button className="text-card-foreground hover:border hovborder-border rounded-full px-2 cursor-pointer hover:text-error transition-colors">
+                <span className="text-2xl">×</span>
               </button>
-              <div className="w-20 h-20 flex-shrink-0 flex items-center justify-center">
+              <div className="w-20 h-20 shrink-0 flex items-center justify-center">
                 <Image
                   width={100}
                   height={100}
