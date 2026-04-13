@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Samsung Galaxy S23 Ultra, Factory Unlocked, 512GB",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img11.png",
+    "currentPrice": 699.99,
+    "originalPrice": 949.99,
+    "stock": 25
+  },
+  {
+    "id": 2,
+    "name": "Apple iPhone 15 Pro Max, 512GB, Unlocked",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img12.png",
+    "currentPrice": 1299.00,
+    "originalPrice": 1399.00,
+    "stock": 120
+  },
+  {
+    "id": 3,
+    "name": "Apple iPhone 14 Pro Max (256 GB) - White Titanium",
+    "image": "https://marketpro.theme.picode.in/assets/images/thumbs/product-two-img13.png",
+    "currentPrice": 519.00,
+    "originalPrice": 805.00,
+    "stock": 30
+  }
+]
