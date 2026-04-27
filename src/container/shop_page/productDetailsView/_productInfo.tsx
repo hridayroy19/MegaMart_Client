@@ -1,6 +1,6 @@
 "use client";
 
-import { IShopingProducts } from "@/types";
+import { IProduct } from "@/types";
 import {
   Heart,
   Minus,
@@ -11,25 +11,50 @@ import {
   Star,
 } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useGetWishlistQuery, useToggleWishlistMutation } from "@/redux/features/wishlist/wishlistApi";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 interface Props {
-  product: IShopingProducts;
+  product: IProduct;
 }
 
 const ProductInfo = ({ product }: Props) => {
   const {
     name,
     description,
-    price,
-    originalPrice,
+    pricing,
     rating,
     reviewsCount,
-    sold,
-    stock,
+    inventory,
   } = product;
 
+  const sold = inventory?.sold || 0;
+  const stock = inventory?.stock || 0;
   const soldPercentage = stock ? Math.min((sold / stock) * 100, 100) : 50;
-  const availableStock = stock - sold;
+  const availableStock = stock > sold ? stock - sold : 0;
+
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const { data: wishlistRes } = useGetWishlistQuery(undefined, {
+    skip: !isAuthenticated,
+  });
+  const [toggleWishlist] = useToggleWishlistMutation();
+
+  const isWishlisted =
+    isAuthenticated &&
+    (wishlistRes as IProduct[])?.some((p: IProduct) => p._id === product._id);
+
+  const handleToggleWishlist = async () => {
+    if (!isAuthenticated) {
+      alert("Please login to add to wishlist");
+      return;
+    }
+    try {
+      await toggleWishlist(product._id).unwrap();
+    } catch (err) {
+      console.error("Failed to toggle wishlist", err);
+    }
+  };
 
   //  State for Quantity 
   const [quantity, setQuantity] = useState(1);
@@ -123,10 +148,10 @@ const ProductInfo = ({ product }: Props) => {
       {/* Price & WhatsApp Button */}
       <div className="flex items-center justify-between border-b border-gray-300 pb-6">
         <div className="flex items-center gap-3">
-          <span className="text-3xl font-bold text-slate-900">${price}</span>
-          {originalPrice && (
+          <span className="text-3xl font-bold text-slate-900">${pricing?.salePrice > 0 ? pricing.salePrice : pricing?.basePrice}</span>
+          {pricing?.discountPercentage > 0 && (
             <span className="text-lg line-through text-gray-400 font-medium">
-              ${originalPrice}
+              ${pricing.basePrice}
             </span>
           )}
         </div>
@@ -235,8 +260,15 @@ const ProductInfo = ({ product }: Props) => {
 
         {/* Action Buttons  */}
         <div className="flex gap-2 pt-2">
-          <button className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 text-xs font-semibold text-slate-600 uppercase tracking-wider">
-            <Heart size={16} /> Wishlist
+          <button 
+            onClick={handleToggleWishlist}
+            className={`flex items-center gap-2 px-4 py-2 border rounded-lg text-xs font-semibold uppercase tracking-wider transition-colors ${
+              isWishlisted
+                ? "border-error text-error bg-error/10 hover:bg-error/20"
+                : "border-gray-200 text-slate-600 hover:bg-gray-50"
+            }`}
+          >
+            <Heart size={16} className={isWishlisted ? "fill-error" : ""} /> {isWishlisted ? "Wishlisted" : "Wishlist"}
           </button>
           <button className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 text-xs font-semibold text-slate-600 uppercase tracking-wider">
             <Repeat2 size={16} /> Compare

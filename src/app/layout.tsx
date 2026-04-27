@@ -4,7 +4,6 @@ import { Quicksand } from "next/font/google";
 import "./globals.css";
 
 import { ThemeProvider } from "@/hooks/useDarkLightTheme";
-import MswProvider from "@/providers/MswProvider";
 import ReduxProvider from "@/providers/ReduxProvider";
 
 const quicksand = Quicksand({
@@ -29,9 +28,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${quicksand.className} antialiased`}>
         <ReduxProvider>
-          <MswProvider>
-            <ThemeProvider>{children}</ThemeProvider>
-          </MswProvider>
+          <ThemeProvider>{children}</ThemeProvider>
         </ReduxProvider>
       </body>
     </html>

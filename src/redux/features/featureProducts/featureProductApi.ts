@@ -1,15 +1,25 @@
 import { baseApi } from "@/redux/api/baseApi";
-import { IFeatureProduct } from "@/types";
+import { IProduct } from "@/types";
 
-export const featureProduct = baseApi.injectEndpoints({
-    endpoints: (builder) => ({
-        getfeaturePrducts: builder.query<IFeatureProduct[], void>({
-            query: () => "/featureProduct",
-            providesTags: ["featureProduct"],
-        }),
+export const featureProductApi = baseApi.injectEndpoints({
+  endpoints: (builder) => ({
+    getFeaturedProducts: builder.query<IProduct[], void>({
+      query: () => "/feature-product",
+      providesTags: ["featureProduct"],
     }),
+    getTopSellingProducts: builder.query<IProduct[], void>({
+      query: () => "/sell-products",
+      providesTags: ["sellProduct"],
+    }),
+    getOnSaleProducts: builder.query<IProduct[], void>({
+      query: () => "/on-sale-products",
+      providesTags: ["featureProduct"],
+    }),
+  }),
 });
 
 export const {
-    useGetfeaturePrductsQuery
-} = featureProduct;
+  useGetFeaturedProductsQuery,
+  useGetTopSellingProductsQuery,
+  useGetOnSaleProductsQuery,
+} = featureProductApi;

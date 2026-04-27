@@ -9,6 +9,7 @@ interface CardProps {
   title: string;
   subtitle: string;
   bgColor?: string;
+  image?: string;
 }
 
 const PromoCard = ({
@@ -16,6 +17,7 @@ const PromoCard = ({
   title,
   subtitle,
   bgColor = "bg-[#FF5A1F]",
+  image,
 }: CardProps) => {
   return (
     <motion.div
@@ -33,7 +35,7 @@ const PromoCard = ({
       <div className="absolute bottom-0 w-full flex justify-center">
         <div className="relative w-full aspect-square">
           <Image
-            src="https://res.cloudinary.com/dsb1inal0/image/upload/v1775918913/images__3_-removebg-preview_rrizzn.png"
+            src={image || "https://res.cloudinary.com/dsb1inal0/image/upload/v1775918913/images__3_-removebg-preview_rrizzn.png"}
             alt={title}
             fill
             sizes="(max-width: 768px) 100vw, 250px"

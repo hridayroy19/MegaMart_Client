@@ -3,15 +3,37 @@
 import { IProduct } from "@/types";
 import { Heart, ShoppingCart, Star, Store } from "lucide-react";
 import Image from "next/image";
-import { useState } from "react";
+import { useGetWishlistQuery, useToggleWishlistMutation } from "@/redux/features/wishlist/wishlistApi";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
 
 export function ProductCard({ product }: { product: IProduct }) {
-  const [isWishlisted, setIsWishlisted] = useState(false);
+  const { isAuthenticated } = useSelector((state: RootState) => state.auth);
+  const { data: wishlistRes } = useGetWishlistQuery(undefined, {
+    skip: !isAuthenticated,
+  });
+  const [toggleWishlist] = useToggleWishlistMutation();
+
+  const isWishlisted =
+    isAuthenticated &&
+    (wishlistRes as IProduct[])?.some((p: IProduct) => p._id === product._id);
+
+  const handleToggleWishlist = async () => {
+    if (!isAuthenticated) {
+      alert("Please login to add to wishlist");
+      return;
+    }
+    try {
+      await toggleWishlist(product._id).unwrap();
+    } catch (err) {
+      console.error("Failed to toggle wishlist", err);
+    }
+  };
 
   return (
     <div className="group flex flex-col justify-between border rounded-2xl border-border bg-card md:p-4 p-1 hover:shadow-lg hover:border-primary transition-all min-h-[480px] relative">
       <button
-        onClick={() => setIsWishlisted(!isWishlisted)}
+        onClick={handleToggleWishlist}
         className="absolute right-3 top-3 opacity-0 group-hover:opacity-100 transition-opacity z-10 p-2 border border-border hover:border-primary rounded-full shadow-sm"
       >
         <Heart
@@ -25,15 +47,15 @@ export function ProductCard({ product }: { product: IProduct }) {
       </button>
 
       {/* Badge */}
-      {product.badge.text && (
+      {product.tag && (
         <span
           className={`inline-block w-fit text-sm font-semibold px-3 py-1 rounded-full mb-2 ${
-            product.badge.color === "red"
+            product.tag === "hot-deals"
               ? "bg-error text-accent-foreground"
               : "bg-primary text-accent-foreground"
           }`}
         >
-          {product.badge.text}
+          {product.tag}
         </span>
       )}
 
@@ -42,7 +64,7 @@ export function ProductCard({ product }: { product: IProduct }) {
         <Image
           width={100}
           height={100}
-          src={product.image}
+          src={product.thumbnail}
           alt={product.name}
           className="h-52 w-38 object-contain transition-transform duration-500 group-hover:scale-120"
         />
@@ -62,10 +84,10 @@ export function ProductCard({ product }: { product: IProduct }) {
       {/* Price */}
       <div className="mb-3 flex items-center gap-2">
         <span className="text-lg font-bold text-foreground">
-          ${product.price.toFixed(2)}
+          ${product.pricing.salePrice.toFixed(2)}
         </span>
         <span className="text-sm line-through text-muted">
-          ${product.originalPrice.toFixed(2)}
+          ${product.pricing.basePrice.toFixed(2)}
         </span>
       </div>
 
@@ -76,7 +98,7 @@ export function ProductCard({ product }: { product: IProduct }) {
           className="text-popover-foreground fill-popover-foreground"
         />
         <span className="text-sm font-medium text-muted">{product.rating}</span>
-        <span className="text-xs text-muted">({product.reviews}k)</span>
+        <span className="text-xs text-muted">({product.reviewsCount})</span>
       </div>
 
       {/* Add To Cart */}

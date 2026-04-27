@@ -8,6 +8,8 @@ interface ShopingTopBarProps {
     toggleSidebar: () => void;
     sortBy: string;
     setSortBy: (sort: string) => void;
+    startIndex?: number;
+    endIndex?: number;
 }
 
 const ShopingTopBar: React.FC<ShopingTopBarProps> = ({
@@ -16,7 +18,9 @@ const ShopingTopBar: React.FC<ShopingTopBarProps> = ({
     setViewMode,
     toggleSidebar,
     sortBy,
-    setSortBy
+    setSortBy,
+    startIndex = 0,
+    endIndex = 0
 }) => {
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
     const sortOptions = ["Popular", "Latest", "Trending", "Matches"];
@@ -30,7 +34,7 @@ const ShopingTopBar: React.FC<ShopingTopBarProps> = ({
         <div className="flex flex-col sm:flex-row justify-between items-center bg-white p-4 rounded-lg mb-6 border border-gray-100 gap-4 sm:gap-0 relative z-20">
             {/* Left Side */}
             <p className="text-gray-600 text-sm w-full sm:w-auto text-center sm:text-left">
-                Showing 1-18 of {totalResults} result
+                Showing {totalResults > 0 ? startIndex + 1 : 0}-{endIndex} of {totalResults} result(s)
             </p>
 
             {/* Right Side*/}

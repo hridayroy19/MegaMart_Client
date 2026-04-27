@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import advertise from "@/assets/images/shopingPage/advertise-img1.png";
 import { Star, X } from "lucide-react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styles from "./shoping.module.css";
 import Image from "next/image";
 
@@ -23,6 +23,8 @@ interface ShopingSidebarProps {
   categories: CategoryData[];
   selectedCategory: string | null;
   setSelectedCategory: (category: string | null) => void;
+  brandsList: { name: string; count: number }[];
+  onClearFilters: () => void;
 
   isMobile?: boolean;
   onClose?: () => void;
@@ -40,11 +42,17 @@ const ShopingSidebar: React.FC<ShopingSidebarProps> = ({
   categories,
   selectedCategory,
   setSelectedCategory,
+  brandsList,
+  onClearFilters,
   isMobile = false,
   onClose,
 }) => {
   // Local State for Price Slider
-  const [localMaxPrice, setLocalMaxPrice] = useState(2000);
+  const [localMaxPrice, setLocalMaxPrice] = useState(priceRange[1] || 2000);
+
+  useEffect(() => {
+    setLocalMaxPrice(priceRange[1]);
+  }, [priceRange]);
 
   const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setLocalMaxPrice(Number(e.target.value));
@@ -100,7 +108,6 @@ const ShopingSidebar: React.FC<ShopingSidebarProps> = ({
     { name: "White", color: "#FFFFFF", count: 12 },
     { name: "Purple", color: "#A855F7", count: 12 },
   ];
-  const brands = ["Apple", "Samsung", "Microsoft", "HP", "DELL", "Redmi"];
 
   return (
     <aside
@@ -110,15 +117,23 @@ const ShopingSidebar: React.FC<ShopingSidebarProps> = ({
       <div>
         <div className="flex justify-between items-center border-b border-zinc-300 pb-4 mb-4 ">
           <h3 className=" text-foreground">Product Category</h3>
-          {/* Close Button for Mobile */}
-          {isMobile && (
+          <div className="flex items-center gap-2">
             <button
-              onClick={onClose}
-              className="p-1 hover:bg-gray-100 rounded-full text-gray-500 transition-colors"
+              onClick={onClearFilters}
+              className="text-xs text-blue-600 hover:text-blue-800 underline transition-colors"
             >
-              <X size={24} />
+              Clear Filters
             </button>
-          )}
+            {/* Close Button for Mobile */}
+            {isMobile && (
+              <button
+                onClick={onClose}
+                className="p-1 hover:bg-gray-100 rounded-full text-gray-500 transition-colors"
+              >
+                <X size={24} />
+              </button>
+            )}
+          </div>
         </div>
 
         <ul
@@ -233,33 +248,29 @@ const ShopingSidebar: React.FC<ShopingSidebarProps> = ({
       {/* Filter by Color */}
       <div>
         <h3 className=" font-bold  mb-4">Filter by Color</h3>
-        <ul className="space-y-3">
-          {colors.map((item, idx) => {
-            const isActive = selectedColors.includes(item.name);
-            return (
-              <li
-                key={idx}
-                onClick={() => toggleColor(item.name)}
-                className="flex items-center gap-3 cursor-pointer group"
-              >
-                <div
-                  className={`w-5 h-5 rounded-full border flex-shrink-0 transition-all 
-                                    ${isActive ? "ring-2 ring-blue-300 border-blue-500" : "border-gray-200 group-hover:ring-2 group-hover:ring-blue-300"} 
-                                    ${item.name === "White" ? "bg-background" : ""}`}
-                  style={{
-                    backgroundColor:
-                      item.name !== "White" ? item.color : undefined,
-                  }}
-                ></div>
-                <span
-                  className={`text-sm transition-colors ${isActive ? "text-blue-600 font-medium" : "text-gray-600 group-hover:text-blue-600"}`}
-                >
-                  {item.name} <span className="text-muted">({item.count})</span>
-                </span>
-              </li>
-            );
-          })}
-        </ul>
+        <div className="relative">
+          <select
+            className="w-full border border-gray-300 rounded-md p-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 bg-white shadow-sm appearance-none cursor-pointer"
+            value={selectedColors[0] || ""}
+            onChange={(e) => {
+              if (e.target.value) {
+                setSelectedColors([e.target.value]);
+              } else {
+                setSelectedColors([]);
+              }
+            }}
+          >
+            <option value="">All Colors</option>
+            {colors.map((item, idx) => (
+              <option key={idx} value={item.name}>
+                {item.name} ({item.count})
+              </option>
+            ))}
+          </select>
+          <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-gray-500">
+            <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" fillRule="evenodd"></path></svg>
+          </div>
+        </div>
       </div>
 
       <hr className="border-slate-200" />
@@ -267,27 +278,29 @@ const ShopingSidebar: React.FC<ShopingSidebarProps> = ({
       {/* Filter by Brand */}
       <div>
         <h3 className=" font-bold  mb-4">Filter by Brand</h3>
-        <ul className="space-y-3">
-          {brands.map((brand, idx) => {
-            const isActive = selectedBrands.includes(brand);
-            return (
-              <li
-                key={idx}
-                onClick={() => toggleBrand(brand)}
-                className="flex items-center gap-3 cursor-pointer group"
-              >
-                <div
-                  className={`w-5 h-5 rounded-full border-2 flex-shrink-0 flex items-center justify-center transition-colors ${isActive ? "border-blue-600 bg-blue-600" : "border-gray-300 group-hover:border-blue-600"}`}
-                ></div>
-                <span
-                  className={`text-sm transition-colors ${isActive ? "text-blue-600 font-medium" : "text-gray-600 group-hover:text-blue-600"}`}
-                >
-                  {brand}
-                </span>
-              </li>
-            );
-          })}
-        </ul>
+        <div className="relative">
+          <select
+            className="w-full border border-gray-300 rounded-md p-2.5 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 bg-white shadow-sm appearance-none cursor-pointer"
+            value={selectedBrands[0] || ""}
+            onChange={(e) => {
+              if (e.target.value) {
+                setSelectedBrands([e.target.value]);
+              } else {
+                setSelectedBrands([]);
+              }
+            }}
+          >
+            <option value="">All Brands</option>
+            {brandsList.map((brandObj, idx) => (
+              <option key={idx} value={brandObj.name}>
+                {brandObj.name} ({brandObj.count})
+              </option>
+            ))}
+          </select>
+          <div className="absolute inset-y-0 right-0 flex items-center px-2 pointer-events-none text-gray-500">
+            <svg className="w-4 h-4 fill-current" viewBox="0 0 20 20"><path d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clipRule="evenodd" fillRule="evenodd"></path></svg>
+          </div>
+        </div>
       </div>
 
       <hr className="border-slate-200" />

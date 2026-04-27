@@ -1,31 +1,17 @@
 "use client";
 
+import { useGetOfferCardQuery } from "@/redux/features/offerCard/offerCardApi";
 import { ArrowRight } from "lucide-react";
 
-const offers = [
-  {
-    id: 1,
-    title: "Fresh Vegetables & Fruits",
-    deliveryTime: "Free Delivery",
-    expireDate: "Offer ends: 30 Apr 2025",
-    bgImage:
-      "https://res.cloudinary.com/dsb1inal0/image/upload/v1775926232/Cms-Banner-09_vxc2hj.jpg",
-    imagePosition: "left",
-    buttonColor: "bg-primary hover:bg-green-600",
-  },
-  {
-    id: 2,
-    title: "Snacks & Beverages Deal",
-    deliveryTime: "Same-Day Delivery",
-    expireDate: "Offer ends: 15 May 2025",
-    bgImage:
-      "https://res.cloudinary.com/dsb1inal0/image/upload/v1775926232/Cms-Banner-010_jubrfb.jpg",
-    imagePosition: "left",
-    buttonColor: "bg-primary hover:bg-green-600",
-  },
-];
-
 export default function OfferSection() {
+  const { data: offers = [], isLoading, isError } = useGetOfferCardQuery();
+
+  if (isLoading)
+    return (
+      <p className="py-6 text-sm text-muted-foreground">Loading offers...</p>
+    );
+  if (isError) return null;
+
   return (
     <section className="w-full">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -63,7 +49,8 @@ export default function OfferSection() {
               </div>
 
               <button
-                className={`${offer.buttonColor} text-background px-5 py-2 rounded-full font-semibold inline-flex items-center gap-2 hover:gap-3 transition-all duration-200 text-sm w-fit shadow-md`}
+                className={`text-background px-5 py-2 rounded-full font-semibold inline-flex items-center gap-2 hover:gap-3 transition-all duration-200 text-sm w-fit shadow-md`}
+                style={{ backgroundColor: offer.buttonColor }}
               >
                 Shop Now
                 <ArrowRight size={16} />

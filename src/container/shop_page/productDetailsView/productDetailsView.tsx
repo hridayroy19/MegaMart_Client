@@ -1,10 +1,10 @@
-import { IShopingProducts } from "@/types";
+import { IProduct } from "@/types";
 import ProductGallery from "./_productGallery";
 import ProductInfo from "./_productInfo";
 import ProductMetaInfo from "./_productMetaInfo";
 
 interface Props {
-  product: IShopingProducts;
+  product: IProduct;
 }
 
 const ProductDetailsView = ({ product }: Props) => {

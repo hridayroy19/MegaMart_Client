@@ -4,7 +4,7 @@ import { IOffer } from "@/types";
 export const offerCardApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getOfferCard: builder.query<IOffer[], void>({
-            query: () => "/offer",
+            query: () => "/offers",
             providesTags: ["offer"],
         }),
     }),

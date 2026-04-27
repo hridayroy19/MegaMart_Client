@@ -1,11 +1,11 @@
-import { IShopingProducts } from "@/types";
+import { IProduct } from "@/types";
 import { ShoppingCart, Star, Plus } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 interface ProductCardProps {
-  product: IShopingProducts;
+  product: IProduct;
   viewMode: "grid" | "list";
 }
 
@@ -18,13 +18,12 @@ const VanderProductCard: React.FC<ProductCardProps> = ({
     images,
     rating,
     reviewsCount,
-    price,
-    originalPrice,
-    isBestSale,
-    discountPercentage,
+    pricing,
+    isBestSeller,
+    thumbnail,
   } = product;
 
-  const mainImage = images?.[0];
+  const mainImage = images?.[0] || thumbnail;
 
   return (
     <Link href={`/shop/${product._id}`} className="block h-full">
@@ -62,13 +61,13 @@ const VanderProductCard: React.FC<ProductCardProps> = ({
             />
           )}
 
-          {discountPercentage && discountPercentage > 0 && (
+          {pricing?.discountPercentage && pricing.discountPercentage > 0 && (
             <span className="absolute top-3 left-2 bg-card text-primary text-xs font-bold px-2 py-3 rounded-full shadow-md">
-              -{discountPercentage}%
+              -{pricing.discountPercentage}%
             </span>
           )}
 
-          {isBestSale && (
+          {isBestSeller && (
             <span className="absolute top-11 mt-4 left-2 bg-background text-foreground text-xs font-bold px-2 py-3 border border-border rounded-full shadow-md">
               HOT
             </span>
@@ -111,13 +110,13 @@ const VanderProductCard: React.FC<ProductCardProps> = ({
           </div>
 
           <div className="flex items-baseline gap-2 mt-auto mb-4">
-            {originalPrice && originalPrice > price && (
+            {pricing?.basePrice && pricing.basePrice > (pricing?.salePrice || 0) && (
               <span className="text-muted line-through text-lg font-normal">
-                ${originalPrice.toFixed(2)}
+                ${pricing.basePrice.toFixed(2)}
               </span>
             )}
             <span className="text-foreground font-bold text-xl">
-              ${price.toFixed(2)}
+              ${(pricing?.salePrice > 0 ? pricing.salePrice : (pricing?.basePrice || 0)).toFixed(2)}
             </span>
             <span className="text-muted text-sm">/Qty</span>
           </div>

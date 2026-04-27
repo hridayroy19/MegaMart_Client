@@ -1,10 +1,10 @@
-import { IShopingProducts } from '@/types';
+import { IProduct } from '@/types';
 import { ShoppingCart, Star } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
 
 interface ProductCardProps {
-    product: IShopingProducts;
+    product: IProduct;
     viewMode: 'grid' | 'list';
 }
 
@@ -15,17 +15,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, viewMode }) => {
         images,
         rating,
         reviewsCount,
-        sold,
-        stock,
-        price,
-        originalPrice,
-        isBestSale,
-        discountPercentage,
-        description
+        inventory,
+        pricing,
+        isBestSeller,
+        flashSale,
+        description,
+        thumbnail
     } = product;
 
-    const soldPercentage = stock > 0 ? Math.min((sold / stock) * 100, 100) : 0;
-    const mainImage = images?.[0];
+    const soldPercentage = inventory?.stock > 0 ? Math.min((inventory.sold / inventory.stock) * 100, 100) : 0;
+    const mainImage = images?.[0] || thumbnail;
 
     return (
         <Link href={`/shop/${product._id}`} className="block h-full">
@@ -51,14 +50,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, viewMode }) => {
                     )}
 
                     {/* Badges */}
-                    {isBestSale && (
+                    {isBestSeller && (
                         <span className="absolute top-0 left-0 text-[11px] font-bold px-3 py-1 text-white bg-blue-500 rounded-tl-2xl rounded-br-[20px]">
                             Best Sale
                         </span>
                     )}
-                    {!isBestSale && discountPercentage > 0 && (
+                    {!isBestSeller && pricing?.discountPercentage > 0 && (
                         <span className="absolute top-0 left-0 text-[10px] font-bold px-3 py-1 rounded rounded-tl-2xl rounded-br-[20px] text-white bg-red-500">
-                            Sale {discountPercentage}%
+                            Sale {pricing.discountPercentage}%
                         </span>
                     )}
                 </div>
@@ -84,14 +83,17 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, viewMode }) => {
                                     style={{ width: `${soldPercentage}%` }}
                                 ></div>
                             </div>
-                            <p className="paragraph-sm">Sold: {sold}/{stock}</p>
+                            <p className="paragraph-sm">Sold: {inventory?.sold || 0}/{inventory?.stock || 0}</p>
                         </div>
                     </div>
 
                     {/* Price & Button Area */}
                     <div className={`${viewMode === 'list' ? 'mt-2' : 'mt-auto'}`}>
                         <div className="flex items-center gap-2">
-                            <span className="text-gray-900 font-bold text-lg">${price}</span>
+                            <span className="text-gray-900 font-bold text-lg">${pricing?.salePrice > 0 ? pricing.salePrice : pricing?.basePrice}</span>
+                            {pricing?.discountPercentage > 0 && (
+                                <span className="text-gray-400 text-xs line-through">${pricing.basePrice}</span>
+                            )}
                             <span className="text-gray-400 text-xs">/Qty</span>
                         </div>
 

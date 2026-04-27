@@ -4,7 +4,7 @@ import { ISellsProduct } from "@/types";
 export const sellProductApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
         getSellProduct: builder.query<ISellsProduct[], void>({
-            query: () => "/sellproduct",
+            query: () => "/sell-products",
             providesTags: ["sellProduct"],
         }),
     }),

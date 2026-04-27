@@ -10,6 +10,7 @@ import sellProductUIReducer from "./features/sellsProduct/sellProductSlice";
 import brandsUIReducer from "./features/brands/brandSlice";
 import BlogPostUIReducer from "./features/blogPost/blogPostSlice";
 import VendorProductUIReducer from "./features/vendorProduct/vendorProductSlice";
+import authReducer from "./features/auth/authSlice";
 
 
 export const store = configureStore({
@@ -24,7 +25,8 @@ export const store = configureStore({
         sellProductUI: sellProductUIReducer,
         bransUI: brandsUIReducer,
         blogPostUI: BlogPostUIReducer,
-        vendorProductUI: VendorProductUIReducer
+        vendorProductUI: VendorProductUIReducer,
+        auth: authReducer,
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat(

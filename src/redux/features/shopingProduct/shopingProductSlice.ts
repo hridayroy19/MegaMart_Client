@@ -1,8 +1,8 @@
-import { IShopingProducts } from "@/types";
+import { IProduct } from "@/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface ShopingProductUIState {
-    items: IShopingProducts[];
+    items: IProduct[];
 }
 
 const initialState: ShopingProductUIState = {
@@ -13,7 +13,7 @@ const shopingProductSlice = createSlice({
     name: "shopingProductUI",
     initialState,
     reducers: {
-        setShopingProducts: (state, action: PayloadAction<IShopingProducts[]>) => {
+        setShopingProducts: (state, action: PayloadAction<IProduct[]>) => {
             state.items = action.payload;
         },
     },

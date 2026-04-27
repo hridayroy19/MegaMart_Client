@@ -9,41 +9,17 @@ import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import "swiper/css";
 import "swiper/css/navigation";
 
-const galleryData = [
-  {
-    id: 1,
-    title: "How to Write a Blog Post Your Readers Will Love in 5 Steps",
-    image:
-      "https://res.cloudinary.com/dsb1inal0/image/upload/v1775923570/blog-01_uogkpt.jpg",
-  },
-  {
-    id: 2,
-    title: "9 Content Marketing Trends and Ideas to Increase Traffic",
-    image:
-      "https://res.cloudinary.com/dsb1inal0/image/upload/v1775923568/blog-05_adix1e.jpg",
-  },
-  {
-    id: 3,
-    title: "The Ultimate Guide to Marketing Strategies to Improve Sales",
-    image:
-      "https://res.cloudinary.com/dsb1inal0/image/upload/v1775923569/blog-03_cjpdz0.jpg",
-  },
-  {
-    id: 4,
-    title: "50 Best Sales Questions to Determine Your Customer's Needs",
-    image:
-      "https://res.cloudinary.com/dsb1inal0/image/upload/v1775923569/blog-04_1_gnoumz.jpg",
-  },
-  {
-    id: 5,
-    title: "Modern Workspace Inspiration",
-    image:
-      "https://res.cloudinary.com/dsb1inal0/image/upload/v1775923563/blog-06_w4zids.jpg",
-  },
-];
+import { useGetGalleryItemsQuery } from "@/redux/features/gallery/galleryApi";
 
 const GallerySlider = () => {
+  const { data: galleryData = [], isLoading } = useGetGalleryItemsQuery();
   const [modalImage, setModalImage] = useState<string | null>(null);
+
+  if (isLoading)
+    return (
+      <div className="p-4 w-full h-[250px] bg-muted animate-pulse rounded-lg"></div>
+    );
+  if (galleryData.length === 0) return null;
 
   return (
     <div className="w-full">
@@ -78,7 +54,7 @@ const GallerySlider = () => {
         }}
       >
         {galleryData.map((item) => (
-          <SwiperSlide key={item.id}>
+          <SwiperSlide key={item._id}>
             <div className="bg-background rounded-lg shadow-sm overflow-hidden cursor-pointer hover:shadow-md transition-shadow duration-200">
               {/* FIX 2: wrap in relative container; use fill + object-cover on Image */}
               <div

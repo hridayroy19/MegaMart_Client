@@ -4,7 +4,7 @@
 import { useMemo, useState } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import VenderSidebar from "./venderSidebar";
-import { IShopingProducts } from "@/types";
+import { IProduct } from "@/types";
 import { CategoryData } from "./venderSidebar";
 import VendarTopBar from "./venderTopBar";
 import VanderProductCard from "./vendarProductCard";
@@ -24,7 +24,7 @@ const VendorProductMain = ({ id }: any) => {
   const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
 
   const { data = [] } = useGetVendorProductsByKeyQuery(id);
-  const allProducts: IShopingProducts[] = data;
+  const allProducts: any[] = data;
 
   /* ---------------- Categories ---------------- */
   const categories: CategoryData[] = useMemo(() => {
@@ -52,13 +52,35 @@ const VendorProductMain = ({ id }: any) => {
     });
 
     if (sortBy === "Price: Low to High") {
-      products.sort((a, b) => a.price - b.price);
+      products.sort((a, b) => {
+        const aPrice =
+          a.pricing?.salePrice > 0
+            ? a.pricing.salePrice
+            : a.pricing?.basePrice || 0;
+        const bPrice =
+          b.pricing?.salePrice > 0
+            ? b.pricing.salePrice
+            : b.pricing?.basePrice || 0;
+        return aPrice - bPrice;
+      });
     } else if (sortBy === "Price: High to Low") {
-      products.sort((a, b) => b.price - a.price);
+      products.sort((a, b) => {
+        const aPrice =
+          a.pricing?.salePrice > 0
+            ? a.pricing.salePrice
+            : a.pricing?.basePrice || 0;
+        const bPrice =
+          b.pricing?.salePrice > 0
+            ? b.pricing.salePrice
+            : b.pricing?.basePrice || 0;
+        return bPrice - aPrice;
+      });
     } else if (sortBy === "Trending") {
-      products.sort((a, b) => b.sold - a.sold);
+      products.sort(
+        (a, b) => (b.inventory?.sold || 0) - (a.inventory?.sold || 0),
+      );
     } else {
-      products.sort((a, b) => b.reviewsCount - a.reviewsCount);
+      products.sort((a, b) => (b.reviewsCount || 0) - (a.reviewsCount || 0));
     }
 
     return products;
@@ -69,7 +91,7 @@ const VendorProductMain = ({ id }: any) => {
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const currentProducts = processedProducts.slice(
     startIndex,
-    startIndex + ITEMS_PER_PAGE
+    startIndex + ITEMS_PER_PAGE,
   );
 
   const handlePageChange = (page: number) => {
@@ -177,7 +199,7 @@ const VendorProductMain = ({ id }: any) => {
                     >
                       {page < 10 ? `0${page}` : page}
                     </button>
-                  )
+                  ),
                 )}
 
                 <button

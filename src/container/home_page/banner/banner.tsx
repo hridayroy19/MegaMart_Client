@@ -5,71 +5,24 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import ProductCard from "./bannerCard";
 import Image from "next/image";
-
-interface Product {
-  id: number;
-  title: string;
-  subtitle: string;
-  price: string;
-  description: string;
-  image: string;
-  cta: string;
-  bgColor: string;
-  textColor: string;
-}
-
-const PRODUCTS: Product[] = [
-  {
-    id: 1,
-    title: "Apple Kit's iPad Pro Max",
-    subtitle: "Flat Online Deal",
-    price: "$225.00",
-    description: "Most powerful iPad ever",
-    image:
-      "https://res.cloudinary.com/dh5fzsfzb/image/upload/v1775891503/Apple-Ipad-Pro-PNG-758x473-removebg-preview_ecuj9i.png",
-    cta: "Shop Now",
-    bgColor: "from-gray-100 to-gray-200",
-    textColor: "text-gray-900",
-  },
-  {
-    id: 2,
-    title: "Truly Wireless",
-    subtitle: "Battery Life",
-    price: "Premium Sound",
-    description: "4GB RAM | 64GB ROM | 20MP",
-    image:
-      "https://res.cloudinary.com/dh5fzsfzb/image/upload/v1775891508/pngtree-white-premium-true-wireless-earbuds-png-image_16021425-removebg-preview_aj1f0b.png",
-    cta: "Explore",
-    bgColor: "from-gray-100 to-gray-200",
-    textColor: "text-gray-900",
-  },
-  {
-    id: 3,
-    title: "For 4K Ultra Smart HD TV's",
-    subtitle: "Crystal Clear Display",
-    price: "Safe & Enjoy Life !!",
-    description: "Experience immersive entertainment",
-    image:
-      "https://res.cloudinary.com/dh5fzsfzb/image/upload/v1775891512/images__2_-removebg-preview_ws30ys.png",
-    cta: "Discover",
-    bgColor: "from-gray-100 to-gray-200",
-    textColor: "text-gray-900",
-  },
-];
+import products from "@/utils/helpers/bannerMain.json";
 
 export default function Banner() {
-  const products = PRODUCTS;
   const [current, setCurrent] = useState(0);
   const [direction, setDirection] = useState(0);
 
   useEffect(() => {
+    if (!products.length) return;
+
     const interval = setInterval(() => {
       setCurrent((prev) => (prev + 1) % products.length);
       setDirection(1);
     }, 5000);
 
     return () => clearInterval(interval);
-  }, [products.length]);
+  }, []);
+
+  if (!products || products.length === 0) return null;
 
   const product = products[current];
 
@@ -84,44 +37,45 @@ export default function Banner() {
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: direction > 0 ? -300 : 300 }}
               transition={{ duration: 0.6 }}
-              className={`absolute inset-0 bg-gradient-to-r ${product.bgColor} 
-                flex flex-col-reverse md:flex-row items-center justify-between p-4 sm:p-6 lg:p-10`}
+              className={`absolute inset-0 bg-gradient-to-r flex flex-col-reverse md:flex-row items-center justify-between p-4 sm:p-6 lg:p-10`}
+              style={{
+                background: `linear-gradient(to right, ${product.bgColor}, #fff)`,
+              }}
             >
               {/* TEXT */}
               <div className="flex-1 space-y-2 sm:space-y-4 text-center md:text-left">
-                <p
-                  className={`text-xs sm:text-sm ${product.textColor} opacity-70`}
-                >
-                  {product.subtitle}
+                <p className={`text-xs sm:text-sm text-gray-900 opacity-70`}>
+                  {product.discount}
                 </p>
 
                 <h1
-                  className={`text-xl sm:text-3xl lg:text-5xl font-bold ${product.textColor}`}
+                  className={`text-xl sm:text-3xl lg:text-5xl font-bold text-gray-900`}
                 >
                   {product.title}
                 </h1>
 
                 <p
-                  className={`text-lg sm:text-2xl font-semibold ${product.textColor}`}
+                  className={`text-lg sm:text-2xl font-semibold text-gray-900`}
                 >
-                  {product.price}
+                  {product.deliveryTime}
                 </p>
 
-                <p
-                  className={`text-xs sm:text-sm ${product.textColor} opacity-80`}
-                >
+                <p className={`text-xs sm:text-sm text-gray-900 opacity-80`}>
                   {product.description}
                 </p>
 
-                <button className="mt-3 sm:mt-5 px-5 sm:px-8 py-2 sm:py-3 bg-yellow-400 rounded-full font-semibold hover:bg-yellow-500 transition">
-                  {product.cta}
+                <button
+                  className="mt-3 sm:mt-5 px-5 sm:px-8 py-2 sm:py-3 rounded-full font-semibold hover:bg-yellow-500 transition"
+                  style={{ backgroundColor: product.buttonColor || "#fbbf24" }}
+                >
+                  Shop Now
                 </button>
               </div>
 
               {/* IMAGE */}
               <div className="flex-1 flex justify-center items-center mt-6 md:mt-0">
                 <Image
-                  src={product.image}
+                  src={product.productImage}
                   alt={product.title}
                   width={400}
                   height={300}

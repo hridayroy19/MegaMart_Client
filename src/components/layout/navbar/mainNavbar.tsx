@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useEffect, useState } from "react";
@@ -5,9 +6,20 @@ import Navbar from "./navbar";
 import StickyScrollNavbar from "./StickyScrollNavbar";
 import { motion, AnimatePresence } from "framer-motion";
 import BottomNav from "./bottomNav";
+import { useGetMeQuery } from "@/redux/features/auth/authApi";
+import { useDispatch } from "react-redux";
+import { setUser } from "@/redux/features/auth/authSlice";
 
 const MainNavbar = () => {
   const [scrollY, setScrollY] = useState(0);
+  const dispatch = useDispatch();
+  const { data: userData, isSuccess } = useGetMeQuery({});
+
+  useEffect(() => {
+    if (isSuccess && userData) {
+      dispatch(setUser(userData as any));
+    }
+  }, [isSuccess, userData, dispatch]);
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);

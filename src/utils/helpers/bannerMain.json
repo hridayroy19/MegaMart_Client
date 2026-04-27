@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "title": "Fresh Apple",
+    "discount": "20% OFF",
+    "deliveryTime": "Delivery in 30 min",
+    "description": "Crispy and fresh apples مباشرة from farm",
+    "productImage": "/images/apple.png",
+    "bgColor": "#fef3c7",
+    "buttonColor": "#fbbf24"
+  },
+  {
+    "id": 2,
+    "title": "Organic Banana",
+    "discount": "15% OFF",
+    "deliveryTime": "Delivery in 20 min",
+    "description": "Sweet organic bananas",
+    "productImage": "/images/banana.png",
+    "bgColor": "#ecfccb",
+    "buttonColor": "#84cc16"
+  }
+]

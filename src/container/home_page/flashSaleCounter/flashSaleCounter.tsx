@@ -7,39 +7,53 @@ import bg2 from "@/assets/images/homePage/flashSaleCounter/Cms-Banner-8.jpg";
 
 import styles from "./flashSaleCounter.module.css";
 
+import { useGetFlashSalesQuery } from "@/redux/features/flashSale/flashSaleApi";
+
 const FlashSaleCounter = () => {
+  const { data: flashSales = [], isLoading } = useGetFlashSalesQuery();
   const [timeLeft, setTimeLeft] = useState({
-    days: 741,
-    hours: 16,
-    minutes: 53,
-    seconds: 15,
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0,
   });
 
   useEffect(() => {
+    if (!flashSales.length) return;
+
+    const activeSale =
+      flashSales.find((s) => s.flashSale?.isActive) || flashSales[0];
+    const endTime = new Date(
+      activeSale.flashSale?.endTime || Date.now() + 86400000,
+    ).getTime();
+
     const interval = setInterval(() => {
-      setTimeLeft((prev) => {
-        let { days, hours, minutes, seconds } = prev;
+      const now = new Date().getTime();
+      const distance = endTime - now;
 
-        if (seconds > 0) seconds--;
-        else {
-          seconds = 59;
-          if (minutes > 0) minutes--;
-          else {
-            minutes = 59;
-            if (hours > 0) hours--;
-            else {
-              hours = 23;
-              if (days > 0) days--;
-            }
-          }
-        }
+      if (distance < 0) {
+        clearInterval(interval);
+        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+        return;
+      }
 
-        return { days, hours, minutes, seconds };
+      setTimeLeft({
+        days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+        hours: Math.floor(
+          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+        ),
+        minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+        seconds: Math.floor((distance % (1000 * 60)) / 1000),
       });
     }, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [flashSales]);
+
+  if (isLoading)
+    return (
+      <div className="p-4 w-full h-[200px] bg-muted animate-pulse rounded-lg"></div>
+    );
 
   const TimeBox = ({ value, label }: { value: number; label: string }) => (
     <div className="bg-background px-5 py-3 rounded-lg shadow text-center">

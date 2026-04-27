@@ -1,4 +1,5 @@
 "use client";
+
 import { useState, useRef, useEffect } from "react";
 import {
   Heart,
@@ -13,208 +14,234 @@ import SecoundNavbar, { categoriesData } from "./secoundNavbar";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import logo from "@/assets/icons/webisteLogo.png";
+import Link from "next/link";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "@/redux/store";
+import { logoutUser } from "@/redux/features/auth/authSlice";
+import { useLogoutMutation } from "@/redux/features/auth/authApi";
+
+type IconButtonProps = {
+  icon: React.ReactNode;
+  badge?: number;
+};
 
 export default function Navbar() {
   const [openCategory, setOpenCategory] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [userOpen, setUserOpen] = useState(false);
 
+  const categoryRef = useRef<HTMLDivElement>(null);
+  const userRef = useRef<HTMLDivElement>(null);
+
+  const { user, isAuthenticated } = useSelector(
+    (state: RootState) => state.auth,
+  );
+
+  const dispatch = useDispatch();
+  const [logoutApi] = useLogoutMutation();
+
+  const handleLogout = async () => {
+    try {
+      await logoutApi({}).unwrap();
+    } catch (err) {
+      console.error("Logout error", err);
+    } finally {
+      dispatch(logoutUser());
+    }
+  };
+
+  // বাইরে click করলে সব dropdown close
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
+        categoryRef.current &&
+        !categoryRef.current.contains(event.target as Node)
       ) {
         setOpenCategory(false);
       }
+
+      if (userRef.current && !userRef.current.contains(event.target as Node)) {
+        setUserOpen(false);
+      }
     };
+
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
   return (
-    <header className="w-full bg-card shadow-sm sticky top-0 z-100">
+    <header className="w-full bg-background shadow-sm sticky top-0 z-50">
       <Topbar />
 
-      <div className="max-w-[1440px] mx-auto px-4 lg:py-2 lg:px-4 flex items-center justify-between bg-card relative">
-        {/* Logo Section */}
-        <div className="flex items-center gap-8">
-          <div className="cursor-pointer ">
-            <Image
-              src={logo}
-              width={300}
-              height={100}
-              alt="MegaMart Logo"
-              className="object-contain w-[200px] h-[80px]"
-              loading="eager"
-            />
-          </div>
+      <div className="max-w-[1440px] mx-auto px-4 lg:py-2 flex items-center justify-between relative">
+        {/* Logo */}
+        <Image
+          src={logo}
+          width={200}
+          height={80}
+          alt="Logo"
+          className="object-contain cursor-pointer"
+        />
 
-          <div
-            className="hidden md:flex lg:hidden items-center gap-2 bg-primary/5 hover:bg-primary/10 border border-primary/20 rounded-full px-4 py-2 transition-colors cursor-pointer"
-            onClick={() => setOpenCategory(!openCategory)}
-          >
-            <span className="text-sm font-semibold text-primary">
-              Categories
-            </span>
-            <ChevronDown
-              className={`w-4 h-4 text-primary transition-transform ${openCategory ? "rotate-180" : ""}`}
-            />
-          </div>
-        </div>
-
-        {/* Desktop Search & Category */}
-        <div className="hidden lg:flex items-center flex-1 max-w-[800px] mx-10">
-          <div className="flex items-center w-full group">
-            <div
-              className="flex items-center gap-3 bg-primary/5 hover:bg-primary/10 border border-r-0 border-border rounded-l-xl px-5 py-[14px] cursor-pointer transition-all"
-              onClick={() => setOpenCategory(!openCategory)}
+        {/* Search */}
+        <div className="hidden lg:flex items-center flex-1 max-w-[700px] mx-10">
+          <div className="flex w-full">
+            {/* Category Button */}
+            <button
+              onClick={() => {
+                setOpenCategory(!openCategory);
+                setUserOpen(false);
+              }}
+              className="flex items-center gap-2 bg-background/10 hover:bg-background/20 border border-r-0 px-4 rounded-l-xl text-sm font-semibold"
             >
-              <span className="font-bold text-sm text-primary whitespace-nowrap">
-                All Categories
-              </span>
+              Categories
               <ChevronDown
-                className={`w-4 h-4 text-primary transition-transform ${openCategory ? "rotate-180" : ""}`}
+                className={`w-4 h-4 transition ${
+                  openCategory ? "rotate-180" : ""
+                }`}
               />
-            </div>
+            </button>
 
+            {/* Input */}
             <div className="relative w-full">
               <input
-                type="text"
-                placeholder="Search for products, brands..."
-                className="w-full border-border border px-5 py-[14px] rounded-r-xl outline-none focus:border-primary transition-all placeholder:text-muted-foreground/60 text-sm"
+                placeholder="Search products..."
+                className="w-full border border-border px-4 py-3 rounded-r-xl outline-none focus:border-primary"
               />
-              <button className="absolute right-2 top-1/2 -translate-y-1/2 bg-primary hover:bg-primary/90 transition-colors h-10 w-10 rounded-lg flex items-center justify-center">
-                <Search className="text-white h-5 w-5" />
+              <button className="absolute right-2 top-1/2 -translate-y-1/2 bg-primary text-foreground w-9 h-9 rounded-lg flex items-center justify-center">
+                <Search size={18} />
               </button>
             </div>
           </div>
         </div>
 
-        {/* Action Icons */}
-        <div className="flex items-center  gap-2">
-          <div className="flex lg:hidden">
-            <IconButton
-              onClick={() => setSearchOpen(true)}
-              icon={<Search className="w-5 h-5" />}
-            />
-          </div>
+        {/* Actions */}
+        <div className="flex items-center gap-3">
+          <Link href="/wishlist">
+            <IconButton icon={<Heart />} />
+          </Link>
 
-          <IconButton
-            icon={<Heart className="w-6 h-6" />}
-            className="hidden sm:flex"
-          />
+          <Link href="/cart">
+            <IconButton icon={<ShoppingCart />} badge={2} />
+          </Link>
 
-          <div className="relative group">
-            <IconButton
-              icon={<ShoppingCart className="w-6 h-6" />}
-              badge={2}
-              className="bg-primary/5 text-primary hover:bg-primary hover:text-white"
-            />
+          {/* USER */}
+          <div className="relative" ref={userRef}>
+            {isAuthenticated ? (
+              <>
+                <button onClick={() => setUserOpen(!userOpen)}>
+                  <div className="w-9 h-9 rounded-full bg-primary text-foreground flex items-center justify-center font-semibold">
+                    {user?.username?.charAt(0).toUpperCase() || "U"}
+                  </div>
+                </button>
+
+                <AnimatePresence>
+                  {userOpen && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                      transition={{ duration: 0.2 }}
+                      className="absolute right-0 mt-2 w-60 bg-background border border-border rounded-xl shadow-2xl z-[999]"
+                    >
+                      <div className="px-4 py-3 border-b">
+                        <p className="font-semibold text-sm">
+                          {user?.username}
+                        </p>
+                        <p className="text-xs text-gray-500">{user?.email}</p>
+                      </div>
+
+                      <div className="p-2 space-y-1">
+                        <Link
+                          href="/dashboard"
+                          className="block px-3 py-2 rounded-lg hover:bg-background/10 text-sm"
+                        >
+                          My Profile
+                        </Link>
+
+                        <button
+                          onClick={handleLogout}
+                          className="w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 text-red-500 text-sm"
+                        >
+                          Sign out
+                        </button>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </>
+            ) : (
+              <Link href="/login">
+                <IconButton icon={<User />} />
+              </Link>
+            )}
           </div>
-          <IconButton icon={<User className="w-6 h-6" />} />
         </div>
 
-        {/* Modern Category Dropdown */}
+        {/* CATEGORY DROPDOWN */}
         <AnimatePresence>
           {openCategory && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-              ref={dropdownRef}
-              className="absolute top-[82%] left-0 lg:left-[20%] w-[280px] md:w-[350px] bg-card/95 backdrop-blur-md shadow-2xl border border-border rounded-2xl z-50 mt-2 overflow-hidden"
-            >
-              <div className="p-4 border-b border-border/50">
-                <div className="relative">
-                  <input
-                    type="text"
-                    placeholder="Filter categories..."
-                    className="w-full bg-muted/50 border-none rounded-lg py-2 pl-9 pr-4 text-sm outline-none focus:ring-1 focus:ring-primary/30"
-                  />
-                  <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-foreground" />
-                </div>
-              </div>
+            <>
+              {/* Overlay */}
+              <div className="fixed inset-0 bg-background/20 z-40"></div>
 
-              <div className="p-2 max-h-[400px] overflow-y-auto custom-scrollbar">
-                {categoriesData.map((cat) => (
-                  <motion.button
-                    key={cat.name}
-                    whileHover={{ x: 4 }}
-                    className="flex items-center hover:cursor-pointer gap-3 w-full px-3 py-2.5 rounded-xl hover:bg-primary/10 text-left transition-colors group"
-                  >
-                    <span className="text-xl group-hover:grayscale-0 transition-all">
-                      {cat.icon}
-                    </span>
-                    <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
+              <motion.div
+                ref={categoryRef}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                className="absolute top-full left-0 mt-2 w-[300px] bg-background border border-border rounded-xl shadow-2xl z-50"
+              >
+                <div className="p-2 max-h-[300px] overflow-y-auto">
+                  {categoriesData.map((cat) => (
+                    <button
+                      key={cat.name}
+                      className="w-full text-left px-3 py-2 rounded-lg hover:bg-background/10"
+                    >
                       {cat.name}
-                    </span>
-                  </motion.button>
-                ))}
+                    </button>
+                  ))}
+                </div>
+              </motion.div>
+            </>
+          )}
+        </AnimatePresence>
+
+        {/* MOBILE SEARCH */}
+        <AnimatePresence>
+          {searchOpen && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 z-50 bg-background p-4"
+            >
+              <div className="flex items-center gap-2">
+                <input
+                  autoFocus
+                  placeholder="Search..."
+                  className="w-full border px-4 py-3 rounded-lg"
+                />
+                <button onClick={() => setSearchOpen(false)}>
+                  <X />
+                </button>
               </div>
             </motion.div>
           )}
         </AnimatePresence>
       </div>
 
-      {/* Mobile Full Screen Search */}
-      <AnimatePresence>
-        {searchOpen && (
-          <div className="fixed inset-0 z-[200] flex items-start justify-center pt-20 px-4">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setSearchOpen(false)}
-              className="absolute inset-0 bg-background/80 backdrop-blur-xl"
-            />
-
-            <motion.div
-              initial={{ scale: 0.95, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.95, opacity: 0 }}
-              className="relative w-full max-w-2xl"
-            >
-              <div className="relative group">
-                <input
-                  autoFocus
-                  placeholder="Search for anything..."
-                  className="w-full bg-card border-2 border-primary/20 rounded-2xl py-5 pl-14 pr-6 text-xl shadow-2xl outline-none focus:border-primary"
-                />
-                <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-6 h-6 text-primary" />
-                <button
-                  onClick={() => setSearchOpen(false)}
-                  className="absolute -top-12 right-0 text-foreground/60 hover:text-primary transition-colors"
-                >
-                  <X className="w-8 h-8" />
-                </button>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
-
       <SecoundNavbar />
     </header>
   );
 }
 
-interface IconButtonProps {
-  icon: React.ReactNode;
-  badge?: number;
-  className?: string;
-  onClick?: () => void;
-}
-
-function IconButton({ icon, badge, className, onClick }: IconButtonProps) {
+function IconButton({ icon, badge }: IconButtonProps) {
   return (
-    <button
-      onClick={onClick}
-      className={`relative p-2.5 rounded-xl transition-all active:scale-95 text-foreground/70 hover:text-primary hover:bg-primary/10 ${className}`}
-    >
+    <button className="relative p-2 rounded-lg hover:bg-background/10">
       {icon}
       {badge && (
-        <span className="absolute top-1 right-1 bg-secondary text-[10px] font-bold text-background w-4 h-4 rounded-full flex items-center justify-center shadow-sm">
+        <span className="absolute top-0 right-0 bg-primary text-foreground text-xs w-4 h-4 flex items-center justify-center rounded-full">
           {badge}
         </span>
       )}

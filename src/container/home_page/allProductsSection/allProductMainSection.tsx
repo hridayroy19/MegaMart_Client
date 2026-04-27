@@ -1,30 +1,21 @@
 "use client";
 import FeaturedProducts from "./featuredProducts";
-import { useGetfeaturePrductsQuery } from "@/redux/features/featureProducts/featureProductApi";
 import TopSellingProduct from "./topSellingProduct";
 import OnSaleProducts from "./onSaleProducts";
+import {
+  useGetFeaturedProductsQuery,
+  useGetTopSellingProductsQuery,
+  useGetOnSaleProductsQuery,
+} from "@/redux/features/featureProducts/featureProductApi";
 
 const AllProductMainSection = () => {
-  const { data, isLoading, isError, error } = useGetfeaturePrductsQuery();
-  if (isLoading)
+  const { data: featured = [], isLoading: l1 } = useGetFeaturedProductsQuery();
+  const { data: topSelling = [], isLoading: l2 } =
+    useGetTopSellingProductsQuery();
+  const { data: onSale = [], isLoading: l3 } = useGetOnSaleProductsQuery();
+
+  if (l1 || l2 || l3)
     return <p className="py-6 text-sm text-muted-foreground">Loading...</p>;
-
-  if (isError) {
-    console.log("Offer error:", error);
-    return (
-      <p className="py-6 text-sm text-error">Failed to load FeatureProduct.</p>
-    );
-  }
-
-  if (!data?.length) {
-    return (
-      <p className="py-6 text-sm text-error">No FeatureProduct available.</p>
-    );
-  }
-
-  const featured = data.filter((p) => p.tag === "featured");
-  const topSelling = data.filter((p) => p.tag === "topSelling");
-  const onSale = data.filter((p) => p.tag === "onSale");
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:gap-7 gap-5 w-full justify-center">

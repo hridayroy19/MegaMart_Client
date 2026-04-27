@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { useGetSellProductQuery } from "@/redux/features/sellsProduct/sellProductApi";
 import PromoCard from "./promoCard";
 import { Button } from "@/components/ui/button";
-
+import productImage from "@/assets/images/homePage/hotDealsToday/ccTv.png";
 export default function DailyBestSells() {
   const { data = [], isLoading, isError, error } = useGetSellProductQuery();
 
@@ -21,9 +21,9 @@ export default function DailyBestSells() {
   useEffect(() => {
     const updateItemsPerPage = () => {
       const w = window.innerWidth;
-      if (w < 640) setItemsPerPage(1);       
-      else if (w < 1024) setItemsPerPage(2);  
-      else setItemsPerPage(4);                 
+      if (w < 640) setItemsPerPage(1);
+      else if (w < 1024) setItemsPerPage(2);
+      else setItemsPerPage(4);
     };
 
     updateItemsPerPage();
@@ -46,37 +46,43 @@ export default function DailyBestSells() {
     const interval = setInterval(() => {
       setProducts((prev) =>
         prev.map((item) => {
-          let { days, hours, minutes, seconds } = item.timer;
+          const endTime = new Date(
+            item.flashSale?.endTime || Date.now() + 86400000,
+          ).getTime();
+          const now = new Date().getTime();
+          const distance = endTime - now;
 
-          if (seconds > 0) seconds--;
-          else {
-            seconds = 59;
-            if (minutes > 0) minutes--;
-            else {
-              minutes = 59;
-              if (hours > 0) hours--;
-              else {
-                hours = 23;
-                if (days > 0) days--;
-              }
-            }
+          if (distance < 0) {
+            return {
+              ...item,
+              timer: { days: 0, hours: 0, minutes: 0, seconds: 0 },
+            };
           }
 
           return {
             ...item,
-            timer: { days, hours, minutes, seconds },
+            timer: {
+              days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+              hours: Math.floor(
+                (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+              ),
+              minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+              seconds: Math.floor((distance % (1000 * 60)) / 1000),
+            },
           };
         }),
       );
     }, 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [data]);
 
   // Slider controls
   const handleNext = () => {
     if (currentIndex + itemsPerPage < products.length) {
-      setCurrentIndex((prev) => Math.min(prev + slideStep, products.length - itemsPerPage));
+      setCurrentIndex((prev) =>
+        Math.min(prev + slideStep, products.length - itemsPerPage),
+      );
     }
   };
 
@@ -86,7 +92,10 @@ export default function DailyBestSells() {
     }
   };
 
-  const visibleProducts = products.slice(currentIndex, currentIndex + itemsPerPage);
+  const visibleProducts = products.slice(
+    currentIndex,
+    currentIndex + itemsPerPage,
+  );
 
   const canPrev = currentIndex > 0;
   const canNext = currentIndex + itemsPerPage < products.length;
@@ -131,14 +140,14 @@ export default function DailyBestSells() {
 
       {/* Main layout */}
       <div className="flex flex-col lg:flex-row items-stretch gap-5">
-
         {/* Promo Card — hidden on mobile/tablet, visible on lg+ */}
         <div className="hidden lg:block lg:w-[250px] xl:w-70 shrink-0">
           <PromoCard
-            discount="50% Discount"
-            title="Best Shopping"
-            subtitle="Iphone's"
+            discount={"50% Discount"}
+            title={"Best Shopping"}
+            subtitle={"Iphone's"}
             bgColor="bg-primary"
+            image={productImage.src}
           />
         </div>
 
@@ -158,7 +167,7 @@ export default function DailyBestSells() {
             >
               {/* Sale badge */}
               <span className="bg-destructive text-background text-xs px-2 py-1 rounded w-fit">
-                Sale {item.sale}
+                Sale {item.pricing?.discountPercentage}%
               </span>
 
               {/* Content row */}
@@ -166,10 +175,10 @@ export default function DailyBestSells() {
                 {/* Image */}
                 <div className="shrink-0">
                   <Image
-                    src={item.image}
+                    src={item.thumbnail}
                     width={80}
                     height={80}
-                    alt={item.title}
+                    alt={item.name}
                     className="rounded object-contain w-[72px] h-[72px] sm:w-[90px] sm:h-[90px]"
                   />
                 </div>
@@ -179,21 +188,25 @@ export default function DailyBestSells() {
                   {/* Price */}
                   <div className="flex items-center gap-2 flex-wrap">
                     <span className="line-through text-sm text-muted-foreground">
-                      ${item.oldPrice}
+                      ${item.pricing?.basePrice}
                     </span>
-                    <span className="font-bold text-sm">${item.newPrice}</span>
+                    <span className="font-bold text-sm">
+                      ${item.pricing?.salePrice}
+                    </span>
                   </div>
 
                   {/* Rating */}
                   <div className="flex items-center gap-1 text-xs sm:text-sm mt-0.5">
                     <Star size={13} className="fill-black shrink-0" />
                     <span>{item.rating}</span>
-                    <span className="text-muted-foreground">({item.reviews})</span>
+                    <span className="text-muted-foreground">
+                      ({item.reviewsCount})
+                    </span>
                   </div>
 
                   {/* Title */}
                   <h3 className="mt-1 text-sm font-medium leading-snug line-clamp-2">
-                    {item.title.slice(0, 40)}...
+                    {item.name}
                   </h3>
 
                   <p className="text-xs sm:text-sm mt-0.5 text-muted-foreground">
@@ -203,9 +216,16 @@ export default function DailyBestSells() {
                   {/* Progress */}
                   <div className="mt-2">
                     <div className="w-full bg-gray-200 h-2 rounded">
-                      <div className="bg-primary h-2 w-1/2 rounded" />
+                      <div
+                        className="bg-primary h-2 rounded"
+                        style={{
+                          width: `${(item.inventory?.sold / (item.inventory?.stock + item.inventory?.sold)) * 100}%`,
+                        }}
+                      />
                     </div>
-                    <p className="text-xs mt-1 text-muted-foreground">Sold: {item.sold}</p>
+                    <p className="text-xs mt-1 text-muted-foreground">
+                      Sold: {item.inventory?.sold}
+                    </p>
                   </div>
 
                   {/* Timer + Button */}
@@ -213,10 +233,10 @@ export default function DailyBestSells() {
                     {/* Timer */}
                     <div className="grid grid-cols-4 gap-1 text-[11px] sm:text-[12px] font-semibold shrink-0">
                       {[
-                        { label: "Day", value: item.timer.days },
-                        { label: "Hrs", value: item.timer.hours },
-                        { label: "Min", value: item.timer.minutes },
-                        { label: "Sec", value: item.timer.seconds },
+                        { label: "Day", value: item.timer?.days || 0 },
+                        { label: "Hrs", value: item.timer?.hours || 0 },
+                        { label: "Min", value: item.timer?.minutes || 0 },
+                        { label: "Sec", value: item.timer?.seconds || 0 },
                       ].map(({ label, value }) => (
                         <span
                           key={label}

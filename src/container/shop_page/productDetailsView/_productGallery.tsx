@@ -1,15 +1,15 @@
 "use client";
-import { IShopingProducts } from "@/types";
+import { IProduct } from "@/types";
 import { useState } from "react";
 
 interface Props {
-  product: IShopingProducts;
+  product: IProduct;
 }
 
 const ProductGallery = ({ product }: Props) => {
   const images = product.images?.length
     ? product.images
-    : ["/placeholder.png"];
+    : (product.thumbnail ? [product.thumbnail] : ["/placeholder.png"]);
 
   const [activeImage, setActiveImage] = useState(images[0]);
 

@@ -8,35 +8,12 @@ import "swiper/css";
 import "swiper/css/navigation";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
-import { useGetAllBransQuery } from "@/redux/features/brands/brandsApi";
+import data from "@/utils/helpers/brands.json";
 
 export default function BrandsCarousel() {
   const swiperRef = useRef<any>(null);
 
-  const { data, isLoading, isError, error } = useGetAllBransQuery();
-
-  if (isLoading)
-    return (
-      <div className="flex gap-4 py-10">
-        {[...Array(6)].map((_, i) => (
-          <div
-            key={i}
-            className="h-32 w-full bg-muted animate-pulse rounded-2xl"
-          />
-        ))}
-      </div>
-    );
-
-  if (isError) {
-    console.error("Brands error:", error);
-    return (
-      <p className="py-6 text-sm text-destructive bg-destructive/10 p-4 rounded-lg">
-        Failed to load brands.
-      </p>
-    );
-  }
-
-  if (!data?.length) {
+  if (!data || data.length === 0) {
     return (
       <p className="py-6 text-sm text-muted-foreground">
         No brands available at the moment.

@@ -26,9 +26,11 @@ export const HotDealsTodaySlider = ({
         "
       >
         {items.map((item, index) => {
-          const sold = item.sold ?? 0;
-          const stock = item.stock ?? 1;
+          const sold = item.inventory?.sold ?? 0;
+          const stock = item.inventory?.stock ?? 1;
           const soldPercent = Math.min(100, (sold / stock) * 100);
+          const salePrice = item.pricing?.salePrice || 0;
+          const basePrice = item.pricing?.basePrice || 0;
 
           return (
             <article
@@ -78,12 +80,12 @@ export const HotDealsTodaySlider = ({
               {/* Price row */}
               <div className="mb-1  flex items-center gap-2">
                 <span className="text-lg font-bold text-foreground">
-                  ${item.salePrice.toFixed(2)}
+                  ${salePrice.toFixed(2)}
                 </span>
                 <span className="text-sm text-muted">/Qty</span>
-                {item.regularPrice && item.regularPrice > item.salePrice && (
+                {basePrice > salePrice && (
                   <span className="text-lg text-muted line-through">
-                    ${item.regularPrice.toFixed(2)}
+                    ${basePrice.toFixed(2)}
                   </span>
                 )}
               </div>
@@ -94,8 +96,8 @@ export const HotDealsTodaySlider = ({
                 <span className="text-amber-400">★</span>
                 <span>
                   (
-                  {item.ratingCount
-                    ? `${Math.round(item.ratingCount / 100) / 10}k`
+                  {item.reviewsCount
+                    ? `${Math.round(item.reviewsCount / 100) / 10}k`
                     : "17k"}
                   )
                 </span>

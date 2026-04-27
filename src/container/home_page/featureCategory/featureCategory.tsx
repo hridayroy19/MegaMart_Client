@@ -1,29 +1,13 @@
 "use client";
 
-import { useGetFeatureCategoriesQuery } from "@/redux/features/featureCategory/featureCategoryApi";
 import { FeatureCategoryCard } from "./_featureCategoryCard";
+import data from "@/utils/helpers/featureCategories.json";
 
 export const FeatureCategory = () => {
-  const { data, isLoading, isError, error } = useGetFeatureCategoriesQuery();
-
-  if (isError) {
-    console.log(" featureCategories error:", error);
-  }
-
-  if (isLoading) {
+  if (!data || data.length === 0) {
     return (
       <div className="py-6">
-        <p className="text-sm text-muted-foreground">Loading feature categories...</p>
-      </div>
-    );
-  }
-
-  if (isError || !data || data.length === 0) {
-    return (
-      <div className="py-6">
-        <p className="text-sm text-red-500">
-          Failed to load feature categories.
-        </p>
+        <p className="text-sm text-red-500">No feature categories available.</p>
       </div>
     );
   }

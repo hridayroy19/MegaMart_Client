@@ -63,8 +63,8 @@ export default function FeaturedProducts({
                     {/* Product Image */}
                     <div className="relative flex-shrink-0 overflow-hidden rounded-lg border border-border bg-white w-[85px] h-[85px]">
                       <Image
-                        src={item.image}
-                        alt={item.productName}
+                        src={item.thumbnail}
+                        alt={item.name}
                         fill
                         className="object-contain p-2 transition-transform duration-500 group-hover:scale-110"
                       />
@@ -84,23 +84,23 @@ export default function FeaturedProducts({
                           ))}
                         </div>
                         <span className="text-[11px] font-medium text-muted-foreground">
-                          {item.rating} ({item.reviews})
+                          {item.rating} ({item.reviewsCount})
                         </span>
                       </div>
 
                       {/* Name */}
                       <h3 className="text-[14px] font-semibold text-foreground truncate group-hover:text-primary transition-colors cursor-pointer">
-                        {item.productName}
+                        {item.name}
                       </h3>
 
                       {/* Pricing */}
                       <div className="flex items-center gap-2 mt-1">
                         <span className="text-base font-bold text-primary">
-                          ${item.price.toFixed(2)}
+                          ${item.pricing?.salePrice?.toFixed(2) || "0.00"}
                         </span>
-                        {item.oldPrice && (
+                        {item.pricing?.basePrice && item.pricing.basePrice > item.pricing.salePrice && (
                           <span className="text-xs text-muted-foreground line-through decoration-muted-foreground/50">
-                            ${item.oldPrice.toFixed(2)}
+                            ${item.pricing.basePrice.toFixed(2)}
                           </span>
                         )}
                       </div>
