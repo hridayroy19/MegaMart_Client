@@ -3,12 +3,12 @@
 
 import { useEffect, useState } from "react";
 import Navbar from "./navbar";
-import StickyScrollNavbar from "./StickyScrollNavbar";
 import { motion, AnimatePresence } from "framer-motion";
 import BottomNav from "./bottomNav";
 import { useGetMeQuery } from "@/redux/features/auth/authApi";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/redux/features/auth/authSlice";
+import SecoundNavbar from "./secoundNavbar";
 
 const MainNavbar = () => {
   const [scrollY, setScrollY] = useState(0);
@@ -61,7 +61,7 @@ const MainNavbar = () => {
               transition={{ duration: 0.35, ease: "easeInOut" }}
               className="absolute top-0 left-0 w-full"
             >
-              <StickyScrollNavbar />
+              <SecoundNavbar />
             </motion.div>
           )}
         </AnimatePresence>

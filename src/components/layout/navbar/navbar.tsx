@@ -50,7 +50,6 @@ export default function Navbar() {
     }
   };
 
-  // বাইরে click করলে সব dropdown close
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -92,7 +91,7 @@ export default function Navbar() {
                 setOpenCategory(!openCategory);
                 setUserOpen(false);
               }}
-              className="flex items-center gap-2 bg-background/10 hover:bg-background/20 border border-r-0 px-4 rounded-l-xl text-sm font-semibold"
+              className="flex items-center gap-2 bg-background/10 hover:bg-background/20 border-secondary/40 border border-r-0 px-4 rounded-l-xl text-sm font-semibold cursor-pointer"
             >
               Categories
               <ChevronDown
@@ -106,7 +105,7 @@ export default function Navbar() {
             <div className="relative w-full">
               <input
                 placeholder="Search products..."
-                className="w-full border border-border px-4 py-3 rounded-r-xl outline-none focus:border-primary"
+                className="w-full border border-secondary/20 px-4 py-3 rounded-r-xl outline-none focus:border-secondary/20"
               />
               <button className="absolute right-2 top-1/2 -translate-y-1/2 bg-primary text-foreground w-9 h-9 rounded-lg flex items-center justify-center">
                 <Search size={18} />
@@ -161,7 +160,7 @@ export default function Navbar() {
 
                         <button
                           onClick={handleLogout}
-                          className="w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 text-red-500 text-sm"
+                          className="w-full text-left px-3 py-2 rounded-lg hover:bg-red-50 text-danger text-sm"
                         >
                           Sign out
                         </button>
@@ -190,13 +189,16 @@ export default function Navbar() {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: 10 }}
-                className="absolute top-full left-0 mt-2 w-[300px] bg-background border border-border rounded-xl shadow-2xl z-50"
+                className="absolute top-full left-1/5 mt-20 w-[300px] bg-background border border-border rounded-xl shadow-2xl z-50"
               >
                 <div className="p-2 max-h-[300px] overflow-y-auto">
                   {categoriesData.map((cat) => (
                     <button
                       key={cat.name}
-                      className="w-full text-left px-3 py-2 rounded-lg hover:bg-background/10"
+                      onClick={() => {
+                        setOpenCategory(false);
+                      }}
+                      className="w-full text-left cursor-pointer hover:bg-primary/15 px-3 py-2 rounded-lg"
                     >
                       {cat.name}
                     </button>
