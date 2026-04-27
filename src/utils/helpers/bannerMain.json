@@ -1,22 +1,58 @@
 [
   {
     "id": 1,
-    "title": "Fresh Apple",
-    "discount": "20% OFF",
-    "deliveryTime": "Delivery in 30 min",
-    "description": "Crispy and fresh apples مباشرة from farm",
-    "productImage": "/images/apple.png",
-    "bgColor": "#fef3c7",
-    "buttonColor": "#fbbf24"
+    "title": "iPhone 15 Pro Max",
+    "brand": "Apple",
+    "price": 159999,
+    "discount": "8% OFF",
+    "rating": 4.8,
+    "stock": 12,
+    "deliveryTime": "Delivery in 24 hours",
+    "description": "A17 Pro chip, advanced camera system, premium design",
+    "productImage": "https://res.cloudinary.com/dh5fzsfzb/image/upload/v1777295963/OIP-removebg-preview_lwmooi.png",
+    "bgColor": "#f1f5f9",
+    "buttonColor": "#0f172a"
   },
   {
     "id": 2,
-    "title": "Organic Banana",
-    "discount": "15% OFF",
-    "deliveryTime": "Delivery in 20 min",
-    "description": "Sweet organic bananas",
-    "productImage": "/images/banana.png",
-    "bgColor": "#ecfccb",
-    "buttonColor": "#84cc16"
+    "title": "Samsung Galaxy S24 Ultra",
+    "brand": "Samsung",
+    "price": 149999,
+    "discount": "10% OFF",
+    "rating": 4.7,
+    "stock": 15,
+    "deliveryTime": "Delivery in 24 hours",
+    "description": "Powerful performance with S Pen and pro-grade camera",
+    "productImage": "https://res.cloudinary.com/dh5fzsfzb/image/upload/v1777296045/images__7_-removebg-preview_c8f29t.png",
+    "bgColor": "#ecfeff",
+    "buttonColor": "#06b6d4"
+  },
+  {
+    "id": 3,
+    "title": "MacBook Pro M3",
+    "brand": "Apple",
+    "price": 219999,
+    "discount": "5% OFF",
+    "rating": 4.9,
+    "stock": 8,
+    "deliveryTime": "Delivery in 48 hours",
+    "description": "M3 chip, ultra performance for developers & creators",
+    "productImage": "https://res.cloudinary.com/dh5fzsfzb/image/upload/v1777296139/images__8_-removebg-preview_hv2so8.png",
+    "bgColor": "#f8fafc",
+    "buttonColor": "#1e293b"
+  },
+  {
+    "id": 4,
+    "title": "Dell XPS 15",
+    "brand": "Dell",
+    "price": 179999,
+    "discount": "12% OFF",
+    "rating": 4.6,
+    "stock": 10,
+    "deliveryTime": "Delivery in 48 hours",
+    "description": "Premium ultrabook with stunning display and performance",
+    "productImage": "https://res.cloudinary.com/dh5fzsfzb/image/upload/v1777296209/images__9_-removebg-preview_dbk2wr.png",
+    "bgColor": "#f1f5f9",
+    "buttonColor": "#334155"
   }
 ]

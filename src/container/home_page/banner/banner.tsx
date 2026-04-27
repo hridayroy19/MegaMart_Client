@@ -44,23 +44,23 @@ export default function Banner() {
             >
               {/* TEXT */}
               <div className="flex-1 space-y-2 sm:space-y-4 text-center md:text-left">
-                <p className={`text-xs sm:text-sm text-gray-900 opacity-70`}>
+                <p className={`text-xs sm:text-sm text-foreground opacity-70`}>
                   {product.discount}
                 </p>
 
                 <h1
-                  className={`text-xl sm:text-3xl lg:text-5xl font-bold text-gray-900`}
+                  className={`text-xl sm:text-3xl lg:text-5xl font-bold text-foreground`}
                 >
                   {product.title}
                 </h1>
 
                 <p
-                  className={`text-lg sm:text-2xl font-semibold text-gray-900`}
+                  className={`text-lg sm:text-2xl font-semibold text-foreground`}
                 >
                   {product.deliveryTime}
                 </p>
 
-                <p className={`text-xs sm:text-sm text-gray-900 opacity-80`}>
+                <p className={`text-xs sm:text-sm text-foreground opacity-80`}>
                   {product.description}
                 </p>
 

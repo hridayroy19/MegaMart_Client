@@ -17,7 +17,6 @@ interface Props {
 
 const MobileMenuItem = ({ item, pathname }: Props) => {
   const [open, setOpen] = useState(false);
-  // Update activeMenu based on URL path
   const isActive = (link: string) => {
     if (link === "/") return pathname === "/";
     return pathname.startsWith(link);

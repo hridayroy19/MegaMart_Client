@@ -209,7 +209,6 @@ export default function Navbar() {
           )}
         </AnimatePresence>
 
-        {/* MOBILE SEARCH */}
         <AnimatePresence>
           {searchOpen && (
             <motion.div
