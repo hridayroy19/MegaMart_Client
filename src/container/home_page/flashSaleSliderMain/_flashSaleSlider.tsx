@@ -87,7 +87,9 @@ export const FlashSaleSlider = ({ items }: FlashSaleSliderProps) => {
 
     if (activeSlide <= 0) {
       const lastIndex = maxIndex;
-      const lastChild = container.children[lastIndex] as HTMLElement | undefined;
+      const lastChild = container.children[lastIndex] as
+        | HTMLElement
+        | undefined;
       if (!lastChild) return;
 
       container.scrollTo({
@@ -174,7 +176,7 @@ export const FlashSaleSlider = ({ items }: FlashSaleSliderProps) => {
                 sm:w-[40%]          
                  md:w-[calc((100%-2rem)/4)]          
                 lg:w-[calc((100%-2rem)/4)] 
-                xl:w-[calc((100%-3rem)/4)]  
+                xl:w-[calc((100%-3rem)/5)]  
                 p-4
                 border
                 shadow-sm  duration-500 ease-in-out
@@ -183,17 +185,17 @@ export const FlashSaleSlider = ({ items }: FlashSaleSliderProps) => {
               "
             >
               {/* Product image */}
-              <div className="relative  mt-2  md:mt-10 flex h-48 md:h-60   items-center justify-center overflow-hidden">
+              <div className="relative  mt-2  md:mt-10 flex h-40 md:h-52   items-center justify-center overflow-hidden">
                 <Image
                   src={item.thumbnail}
                   alt={item.name}
-                  width={200}
-                  height={160}
+                  width={150}
+                  height={120}
                   className="
                   md:pb-7
                     h-full w-auto object-contain
                     transition-transform duration-500 ease-in-out
-                    group-hover:scale-119
+                    group-hover:scale-100
                   "
                 />
               </div>

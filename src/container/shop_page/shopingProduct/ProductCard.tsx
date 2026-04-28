@@ -2,6 +2,9 @@ import { IProduct } from '@/types';
 import { ShoppingCart, Star } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
+import { useDispatch } from 'react-redux'
+import { addItem, syncCartToServer } from '@/redux/features/cart/cartSlice'
+import toast from 'react-hot-toast'
 
 interface ProductCardProps {
     product: IProduct;
@@ -10,6 +13,7 @@ interface ProductCardProps {
 
 const ProductCard: React.FC<ProductCardProps> = ({ product, viewMode }) => {
     console.log(product.images);
+    const dispatch = useDispatch()
     const {
         name,
         images,
@@ -97,7 +101,19 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, viewMode }) => {
                             <span className="text-gray-400 text-xs">/Qty</span>
                         </div>
 
-                        <button className="w-full flex items-center justify-center gap-2 bg-gray-100 hover:bg-blue-600 hover:text-white text-gray-700 text-xs font-bold py-2 px-3 rounded transition-colors duration-200">
+                        <button
+                            onClick={async (e) => {
+                                e.preventDefault()
+                                dispatch(addItem({ product: product._id, quantity: 1 }))
+                                try {
+                                    await dispatch(syncCartToServer() as any).unwrap()
+                                } catch (err) {
+                                    /* ignore */
+                                }
+                                toast.success('Added to Cart')
+                            }}
+                            className="w-full flex items-center justify-center gap-2 bg-gray-100 hover:bg-blue-600 hover:text-white text-gray-700 text-xs font-bold py-2 px-3 rounded transition-colors duration-200"
+                        >
                             <h5>Add To Cart</h5>
                             <ShoppingCart size={14} />
                         </button>

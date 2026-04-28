@@ -3,15 +3,21 @@
 import { IProduct } from "@/types";
 import { Heart, ShoppingCart, Star, Store } from "lucide-react";
 import Image from "next/image";
-import { useGetWishlistQuery, useToggleWishlistMutation } from "@/redux/features/wishlist/wishlistApi";
-import { useSelector } from "react-redux";
+import {
+  useGetWishlistQuery,
+  useToggleWishlistMutation,
+} from "@/redux/features/wishlist/wishlistApi";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
+import { addItem, syncCartToServer } from '@/redux/features/cart/cartSlice'
+import toast from 'react-hot-toast'
 
 export function ProductCard({ product }: { product: IProduct }) {
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
   const { data: wishlistRes } = useGetWishlistQuery(undefined, {
     skip: !isAuthenticated,
   });
+  const dispatch = useDispatch()
   const [toggleWishlist] = useToggleWishlistMutation();
 
   const isWishlisted =
@@ -66,7 +72,7 @@ export function ProductCard({ product }: { product: IProduct }) {
           height={100}
           src={product.thumbnail}
           alt={product.name}
-          className="h-52 w-38 object-contain transition-transform duration-500 group-hover:scale-120"
+          className="h-44 w-32 object-contain transition-transform duration-500 group-hover:scale-120"
         />
       </div>
 
@@ -102,7 +108,11 @@ export function ProductCard({ product }: { product: IProduct }) {
       </div>
 
       {/* Add To Cart */}
-      <button className="mt-auto flex w-full items-center justify-center gap-2 bg-secondary/15 py-2 text-sm font-medium hover:bg-primary hover:text-accent-foreground rounded-3xl transition-colors">
+      <button onClick={async () => {
+        dispatch(addItem({ product: product._id, quantity: 1 }))
+        try { await dispatch(syncCartToServer() as any).unwrap() } catch (err) {}
+        toast.success('Added to Cart')
+      }} className="mt-auto flex w-full items-center justify-center gap-2 bg-secondary/15 py-2 text-sm font-medium hover:bg-primary hover:text-accent-foreground rounded-3xl transition-colors">
         <ShoppingCart size={18} />
         Add To Cart
       </button>
