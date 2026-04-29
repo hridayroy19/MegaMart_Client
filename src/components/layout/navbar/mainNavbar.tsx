@@ -34,7 +34,6 @@ const MainNavbar = () => {
   return (
     <>
       <div className="fixed top-0 left-0 w-full z-50">
-        {/* Top Navbar (default) */}
         <AnimatePresence mode="wait">
           {showTopNavbar && (
             <motion.div
@@ -50,7 +49,6 @@ const MainNavbar = () => {
           )}
         </AnimatePresence>
 
-        {/* Sticky Navbar (scroll down) */}
         <AnimatePresence mode="wait">
           {showStickyNavbar && (
             <motion.div
