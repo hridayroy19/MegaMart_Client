@@ -19,7 +19,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
 import { logoutUser } from "@/redux/features/auth/authSlice";
 import { useLogoutMutation } from "@/redux/features/auth/authApi";
-import CartDrawer from '../cart/CartDrawer'
+import CartDrawer from "../cart/CartDrawer";
 
 type IconButtonProps = {
   icon: React.ReactNode;
@@ -40,7 +40,7 @@ export default function Navbar() {
 
   const dispatch = useDispatch();
   const [logoutApi] = useLogoutMutation();
-  const [cartOpen, setCartOpen] = useState(false)
+  const [cartOpen, setCartOpen] = useState(false);
 
   const handleLogout = async () => {
     try {
@@ -123,7 +123,10 @@ export default function Navbar() {
           </Link>
 
           <button onClick={() => setCartOpen(true)}>
-            <IconButton icon={<ShoppingCart />} badge={useSelector((s: RootState) => s.cart.items.length)} />
+            <IconButton
+              icon={<ShoppingCart />}
+              badge={useSelector((s: RootState) => s.cart.items.length || 0)}
+            />
           </button>
 
           {/* USER */}
