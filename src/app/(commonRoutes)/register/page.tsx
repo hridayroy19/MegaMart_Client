@@ -27,7 +27,6 @@ export default function RegisterPage() {
 
     try {
       const res = await register({ username, email, password }).unwrap();
-      console.log(res, "login resut");
       if (res.success) {
         router.push("/login?registered=true");
       } else {

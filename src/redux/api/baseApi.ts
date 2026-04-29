@@ -2,12 +2,13 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 const fatchQuery = fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_API_URL,
     credentials: 'include',
-    // prepareHeaders: (headers, { getState }) => {
-    //     const token = (getState() as RootState).auth.token;
-    //     if (token) {
-    //         headers.set("authorization", `Bearer ${token}`);
-    //     }
-    // },
+    prepareHeaders: (headers) => {
+        const token = typeof window !== 'undefined' ? localStorage.getItem('authToken') : null;
+        if (token) {
+            headers.set("authorization", `Bearer ${token}`);
+        }
+        return headers;
+    },
 });
 
 export const baseApi = createApi({
@@ -30,6 +31,6 @@ export const baseApi = createApi({
         
         return result;
     },
-    tagTypes: ["FlashSale", "FeatureCategory", "productCard", "offer", "featureProduct", "sellProduct", "brands", "HotDealsToday", "ShopingProduct", "blogPost", "VendorProduct", "Gallery", "Auth", "Wishlist"] as const,
+    tagTypes: ["FlashSale", "FeatureCategory", "productCard", "offer", "featureProduct", "sellProduct", "brands", "HotDealsToday", "ShopingProduct", "blogPost", "VendorProduct", "Gallery", "Auth", "Wishlist", "Orders"] as const,
     endpoints: () => ({}),
 });

@@ -30,7 +30,7 @@ export default function LoginPage() {
     try {
       const res = await login({ email, password }).unwrap();
       if (res.success) {
-        dispatch(setUser(res.data));
+        dispatch(setUser({ user: res.data, token: res.token }));
         router.push("/");
       } else {
         setErrorMsg(res.message || "Login failed");

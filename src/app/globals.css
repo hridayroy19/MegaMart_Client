@@ -158,6 +158,44 @@
   }
 }
 
+/* Checkout specific utilities */
+@layer utilities {
+  .checkout-bg {
+    background-color: #f3f4f6; /* subtle gray */
+  }
+
+  .page-card {
+    background-color: var(--card);
+    border-radius: 12px;
+    box-shadow: 0 6px 18px rgba(16,24,40,0.06);
+    border: 1px solid rgba(0,0,0,0.04);
+  }
+
+  .primary-cta {
+    background-color: #0b0b0b;
+    color: #ffffff;
+    padding: 12px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform .08s ease, box-shadow .08s ease, opacity .08s ease;
+  }
+
+  .primary-cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(11,11,11,0.12);
+  }
+
+  .shipping-card {
+    background: #fff;
+    border-radius: 10px;
+    border: 1px solid rgba(0,0,0,0.06);
+    padding: 14px;
+  }
+}
+
 /* Text classes */
 .paragraph-sm {
   @apply font-body text-sm font-semibold;

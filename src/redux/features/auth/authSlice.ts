@@ -10,11 +10,13 @@ export interface IUser {
 
 interface AuthState {
   user: IUser | null;
+  token: string | null;
   isAuthenticated: boolean;
 }
 
 const initialState: AuthState = {
   user: null,
+  token: typeof window !== 'undefined' ? localStorage.getItem('authToken') : null,
   isAuthenticated: false,
 };
 
@@ -22,13 +24,19 @@ const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setUser: (state, action: PayloadAction<IUser>) => {
-      state.user = action.payload;
+    setUser: (state, action: PayloadAction<{ user: IUser; token?: string }>) => {
+      state.user = action.payload.user;
+      if (action.payload.token) {
+        state.token = action.payload.token;
+        localStorage.setItem("authToken", action.payload.token);
+      }
       state.isAuthenticated = true;
     },
     logoutUser: (state) => {
       state.user = null;
+      state.token = null;
       state.isAuthenticated = false;
+      localStorage.removeItem("authToken");
     },
   },
 });

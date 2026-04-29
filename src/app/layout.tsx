@@ -5,6 +5,8 @@ import "./globals.css";
 
 import { ThemeProvider } from "@/hooks/useDarkLightTheme";
 import ReduxProvider from "@/providers/ReduxProvider";
+import AuthLoader from "@/providers/AuthLoader";
+
 
 const quicksand = Quicksand({
   weight: ["400", "500", "600", "700"],
@@ -28,7 +30,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${quicksand.className} antialiased`}>
         <ReduxProvider>
-          <ThemeProvider>{children}</ThemeProvider>
+          <AuthLoader>
+            <ThemeProvider>{children}</ThemeProvider>
+          </AuthLoader>
         </ReduxProvider>
       </body>
     </html>
