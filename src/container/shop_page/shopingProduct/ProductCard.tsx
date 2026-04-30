@@ -1,10 +1,13 @@
 import { IProduct } from '@/types';
-import { ShoppingCart, Star } from 'lucide-react';
+import { ShoppingCart, Star, Heart } from 'lucide-react';
 import Link from 'next/link';
 import React from 'react';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addItem, syncCartToServer } from '@/redux/features/cart/cartSlice'
+import { useToggleWishlistMutation } from '@/redux/features/wishlist/wishlistApi'
+import { RootState } from '@/redux/store'
 import toast from 'react-hot-toast'
+import { useRouter } from 'next/navigation'
 
 interface ProductCardProps {
     product: IProduct;
@@ -14,6 +17,10 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ product, viewMode }) => {
     console.log(product.images);
     const dispatch = useDispatch()
+    const router = useRouter()
+    const { isAuthenticated } = useSelector((s: RootState) => s.auth)
+    const [toggleWishlist, { isLoading: isToggling }] = useToggleWishlistMutation()
+    
     const {
         name,
         images,
@@ -64,6 +71,28 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, viewMode }) => {
                             Sale {pricing.discountPercentage}%
                         </span>
                     )}
+
+                    {/* Wishlist Button */}
+                    <button
+                        disabled={isToggling}
+                        onClick={async (e) => {
+                            e.preventDefault()
+                            if (!isAuthenticated) {
+                                toast.error('Please login to add to wishlist')
+                                router.push('/login')
+                                return
+                            }
+                            try {
+                                await toggleWishlist(product._id).unwrap()
+                                toast.success('Wishlist updated')
+                            } catch (err: any) {
+                                toast.error(err?.data?.message || 'Failed to update wishlist')
+                            }
+                        }}
+                        className={`absolute top-2 right-2 p-2 rounded-full shadow-md transition-all duration-300 ${isToggling ? 'opacity-50' : 'hover:scale-110 active:scale-95'} bg-white/80 backdrop-blur-sm text-gray-400 hover:text-red-500`}
+                    >
+                        <Heart size={18} className={isToggling ? 'animate-pulse' : ''} />
+                    </button>
                 </div>
 
                 {/* Content Section */}

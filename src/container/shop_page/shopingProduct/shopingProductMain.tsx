@@ -3,7 +3,8 @@
 import { useGetShopingProductsQuery } from "@/redux/features/shopingProduct/shopingProductApi";
 import { IProduct } from "@/types";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import React, { useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import React, { useMemo, useState, useEffect } from "react";
 import ProductCard from "./ProductCard";
 import ShopingHeader from "./_shopingHeader";
 import ShopingSidebar, { CategoryData } from "./ShopingSidebar";
@@ -18,12 +19,26 @@ const ShopingProductMain: React.FC = () => {
   // Sorting State
   const [sortBy, setSortBy] = useState("Popular");
 
+  const searchParams = useSearchParams();
+  const queryCategory = searchParams.get("category");
+  const queryBrand = searchParams.get("brand");
+
   // Filter States
   const [selectedRating, setSelectedRating] = useState<number | null>(null);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
-  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [selectedBrands, setSelectedBrands] = useState<string[]>(
+    queryBrand ? [queryBrand] : []
+  );
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(
+    queryCategory || null
+  );
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 2000]);
+
+  // Sync state with URL params
+  useEffect(() => {
+    if (queryCategory) setSelectedCategory(queryCategory);
+    if (queryBrand) setSelectedBrands([queryBrand]);
+  }, [queryCategory, queryBrand]);
 
   const { data, isLoading, isError } = useGetShopingProductsQuery(undefined);
   console.log(data, "data");

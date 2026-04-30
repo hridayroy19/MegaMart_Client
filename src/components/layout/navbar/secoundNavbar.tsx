@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
+
+import React, { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   ChevronDown,
   Menu,
   X,
-  Search,
   User,
   LayoutGrid,
   PhoneCall,
@@ -13,17 +15,22 @@ import {
   ShoppingCart,
   LogOut,
   UserCircle,
+  Tag,
+  Store,
+  ChevronRight,
 } from "lucide-react";
-import { usePathname } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
-import MobileMenuItem from "./mobleMenuIte";
-import { menuData } from "@/constants/navbarRouteConstants";
+import { usePathname, useRouter } from "next/navigation";
+import { useSelector, useDispatch } from "react-redux";
 import Link from "next/link";
 import { RootState } from "@/redux/store";
 import { logoutUser } from "@/redux/features/auth/authSlice";
 import { useLogoutMutation } from "@/redux/features/auth/authApi";
-import { useSelector, useDispatch } from "react-redux";
+import { useGetFeatureCategoriesQuery } from "@/redux/features/featureCategory/featureCategoryApi";
+import { useGetAllBransQuery } from "@/redux/features/brands/brandsApi";
+import { useGetShopingProductsQuery } from "@/redux/features/shopingProduct/shopingProductApi";
 import CartDrawer from "../cart/CartDrawer";
+import { menuData } from "@/constants/navbarRouteConstants";
+import MobileMenuItem from "./mobleMenuIte";
 
 type IconButtonProps = {
   icon: React.ReactNode;
@@ -31,25 +38,20 @@ type IconButtonProps = {
   onClick?: () => void;
 };
 
-export const categoriesData = [
-  { name: "Vegetables", icon: "🥦", count: "125 Items" },
-  { name: "Milk & Cake", icon: "🥛", count: "84 Items" },
-  { name: "Grocery", icon: "🛒", count: "210 Items" },
-  { name: "Beauty", icon: "💄", count: "65 Items" },
-  { name: "Wines & Drinks", icon: "🍷", count: "42 Items" },
-  { name: "Juice", icon: "🧃", count: "38 Items" },
-  { name: "Fruits", icon: "🍎", count: "96 Items" },
-  { name: "Tea & Coffee", icon: "☕", count: "54 Items" },
-];
-
 const SecoundNavbar = () => {
   const [open, setOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [userOpen, setUserOpen] = useState(false);
   const [cartOpen, setCartOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<"categories" | "brands">(
+    "categories",
+  );
 
   const pathname = usePathname();
+  const router = useRouter();
+  const dispatch = useDispatch();
+
   const popupRef = useRef<HTMLDivElement>(null);
   const userRef = useRef<HTMLDivElement>(null);
 
@@ -58,17 +60,43 @@ const SecoundNavbar = () => {
   );
   const cartCount = useSelector((s: RootState) => s.cart.items.length || 0);
 
-  const dispatch = useDispatch();
+  // Fetch dynamic data
+  const { data: categories } = useGetFeatureCategoriesQuery(undefined);
+  const { data: brands } = useGetAllBransQuery(undefined);
+  const { data: allProducts } = useGetShopingProductsQuery(undefined);
   const [logoutApi] = useLogoutMutation();
 
-  // ── Scroll detection ───────────────────────────────────────────────────────
+  // Calculate dynamic all categories from products
+  const allCategories = React.useMemo(() => {
+    const catMap = new Map<string, number>();
+    allProducts?.forEach((product) => {
+      if (product.category) {
+        const count = catMap.get(product.category) || 0;
+        catMap.set(product.category, count + 1);
+      }
+    });
+    return Array.from(catMap.entries()).map(([title, count]) => ({
+      title,
+      count,
+      _id: title,
+      image: categories?.find((c: any) => c.title === title)?.image || "",
+    }));
+  }, [allProducts, categories]);
+
+  const brandCounts = React.useMemo(() => {
+    const counts: Record<string, number> = {};
+    allProducts?.forEach((p) => {
+      if (p.brand) counts[p.brand] = (counts[p.brand] || 0) + 1;
+    });
+    return counts;
+  }, [allProducts]);
+
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // ── Outside Click Logic ───────────────────────────────────────────────────
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (userRef.current && !userRef.current.contains(event.target as Node)) {
@@ -99,10 +127,9 @@ const SecoundNavbar = () => {
   const isActive = (link: string) =>
     link === "/" ? pathname === "/" : pathname.startsWith(link);
 
-  // ── Refactored IconCluster ───────────────────────────────────────────────
   const IconCluster = () => (
     <>
-      <Link href="/wishlist">
+      <Link href="/dashboard/wishlist">
         <IconButton icon={<Heart className="w-5 h-5" />} />
       </Link>
 
@@ -147,7 +174,7 @@ const SecoundNavbar = () => {
                       className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-secondary/10 hover:text-secondary text-sm font-medium transition-colors"
                     >
                       <UserCircle className="w-4 h-4" />
-                      My Profile
+                      My Dashboard
                     </Link>
                     <button
                       onClick={handleLogout}
@@ -172,9 +199,9 @@ const SecoundNavbar = () => {
 
   return (
     <div className="sticky top-0 z-[100] w-full">
-      <div className="bg-white/80 dark:bg-slate-950/80 backdrop-blur-xl border-b border-border/50 shadow-sm">
+      <div className="bg-white/90 dark:bg-slate-950/90 backdrop-blur-xl border-b border-border/50 shadow-sm">
         <div className="max-w-[1440px] px-4 lg:px-8 mx-auto py-2.5 flex items-center justify-between gap-4">
-          {/* Left: Category Trigger */}
+          {/* Left: Dynamic Category Trigger */}
           <div className="flex-shrink-0">
             <motion.button
               whileHover={{ scale: 1.02 }}
@@ -183,7 +210,7 @@ const SecoundNavbar = () => {
               className="flex items-center gap-3 bg-secondary text-white px-6 py-2.5 rounded-full shadow-lg font-bold text-sm lg:text-base transition-all"
             >
               <LayoutGrid className="w-5 h-5" />
-              <span className="hidden md:inline">Browse Categories</span>
+              <span className="hidden md:inline">Browse Products</span>
               <span className="md:hidden">Shop</span>
               <ChevronDown
                 className={`w-4 h-4 transition-transform duration-300 ${open ? "rotate-180" : ""}`}
@@ -218,9 +245,8 @@ const SecoundNavbar = () => {
             ))}
           </nav>
 
-          {/* Right Section: Hotline & Icons */}
+          {/* Right Section */}
           <div className="flex items-center gap-4">
-            {/* Hotline: Visible only when NOT scrolled on XL screens */}
             <AnimatePresence mode="wait">
               {!scrolled && (
                 <motion.div
@@ -243,8 +269,6 @@ const SecoundNavbar = () => {
                   </div>
                 </motion.div>
               )}
-
-              {/* Scrolled Icons: Visible only when scrolled on XL screens */}
               {scrolled && (
                 <motion.div
                   key="icons-scrolled"
@@ -258,12 +282,10 @@ const SecoundNavbar = () => {
               )}
             </AnimatePresence>
 
-            {/* Mobile/Tablet Icons: Always visible icons on non-xl screens */}
             <div className="flex xl:hidden items-center gap-2">
               <IconCluster />
             </div>
 
-            {/* Mobile menu trigger */}
             <button
               onClick={() => setMobileOpen(true)}
               className="lg:hidden p-2.5 bg-muted/50 hover:bg-muted rounded-xl transition-colors"
@@ -274,7 +296,7 @@ const SecoundNavbar = () => {
         </div>
       </div>
 
-      {/* ── Mega Menu ── */}
+      {/* ── Dynamic Mega Menu ── */}
       <AnimatePresence>
         {open && (
           <>
@@ -290,39 +312,140 @@ const SecoundNavbar = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 20 }}
-              className="absolute left-4 right-4 lg:left-8 lg:right-auto lg:w-[1000px] top-full mt-3 z-50"
+              className="absolute left-4 right-4 lg:left-8 lg:right-auto lg:w-[1100px] top-full mt-3 z-50"
             >
-              <div className="bg-card border border-border shadow-2xl rounded-3xl overflow-hidden flex flex-col md:flex-row">
+              <div className="bg-card border border-border shadow-2xl rounded-3xl overflow-hidden flex flex-col md:flex-row min-h-[500px]">
+                {/* Sidebar Tabs */}
                 <div className="w-full md:w-72 bg-muted/30 p-8 border-r border-border">
-                  <h3 className="text-lg font-black mb-6">Quick Search</h3>
-                  <div className="relative mb-8">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
-                    <input
-                      type="text"
-                      placeholder="Find category..."
-                      className="w-full pl-10 pr-4 py-2.5 bg-background border rounded-xl text-sm outline-none focus:ring-2 focus:ring-secondary/20"
-                    />
+                  <h3 className="text-lg font-black mb-8">Browse Market</h3>
+
+                  <div className="space-y-4">
+                    <button
+                      onClick={() => setActiveTab("categories")}
+                      className={`w-full flex items-center justify-between p-4 rounded-2xl transition-all ${
+                        activeTab === "categories"
+                          ? "bg-secondary text-white shadow-lg"
+                          : "bg-background hover:bg-muted border border-border"
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <Tag size={20} />
+                        <span className="font-bold">Categories</span>
+                      </div>
+                      <ChevronRight size={16} />
+                    </button>
+
+                    <button
+                      onClick={() => setActiveTab("brands")}
+                      className={`w-full flex items-center justify-between p-4 rounded-2xl transition-all ${
+                        activeTab === "brands"
+                          ? "bg-secondary text-white shadow-lg"
+                          : "bg-background hover:bg-muted border border-border"
+                      }`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <Store size={20} />
+                        <span className="font-bold">Popular Brands</span>
+                      </div>
+                      <ChevronRight size={16} />
+                    </button>
+                  </div>
+
+                  <div className="mt-12 p-6 bg-gradient-to-br from-secondary/10 to-transparent border border-secondary/20 rounded-2xl">
+                    <p className="text-xs font-bold text-secondary uppercase mb-2">
+                      Weekly Offer
+                    </p>
+                    <p className="text-sm font-medium mb-4">
+                      Up to 40% off on organic vegetables
+                    </p>
+                    <Link href="/shop" className="text-xs font-bold underline">
+                      Shop Now
+                    </Link>
                   </div>
                 </div>
-                <div className="flex-1 p-8 grid grid-cols-2 lg:grid-cols-3 gap-4">
-                  {categoriesData.map((cat, i) => (
-                    <div
-                      key={i}
-                      className="group flex items-center gap-4 p-4 rounded-2xl border border-transparent hover:border-secondary/20 hover:bg-secondary/5 transition-all cursor-pointer"
+
+                {/* Content Area */}
+                <div className="flex-1 p-8">
+                  <div className="flex items-center justify-between mb-8">
+                    <h3 className="text-xl font-black">
+                      {activeTab === "categories"
+                        ? "Explore Categories"
+                        : "Shop by Brands"}
+                    </h3>
+                    <Link
+                      href="/shop"
+                      className="text-sm font-bold text-secondary flex items-center gap-1"
                     >
-                      <div className="text-3xl p-3 bg-muted rounded-2xl group-hover:scale-110 transition-transform">
-                        {cat.icon}
-                      </div>
-                      <div>
-                        <p className="font-bold group-hover:text-secondary transition-colors">
-                          {cat.name}
-                        </p>
-                        <p className="text-[11px] text-muted-foreground">
-                          {cat.count}
-                        </p>
-                      </div>
-                    </div>
-                  ))}
+                      View All <ArrowRight size={14} />
+                    </Link>
+                  </div>
+
+                  <div className="grid grid-cols-2 lg:grid-cols-3 gap-6 overflow-y-auto max-h-[500px] pr-2 custom-scrollbar">
+                    {activeTab === "categories"
+                      ? allCategories?.map((cat: any) => (
+                          <div
+                            key={cat._id}
+                            onClick={() => {
+                              setOpen(false);
+                              router.push(`/shop?category=${cat.title}`);
+                            }}
+                            className="group flex items-center gap-4 p-4 rounded-2xl border border-transparent hover:border-secondary/20 hover:bg-secondary/5 transition-all cursor-pointer"
+                          >
+                            <div className="w-14 h-14 bg-muted rounded-2xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform overflow-hidden relative">
+                              {cat.image ? (
+                                <img
+                                  src={cat.image}
+                                  alt={cat.title}
+                                  className="w-full h-full object-cover"
+                                />
+                              ) : (
+                                "📦"
+                              )}
+                            </div>
+                            <div>
+                              <p className="font-bold group-hover:text-secondary transition-colors line-clamp-1">
+                                {cat.title}
+                              </p>
+                              <p className="text-[11px] text-muted-foreground">
+                                Total Items: {cat.count}
+                              </p>
+                            </div>
+                          </div>
+                        ))
+                      : brands?.map((brand: any) => (
+                          <div
+                            key={brand._id}
+                            onClick={() => {
+                              setOpen(false);
+                              router.push(`/shop?brand=${brand.title}`);
+                            }}
+                            className="group flex items-center gap-4 p-4 rounded-2xl border border-transparent hover:border-secondary/20 hover:bg-secondary/5 transition-all cursor-pointer"
+                          >
+                            <div className="w-14 h-14 bg-muted rounded-2xl flex items-center justify-center text-2xl group-hover:scale-110 transition-transform overflow-hidden relative">
+                              {brand.image ? (
+                                <img
+                                  src={brand.image}
+                                  alt={brand.title}
+                                  className="w-full h-full object-contain p-2"
+                                />
+                              ) : (
+                                <Store
+                                  size={24}
+                                  className="text-muted-foreground"
+                                />
+                              )}
+                            </div>
+                            <div>
+                              <p className="font-bold group-hover:text-secondary transition-colors line-clamp-1">
+                                {brand.title}
+                              </p>
+                              <p className="text-[11px] text-muted-foreground">
+                                Total Items: {brandCounts[brand.title] || 0}
+                              </p>
+                            </div>
+                          </div>
+                        ))}
+                  </div>
                 </div>
               </div>
             </motion.div>
@@ -330,10 +453,9 @@ const SecoundNavbar = () => {
         )}
       </AnimatePresence>
 
-      {/* ── Drawers ── */}
       <CartDrawer open={cartOpen} onClose={() => setCartOpen(false)} />
 
-      {/* ── Mobile Sidebar ── */}
+      {/* Mobile Sidebar */}
       <AnimatePresence>
         {mobileOpen && (
           <>
@@ -383,7 +505,21 @@ const SecoundNavbar = () => {
 
 export default SecoundNavbar;
 
-// ── IconButton Sub-component ──
+const ArrowRight = ({ size }: { size: number }) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M5 12h14M12 5l7 7-7 7" />
+  </svg>
+);
+
 function IconButton({ icon, badge, onClick }: IconButtonProps) {
   return (
     <button

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState, useRef, useEffect } from "react";
@@ -10,7 +11,7 @@ import {
   X,
 } from "lucide-react";
 import Topbar from "../topbar/topbar";
-import SecoundNavbar, { categoriesData } from "./secoundNavbar";
+import SecoundNavbar from "./secoundNavbar";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import logo from "@/assets/icons/webisteLogo.png";
@@ -19,7 +20,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
 import { logoutUser } from "@/redux/features/auth/authSlice";
 import { useLogoutMutation } from "@/redux/features/auth/authApi";
+import { useGetShopingProductsQuery } from "@/redux/features/shopingProduct/shopingProductApi";
 import CartDrawer from "../cart/CartDrawer";
+import { useRouter } from "next/navigation";
+import { useMemo } from "react";
 
 type IconButtonProps = {
   icon: React.ReactNode;
@@ -41,6 +45,23 @@ export default function Navbar() {
   const dispatch = useDispatch();
   const [logoutApi] = useLogoutMutation();
   const [cartOpen, setCartOpen] = useState(false);
+  const router = useRouter();
+
+  const { data: allProducts } = useGetShopingProductsQuery(undefined);
+
+  const categories = useMemo(() => {
+    const catMap = new Map<string, number>();
+    allProducts?.forEach((product) => {
+      if (product.category) {
+        const count = catMap.get(product.category) || 0;
+        catMap.set(product.category, count + 1);
+      }
+    });
+    return Array.from(catMap.entries()).map(([name, count]) => ({
+      name,
+      count,
+    }));
+  }, [allProducts]);
 
   const handleLogout = async () => {
     try {
@@ -197,11 +218,12 @@ export default function Navbar() {
                 className="absolute top-full left-1/5 mt-20 w-[300px] bg-background border border-border rounded-xl shadow-2xl z-50"
               >
                 <div className="p-2 max-h-[300px] overflow-y-auto">
-                  {categoriesData.map((cat) => (
+                  {categories?.map((cat: any) => (
                     <button
                       key={cat.name}
                       onClick={() => {
                         setOpenCategory(false);
+                        router.push(`/shop?category=${cat.name}`);
                       }}
                       className="w-full text-left cursor-pointer hover:bg-primary/15 px-3 py-2 rounded-lg"
                     >

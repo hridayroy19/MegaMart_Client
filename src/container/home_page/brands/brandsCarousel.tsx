@@ -8,14 +8,36 @@ import "swiper/css";
 import "swiper/css/navigation";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, ArrowRight } from "lucide-react";
-import data from "@/utils/helpers/brands.json";
+import { useGetAllBransQuery } from "@/redux/features/brands/brandsApi";
+import { useGetShopingProductsQuery } from "@/redux/features/shopingProduct/shopingProductApi";
+import { useRouter } from "next/navigation";
+import { useMemo } from "react";
 
 export default function BrandsCarousel() {
   const swiperRef = useRef<any>(null);
+  const router = useRouter();
+  const { data: brands, isLoading } = useGetAllBransQuery(undefined);
+  const { data: allProducts } = useGetShopingProductsQuery(undefined);
 
-  if (!data || data.length === 0) {
+  const brandCounts = useMemo(() => {
+    const counts: Record<string, number> = {};
+    allProducts?.forEach((p) => {
+      if (p.brand) counts[p.brand] = (counts[p.brand] || 0) + 1;
+    });
+    return counts;
+  }, [allProducts]);
+
+  if (isLoading) {
     return (
-      <p className="py-6 text-sm text-muted-foreground">
+      <div className="py-20 flex justify-center items-center">
+        <div className="w-10 h-10 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
+      </div>
+    );
+  }
+
+  if (!brands || brands.length === 0) {
+    return (
+      <p className="py-6 text-sm text-muted-foreground text-center">
         No brands available at the moment.
       </p>
     );
@@ -79,9 +101,12 @@ export default function BrandsCarousel() {
         onMouseLeave={() => swiperRef.current?.autoplay.start()}
         className="brands-swiper !py-4"
       >
-        {data.map((brand: any) => (
+        {brands.map((brand: any) => (
           <SwiperSlide key={brand._id}>
-            <div className="group relative w-full aspect-[4/3] sm:aspect-square bg-card border border-border/50 rounded-2xl p-6 flex items-center justify-center transition-all duration-300 hover:border-primary/50 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] cursor-pointer overflow-hidden">
+            <div
+              onClick={() => router.push(`/shop?brand=${brand.title}`)}
+              className="group relative w-full aspect-[4/3] sm:aspect-square bg-card border border-border/50 rounded-2xl p-6 flex items-center justify-center transition-all duration-300 hover:border-primary/50 hover:shadow-[0_8px_30px_rgb(0,0,0,0.04)] cursor-pointer overflow-hidden"
+            >
               {/* Subtle background glow on hover */}
               <div className="absolute inset-0 bg-gradient-to-br from-secondary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
 
@@ -95,8 +120,11 @@ export default function BrandsCarousel() {
                 />
               </div>
             </div>
-            <p className="mt-3 text-center text-sm font-medium text-muted-foreground group-hover:text-primary transition-colors">
+            <p className="mt-3 text-center text-sm font-bold text-foreground group-hover:text-primary transition-colors">
               {brand.title}
+            </p>
+            <p className="text-center text-[11px] text-muted-foreground">
+              {brandCounts[brand.title] || 0} Items
             </p>
           </SwiperSlide>
         ))}
