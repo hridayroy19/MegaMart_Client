@@ -87,39 +87,31 @@
 
 .dark {
   /* Dark theme colors - Hex codes */
-  --foreground: #f2f0f6;
-  --background: #140042;
-  --primary: #f5f4f9;
-  --primary-foreground: #230075;
-  --secondary: #020203;
-  --secondary-foreground: #168dff;
-  --accent: #140042;
-  --accent-foreground: #eeedff;
-  --accent2: #140042;
-  --accent2-foreground: #eeedff;
-  --muted: #675b83;
-  --muted-foreground: #f7f5fc;
-  --card: #140042;
-  --card-foreground: #f3f4f6;
-  --popover: #0f172a;
-  --popover-foreground: #ffffff;
+  --background: #fbfbfb;
+  --foreground: #121535;
+  --primary: #15b3ab;
+  --primary-foreground: #1c799b;
+  --secondary: #0a5a56;
+  --secondary-foreground: #10d17a;
+  --accent: #2563eb;
+  --accent-foreground: #ffffff;
+  --accent2: #000000;
+  --accent2-foreground: #000000;
+  --muted: #666668;
+  --muted-foreground: #313131;
+  --card: #ffffff;
+  --card-foreground: #140042;
+  --popover: #ffffff;
+  --popover-foreground: #f1cf0a;
   --destructive: #ef4444;
-  --destructive-foreground: #f8fafc;
-  --border: #312d4b;
-  --input: #3f3a60;
-  --ring: #5b21b6;
+  --destructive-foreground: #c4c6c7;
+  --border: #b4b4b462;
+  --input: #e2e8f0;
+  --ring: #230075;
 
-  --success: #22c55e;
-  --warning: #f97316;
-  --error: #ef4444;
-
-  --gradient-overlay: linear-gradient(
-    180deg,
-    rgba(20, 0, 66, 0.4) 0%,
-    rgba(20, 0, 66, 0.7) 60%,
-    rgba(20, 0, 66, 0.9) 90%,
-    rgba(20, 0, 66, 1) 100%
-  );
+  --success: #16a34a;
+  --warning: #ea580c;
+  --error: #dc2626;
 }
 
 /* Scrollbar */
@@ -167,8 +159,8 @@
   .page-card {
     background-color: var(--card);
     border-radius: 12px;
-    box-shadow: 0 6px 18px rgba(16,24,40,0.06);
-    border: 1px solid rgba(0,0,0,0.04);
+    box-shadow: 0 6px 18px rgba(16, 24, 40, 0.06);
+    border: 1px solid rgba(0, 0, 0, 0.04);
   }
 
   .primary-cta {
@@ -180,18 +172,21 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    transition: transform .08s ease, box-shadow .08s ease, opacity .08s ease;
+    transition:
+      transform 0.08s ease,
+      box-shadow 0.08s ease,
+      opacity 0.08s ease;
   }
 
   .primary-cta:hover {
     transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(11,11,11,0.12);
+    box-shadow: 0 6px 20px rgba(11, 11, 11, 0.12);
   }
 
   .shipping-card {
     background: #fff;
     border-radius: 10px;
-    border: 1px solid rgba(0,0,0,0.06);
+    border: 1px solid rgba(0, 0, 0, 0.06);
     padding: 14px;
   }
 }

@@ -31,18 +31,18 @@ interface OrderCardProps {
 
 export default function OrderCard({ order }: OrderCardProps) {
   return (
-    <div className="rounded-2xl overflow-hidden transition-all duration-300 bg-slate-900/60 backdrop-blur-md border border-slate-700/40 shadow-[0_4px_24px_-1px_rgba(0,0,0,0.2)] hover:border-amber-400/30 hover:-translate-y-0.5 hover:bg-slate-900/80">
+    <div className="rounded-2xl overflow-hidden transition-all duration-300 bg-secondary backdrop-blur-md border border-background/60 rounded-2xl px-6 py-4">
       {/* Order Header */}
-      <div className="px-6 py-4 border-b border-slate-700/50 flex flex-wrap items-center justify-between gap-4">
+      <div className="px-6 py-4 border-b border-background/50 flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-4">
-          <div className="p-2 bg-slate-800 rounded-lg">
-            <Package size={20} className="text-amber-400" />
+          <div className="p-2 bg-secondary/60 backdrop-blur-md border border-background/60 rounded-lg">
+            <Package size={20} className="text-accent" />
           </div>
           <div>
-            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">
+            <p className="text-[10px] text-background font-bold uppercase tracking-widest">
               Order ID
             </p>
-            <p className="text-sm font-mono font-bold text-white uppercase">
+            <p className="text-sm font-mono font-bold text-background uppercase">
               {order.transactionId?.slice(0, 12)}...
             </p>
           </div>
@@ -50,10 +50,10 @@ export default function OrderCard({ order }: OrderCardProps) {
 
         <div className="flex items-center gap-6">
           <div className="hidden sm:block text-right">
-            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest">
+            <p className="text-[10px] text-background font-bold uppercase tracking-widest">
               Date Placed
             </p>
-            <p className="text-xs text-slate-300">
+            <p className="text-xs text-background/80">
               {new Date(order.createdAt).toLocaleDateString("en-US", {
                 month: "short",
                 day: "numeric",
@@ -69,7 +69,7 @@ export default function OrderCard({ order }: OrderCardProps) {
       <div className="px-6 py-6 space-y-4">
         {order.items?.map((item) => (
           <div key={item._id} className="flex items-center gap-4 group">
-            <div className="w-16 h-16 rounded-xl bg-slate-800 border border-slate-700 overflow-hidden flex-shrink-0 relative">
+            <div className="w-14 h-14 rounded-xl bg-secondary/60 backdrop-blur-md border border-background/60 overflow-hidden flex-shrink-0 relative">
               {item.product?.images?.[0] || item.product?.thumbnail ? (
                 <Image
                   src={item.product.images?.[0] ?? item.product.thumbnail!}
@@ -85,29 +85,31 @@ export default function OrderCard({ order }: OrderCardProps) {
             </div>
 
             <div className="flex-1 min-w-0">
-              <h4 className="text-sm font-bold text-white truncate group-hover:text-amber-400 transition-colors">
+              <h4 className="text-sm font-bold text-background truncate group-hover:text-amber-400 transition-colors">
                 {item.product?.name ?? "Product"}
               </h4>
-              <p className="text-xs text-slate-500 mt-0.5">
+              <p className="text-xs text-background/80 mt-0.5">
                 Quantity:{" "}
-                <span className="text-slate-300">{item.quantity}</span>
+                <span className="text-background/80">{item.quantity}</span>
               </p>
             </div>
 
             <div className="text-right">
-              <p className="text-sm font-bold text-white">
+              <p className="text-sm font-bold text-background">
                 ${(item.priceAt * item.quantity).toFixed(2)}
               </p>
-              <p className="text-[10px] text-slate-500">${item.priceAt} each</p>
+              <p className="text-[10px] text-background/80">
+                ${item.priceAt} each
+              </p>
             </div>
           </div>
         ))}
       </div>
 
       {/* Order Tracker */}
-      <div className="px-6 py-4 bg-slate-900/30 border-t border-slate-700/30">
+      <div className="px-6 py-4 bg-secondary/30 border-t border-slate-700/30">
         <div className="flex items-center justify-between mb-2">
-          <p className="text-xs font-bold text-slate-400">Order Progress</p>
+          <p className="text-xs font-bold text-background">Order Progress</p>
           <p className="text-xs font-medium text-amber-400/80">
             Est. Arrival: 3-5 days
           </p>
@@ -116,18 +118,18 @@ export default function OrderCard({ order }: OrderCardProps) {
       </div>
 
       {/* Order Footer */}
-      <div className="px-6 py-4 bg-slate-800/20 flex flex-wrap items-center justify-between gap-4">
-        <div className="flex items-center gap-4 text-xs text-slate-400">
+      <div className="px-6 py-4 bg-secondary/60 backdrop-blur-md border border-background/60 rounded-2xl px-6 py-4">
+        <div className="flex items-center gap-4 text-xs text-background">
           <div className="flex items-center gap-1.5">
-            <CreditCard size={14} className="text-slate-500" />
+            <CreditCard size={14} className="text-background" />
             <span>
               {order.paymentStatus === "Success"
                 ? "Paid"
                 : "Unpaid (COD/Pending)"}
             </span>
           </div>
-          <div className="flex items-center gap-1.5 border-l border-slate-700 pl-4">
-            <MapPin size={14} className="text-slate-500" />
+          <div className="flex items-center gap-1.5 border-l border-border pl-4">
+            <MapPin size={14} className="text-background" />
             <span className="truncate max-w-[120px]">
               {order.customer?.city ?? "Address"}
             </span>
@@ -136,7 +138,7 @@ export default function OrderCard({ order }: OrderCardProps) {
 
         <div className="flex items-center gap-4">
           <div className="text-right">
-            <p className="text-[10px] text-slate-500 font-bold uppercase tracking-widest leading-none mb-1">
+            <p className="text-[10px] text-background font-bold uppercase tracking-widest leading-none mb-1">
               Grand Total
             </p>
             <p className="text-lg font-bold text-amber-400">
