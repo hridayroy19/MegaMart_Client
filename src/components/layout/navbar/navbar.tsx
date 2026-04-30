@@ -25,10 +25,10 @@ import CartDrawer from "../cart/CartDrawer";
 import { useRouter } from "next/navigation";
 import { useMemo } from "react";
 
-type IconButtonProps = {
+interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   icon: React.ReactNode;
   badge?: number;
-};
+}
 
 export default function Navbar() {
   const [openCategory, setOpenCategory] = useState(false);
@@ -143,12 +143,11 @@ export default function Navbar() {
             <IconButton icon={<Heart />} />
           </Link>
 
-          <button onClick={() => setCartOpen(true)}>
-            <IconButton
-              icon={<ShoppingCart />}
-              badge={useSelector((s: RootState) => s.cart.items.length || 0)}
-            />
-          </button>
+          <IconButton
+            onClick={() => setCartOpen(true)}
+            icon={<ShoppingCart />}
+            badge={useSelector((s: RootState) => s.cart.items.length || 0)}
+          />
 
           {/* USER */}
           <div className="relative" ref={userRef}>
@@ -265,11 +264,14 @@ export default function Navbar() {
   );
 }
 
-function IconButton({ icon, badge }: IconButtonProps) {
+function IconButton({ icon, badge, className, ...props }: IconButtonProps) {
   return (
-    <button className="relative p-2 rounded-lg hover:bg-background/10">
+    <button
+      className={`relative p-2 rounded-lg hover:bg-background/10 transition-colors ${className || ""}`}
+      {...props}
+    >
       {icon}
-      {badge && (
+      {badge !== undefined && badge > 0 && (
         <span className="absolute top-0 right-0 bg-primary text-foreground text-xs w-4 h-4 flex items-center justify-center rounded-full">
           {badge}
         </span>

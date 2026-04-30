@@ -32,11 +32,10 @@ import CartDrawer from "../cart/CartDrawer";
 import { menuData } from "@/constants/navbarRouteConstants";
 import MobileMenuItem from "./mobleMenuIte";
 
-type IconButtonProps = {
+interface IconButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   icon: React.ReactNode;
   badge?: number;
-  onClick?: () => void;
-};
+}
 
 const SecoundNavbar = () => {
   const [open, setOpen] = useState(false);
@@ -520,11 +519,11 @@ const ArrowRight = ({ size }: { size: number }) => (
   </svg>
 );
 
-function IconButton({ icon, badge, onClick }: IconButtonProps) {
+function IconButton({ icon, badge, className, ...props }: IconButtonProps) {
   return (
     <button
-      onClick={onClick}
-      className="relative p-2.5 rounded-xl hover:bg-secondary/10 text-foreground/80 hover:text-secondary transition-all"
+      className={`relative p-2.5 rounded-xl hover:bg-secondary/10 text-foreground/80 hover:text-secondary transition-all ${className || ""}`}
+      {...props}
     >
       {icon}
       {badge ? (

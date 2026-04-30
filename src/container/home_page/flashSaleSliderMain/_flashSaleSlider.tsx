@@ -1,14 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import {
-  setActiveSlide,
-  setSelectedFlashSaleId,
-} from "@/redux/features/flashSale/flashSaleSlice";
+import { setActiveSlide } from "@/redux/features/flashSale/flashSaleSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { IFlashSale } from "@/types";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { addItem, syncCartToServer } from "@/redux/features/cart/cartSlice";
+import toast from "react-hot-toast";
 
 type FlashSaleSliderProps = {
   items: IFlashSale[];
@@ -167,88 +168,88 @@ export const FlashSaleSlider = ({ items }: FlashSaleSliderProps) => {
             <article
               key={item._id}
               className="
-                group
-                snap-start
-                border-border bg-card md:p-4  hover:border-primary transition-all
-                relative flex flex-col
-                flex-shrink-0
-                w-[45%]              
-                sm:w-[40%]          
-                 md:w-[calc((100%-2rem)/4)]          
-                lg:w-[calc((100%-2rem)/4)] 
-                xl:w-[calc((100%-3rem)/5)]  
-                p-4
-                border
-                shadow-sm  duration-500 ease-in-out
-                rounded-2xl 
-             
-              "
+    group relative flex flex-col flex-shrink-0
+    bg-background border border-border
+    rounded-2xl p-3 transition-colors duration-200
+    w-[45%] sm:w-[40%] md:w-[calc((100%-2rem)/4)] xl:w-[calc((100%-3rem)/5)]
+  "
             >
-              {/* Product image */}
-              <div className="relative  mt-2  md:mt-10 flex h-40 md:h-52   items-center justify-center overflow-hidden">
+              <span className="absolute top-2.5 left-2.5 text-destructive font-medium px-2 py-0.5 rounded-full">
+                -{Math.round(((basePrice - salePrice) / basePrice) * 100)}%
+              </span>
+
+              <button
+                onClick={async () => {
+                  dispatch(addItem({ product: item._id, quantity: 1 }));
+                  try {
+                    await dispatch(syncCartToServer() as any).unwrap();
+                  } catch (err) {}
+                  toast.success("Added to Cart");
+                }}
+                className="absolute top-2.5 right-2.5 rounded-full  flex items-center justify-center transition-colors "
+              >
+                <Plus
+                  size={24}
+                  className="text-primary hover:border rounded-full border-primary cursor-pointer "
+                />
+              </button>
+
+              {/* Image */}
+              <div className="flex items-center justify-center h-24 mt-7 mb-2.5">
                 <Image
                   src={item.thumbnail}
                   alt={item.name}
-                  width={150}
-                  height={120}
-                  className="
-                  md:pb-7
-                    h-full w-auto object-contain
-                    transition-transform duration-500 ease-in-out
-                    group-hover:scale-100
-                  "
+                  width={120}
+                  height={96}
+                  className="h-full w-auto object-contain transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
 
-              {/* Add button */}
-              <button
-                className="absolute right-4 md:top-4 flex items-center gap-1 rounded-full bg-sky-100 px-4 py-1 text-xs font-semibold text-sky-700 shadow-sm"
-                onClick={() => dispatch(setSelectedFlashSaleId(item._id))}
-              >
-                Add
-                <span className="text-base">🛒</span>
-              </button>
-              {/* Price row */}
-              <div className="mb-1 flex items-center  gap-2">
-                <span className=" font-bold text-foreground text-lg ">
+              {/* Price */}
+              <div className="flex items-baseline gap-1.5 flex-wrap mb-1">
+                <span className="text-[15px] font-medium text-foreground">
                   ${salePrice.toFixed(2)}
                 </span>
-                <span className="text-lg text-muted">/Qty</span>
                 {basePrice > salePrice && (
-                  <span className="text-lg text-muted line-through">
+                  <span className="text-xs text-foreground line-through">
                     ${basePrice.toFixed(2)}
                   </span>
                 )}
               </div>
 
               {/* Rating */}
-              <div className="mb-2 flex items-center gap-1  text-foreground">
+              <div className="flex items-center gap-1 text-xs text-zinc-400 mb-1">
+                <span className="text-amber-500">★</span>
                 <span>{item.rating?.toFixed(1) ?? "4.8"}</span>
-                <span className="text-amber-400">★</span>
                 <span>
                   (
                   {item.reviewsCount
-                    ? `${Math.round(item.reviewsCount / 100) / 10}k`
+                    ? `${(item.reviewsCount / 1000).toFixed(1)}k`
                     : "17k"}
                   )
                 </span>
               </div>
 
               {/* Name */}
-              <h3 className="mb-4 line-clamp-2  text-foreground">
+              <Link
+                href={`/shop/${item._id}`}
+                className="text-md text-foreground leading-snug line-clamp-2 mb-2 flex-1 hover:text-primary transition-colors"
+              >
                 {item.name}
-              </h3>
+              </Link>
 
-              {/* Progress bar */}
+              {/* Progress */}
               <div className="mt-auto">
-                <div className="h-1.5 w-full overflow-hidden rounded-full bg-background">
+                <div className="h-1 w-full rounded-full bg-background overflow-hidden mb-1.5">
                   <div
-                    className="h-full rounded-full bg-sky-500"
+                    className="h-full rounded-full bg-destructive"
                     style={{ width: `${soldPercent}%` }}
                   />
                 </div>
-                <p className="mt-2 text-xs text-foreground">
-                  Sold: {sold}/{stock}
+                <p className="text-[14px] text-foreground">
+                  Sold:{" "}
+                  <span className="text-destructive font-medium">{sold}</span>/
+                  {stock}
                 </p>
               </div>
             </article>

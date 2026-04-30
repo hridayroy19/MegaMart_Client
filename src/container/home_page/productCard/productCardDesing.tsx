@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { IProduct } from "@/types";
@@ -9,15 +10,15 @@ import {
 } from "@/redux/features/wishlist/wishlistApi";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
-import { addItem, syncCartToServer } from '@/redux/features/cart/cartSlice'
-import toast from 'react-hot-toast'
+import { addItem, syncCartToServer } from "@/redux/features/cart/cartSlice";
+import toast from "react-hot-toast";
 
 export function ProductCard({ product }: { product: IProduct }) {
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
   const { data: wishlistRes } = useGetWishlistQuery(undefined, {
     skip: !isAuthenticated,
   });
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [toggleWishlist] = useToggleWishlistMutation();
 
   const isWishlisted =
@@ -108,11 +109,16 @@ export function ProductCard({ product }: { product: IProduct }) {
       </div>
 
       {/* Add To Cart */}
-      <button onClick={async () => {
-        dispatch(addItem({ product: product._id, quantity: 1 }))
-        try { await dispatch(syncCartToServer() as any).unwrap() } catch (err) {}
-        toast.success('Added to Cart')
-      }} className="mt-auto flex w-full items-center justify-center gap-2 bg-secondary/15 py-2 text-sm font-medium hover:bg-primary hover:text-accent-foreground rounded-3xl transition-colors">
+      <button
+        onClick={async () => {
+          dispatch(addItem({ product: product._id, quantity: 1 }));
+          try {
+            await dispatch(syncCartToServer() as any).unwrap();
+          } catch (err) {}
+          toast.success("Added to Cart");
+        }}
+        className="mt-auto flex w-full items-center justify-center gap-2 bg-secondary/15 py-2 text-sm font-medium hover:bg-primary hover:text-accent-foreground rounded-3xl transition-colors"
+      >
         <ShoppingCart size={18} />
         Add To Cart
       </button>
