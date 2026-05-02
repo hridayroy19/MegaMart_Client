@@ -3,7 +3,6 @@ import Banner from "@/container/home_page/banner/banner";
 import BrandsCarousel from "@/container/home_page/brands/brandsCarousel";
 import DailyBestSells from "@/container/home_page/dailyBestSells/dailyBestSells";
 import DiscountBanner from "@/container/home_page/discountBanner/discountBanner";
-import OfferSection from "@/container/home_page/fastOrderOffer/offerSection";
 import { FeatureCategory } from "@/container/home_page/featureCategory/featureCategory";
 import FlashSaleCounter from "@/container/home_page/flashSaleCounter/flashSaleCounter";
 import { FlashSaleSliderMain } from "@/container/home_page/flashSaleSliderMain/flashSaleSliderMain";
@@ -13,6 +12,7 @@ import NewsletterSection from "@/container/home_page/newsletterSection/newslette
 import ProductSection from "@/container/home_page/productCard/productSection";
 import FeatureSection from "@/container/home_page/subBannerSlider/subBannerSlider";
 import WelcomePopup from "../../components/common/welcomePopup/welcomePopup";
+import PromoBanners from "@/container/home_page/fastOrderOffer/offerSection";
 
 const Homepage = () => {
   return (
@@ -38,7 +38,7 @@ const Homepage = () => {
         <ProductSection />
       </section>
       <section className="section-padding-t section-padding-x">
-        <OfferSection />
+        <PromoBanners />
       </section>
       <section className="section-padding-t section-padding-x">
         <HotDealsToday />

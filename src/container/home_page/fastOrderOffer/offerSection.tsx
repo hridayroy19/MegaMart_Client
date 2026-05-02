@@ -1,64 +1,91 @@
 "use client";
 
-import { useGetOfferCardQuery } from "@/redux/features/offerCard/offerCardApi";
-import { ArrowRight } from "lucide-react";
+import Image from "next/image";
+import { useState } from "react";
+import imageOne from "@/assets/images/homePage/offer/fast.png";
+import imageTwo from "@/assets/images/homePage/offer/secound.png";
 
-export default function OfferSection() {
-  const { data: offers = [], isLoading, isError } = useGetOfferCardQuery();
+export default function PromoBanners() {
+  const [copied, setCopied] = useState(false);
 
-  if (isLoading)
-    return (
-      <p className="py-6 text-sm text-muted-foreground">Loading offers...</p>
-    );
-  if (isError) return null;
+  function handleCopy() {
+    navigator.clipboard.writeText("NEW50").catch(() => {});
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  }
 
   return (
-    <section className="w-full">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {offers.map((offer) => (
-          <div
-            key={offer.id}
-            className="relative rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 h-[180px] md:h-[220px]"
-            style={{
-              backgroundImage: `url(${offer.bgImage})`,
-              backgroundSize: "cover",
-              backgroundRepeat: "no-repeat",
-              opacity: 0.95,
-              backgroundPosition:
-                offer.imagePosition === "left" ? "left center" : "right center",
-            }}
+    <div className="flex flex-col lg:flex-row gap-4 w-full">
+      {/* Card 1 */}
+      <div className="relative flex flex-1 overflow-hidden rounded-2xl min-h-[200px] sm:min-h-[240px]">
+        <Image
+          src={imageOne}
+          alt="cashback offer"
+          fill
+          className="object-cover object-center"
+        />
+
+        <div className="absolute inset-0 bg-gradient-to-r from-primary/75 via-primary/20 to-transparent" />
+
+        {/* Text Content */}
+        <div className="relative z-10 flex flex-col justify-center items-end px-7 text-center w-full h-full p-4">
+          <h2 className="text-background text-2xl sm:text-3xl md:text-4xl font-bold leading-tight">
+            10% Back
+          </h2>
+
+          <p className="mt-2 text-background/90">
+            Earn 10% cash back on Swootech.
+          </p>
+
+          <a
+            href="#"
+            className="mt-2 font-semibold text-background underline underline-offset-2 hover:text-primary transition"
           >
-            {/* Text content */}
-            <div
-              className={`relative z-10 h-full p-2 md:p-4 flex flex-col justify-between w-[65%] xl:w-[50%] lg:w-[60%] md:w-[70%] ${
-                offer.imagePosition === "right" ? "md:ml-auto" : ""
+            Learn how
+          </a>
+        </div>
+      </div>
+
+      {/* Card 2 */}
+      <div className="relative flex flex-1 items-center overflow-hidden rounded-2xl min-h-[200px] sm:min-h-[220px]">
+        <Image
+          src={imageTwo}
+          alt="electronics deal"
+          fill
+          className="object-cover object-center"
+        />
+
+        <div className="absolute inset-0 bg-gradient-to-r from-foreground/75 via-foreground/40 to-transparent" />
+
+        <div className="relative z-10 p-5 sm:p-7 md:p-8 w-[80%] sm:w-[70%] lg:w-[60%]">
+          <p className="text-[10px] sm:text-[11px] font-semibold tracking-[2px] uppercase text-background/40">
+            Limited offer
+          </p>
+
+          <h2 className="mt-1 text-xl sm:text-2xl md:text-3xl font-bold text-background leading-tight">
+            Electronics Mega Deal
+          </h2>
+          <p className="text-background">
+            Enter your phone number and well send you a download link.
+          </p>
+          <button
+            onClick={handleCopy}
+            className="mt-4 inline-flex items-center rounded-xl border border-border overflow-hidden active:scale-95 transition"
+          >
+            <span className="px-3 py-2 text-[10px] sm:text-xs text-background/40 bg-background/5">
+              Copy code
+            </span>
+
+            <span
+              className={`px-4 py-2 text-[10px] sm:text-xs font-bold tracking-widest text-black transition ${
+                copied ? "bg-green-400" : "bg-primary"
               }`}
             >
-              <div className="flex flex-col gap-1.5">
-                <h2 className=" leading-snug drop-shadow">{offer.title}</h2>
-
-                <div className="flex flex-wrap gap-x-3 mt-1">
-                  <span className=" backdrop-blur-sm px-2.5 py-0.5 rounded-full">
-                    {offer.deliveryTime}
-                  </span>
-                  <br />
-                  <span className="kdrop-blur-sm px-2.5 py-0.5 rounded-full">
-                    {offer.expireDate}
-                  </span>
-                </div>
-              </div>
-
-              <button
-                className={`text-background px-5 py-2 rounded-full font-semibold inline-flex items-center gap-2 hover:gap-3 transition-all duration-200 text-sm w-fit shadow-md`}
-                style={{ backgroundColor: offer.buttonColor }}
-              >
-                Shop Now
-                <ArrowRight size={16} />
-              </button>
-            </div>
-          </div>
-        ))}
+              {copied ? "Copied!" : "NEW50"}
+            </span>
+          </button>
+        </div>
       </div>
-    </section>
+    </div>
   );
 }
