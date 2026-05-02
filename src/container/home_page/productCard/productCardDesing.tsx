@@ -12,6 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
 import { addItem, syncCartToServer } from "@/redux/features/cart/cartSlice";
 import toast from "react-hot-toast";
+import Link from "next/link";
 
 export function ProductCard({ product }: { product: IProduct }) {
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
@@ -78,9 +79,11 @@ export function ProductCard({ product }: { product: IProduct }) {
       </div>
 
       {/* Product Name */}
+      <Link href={`/shop/${product._id}`} >
       <h3 className="mb-2 line-clamp-2 hover:text-primary cursor-pointer">
         {product.name}
       </h3>
+      </Link>
 
       {/* Seller */}
       <div className="mb-3 flex items-center gap-1 text-muted text-sm">
