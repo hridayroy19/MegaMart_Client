@@ -12,10 +12,13 @@ import { HotDealsToday } from "@/container/home_page/hotDealsToday/hotDealsToday
 import NewsletterSection from "@/container/home_page/newsletterSection/newsletterSection";
 import ProductSection from "@/container/home_page/productCard/productSection";
 import FeatureSection from "@/container/home_page/subBannerSlider/subBannerSlider";
+import WelcomePopup from "../../components/common/welcomePopup/welcomePopup";
 
 const Homepage = () => {
   return (
     <div className="max-content-width">
+      <WelcomePopup />
+
       <section className="section-content-top ">
         <Banner />
       </section>
