@@ -5,6 +5,7 @@ import { Star, ChevronRight } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import { IProduct } from "@/types";
+import Link from "next/link";
 
 interface TopSellingProductProps {
   title: string;
@@ -57,8 +58,9 @@ export default function TopSellingProduct({
           {slides.map((group, index) => (
             <SwiperSlide key={index}>
               <div className="flex flex-col gap-5">
-                {group.map((item) => (
-                  <div
+                {group?.map((item) => (
+                  <Link
+                    href={`/shop/${item?._id}`}
                     key={item._id}
                     className="group flex items-center gap-4 p-2 rounded-xl transition-all duration-300 hover:bg-muted/50"
                   >
@@ -108,7 +110,7 @@ export default function TopSellingProduct({
                           )}
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </SwiperSlide>

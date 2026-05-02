@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { IProduct } from "@/types";
@@ -11,23 +12,22 @@ import {
   Star,
 } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useGetWishlistQuery, useToggleWishlistMutation } from "@/redux/features/wishlist/wishlistApi";
-import { useSelector } from "react-redux";
+import {
+  useGetWishlistQuery,
+  useToggleWishlistMutation,
+} from "@/redux/features/wishlist/wishlistApi";
+import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
+import { addItem, syncCartToServer } from "@/redux/features/cart/cartSlice";
+import toast from "react-hot-toast";
 
 interface Props {
   product: IProduct;
 }
 
 const ProductInfo = ({ product }: Props) => {
-  const {
-    name,
-    description,
-    pricing,
-    rating,
-    reviewsCount,
-    inventory,
-  } = product;
+  const { name, description, pricing, rating, reviewsCount, inventory } =
+    product;
 
   const sold = inventory?.sold || 0;
   const stock = inventory?.stock || 0;
@@ -44,22 +44,28 @@ const ProductInfo = ({ product }: Props) => {
     isAuthenticated &&
     (wishlistRes as IProduct[])?.some((p: IProduct) => p._id === product._id);
 
+  const dispatch = useDispatch();
+
   const handleToggleWishlist = async () => {
     if (!isAuthenticated) {
-      alert("Please login to add to wishlist");
+      toast.error("Please login to add to wishlist");
       return;
     }
     try {
       await toggleWishlist(product._id).unwrap();
+      toast.success(
+        isWishlisted ? "Removed from wishlist" : "Added to wishlist",
+      );
     } catch (err) {
       console.error("Failed to toggle wishlist", err);
+      toast.error("Failed to update wishlist");
     }
   };
 
-  //  State for Quantity 
+  //  State for Quantity
   const [quantity, setQuantity] = useState(1);
 
-  //  Handlers 
+  //  Handlers
   const handleDecrease = () => {
     if (quantity > 1) {
       setQuantity((prev) => prev - 1);
@@ -69,7 +75,31 @@ const ProductInfo = ({ product }: Props) => {
   const handleIncrease = () => {
     if (quantity < availableStock) {
       setQuantity((prev) => prev + 1);
+    } else {
+      toast.error("Not enough stock available");
     }
+  };
+
+  const handleAddToCart = async () => {
+    dispatch(addItem({ product: product._id, quantity }));
+    try {
+      await dispatch(syncCartToServer() as any).unwrap();
+      toast.success("Added to Cart");
+    } catch (err) {
+      console.error("Failed to sync cart", err);
+    }
+  };
+
+  const handleWhatsAppOrder = () => {
+    const message = encodeURIComponent(
+      `Hi, I'm interested in ordering "${name}".\nPrice: $${pricing?.salePrice > 0 ? pricing.salePrice : pricing?.basePrice}\nQuantity: ${quantity}\nLink: ${window.location.href}`,
+    );
+    window.open(`https://wa.me/880123456789?text=${message}`, "_blank");
+  };
+
+  const handleShare = () => {
+    navigator.clipboard.writeText(window.location.href);
+    toast.success("Link copied to clipboard!");
   };
 
   // Countdown
@@ -90,10 +120,10 @@ const ProductInfo = ({ product }: Props) => {
       if (difference > 0) {
         const days = Math.floor(difference / (1000 * 60 * 60 * 24));
         const hours = Math.floor(
-          (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)
+          (difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
         );
         const minutes = Math.floor(
-          (difference % (1000 * 60 * 60)) / (1000 * 60)
+          (difference % (1000 * 60 * 60)) / (1000 * 60),
         );
         const seconds = Math.floor((difference % (1000 * 60)) / 1000);
 
@@ -120,10 +150,11 @@ const ProductInfo = ({ product }: Props) => {
             {[...Array(5)].map((_, i) => (
               <Star
                 key={i}
-                className={`w-4 h-4 ${i < Math.floor(rating)
-                  ? "text-orange-400 fill-orange-400"
-                  : "text-gray-300"
-                  }`}
+                className={`w-4 h-4 ${
+                  i < Math.floor(rating)
+                    ? "text-orange-400 fill-orange-400"
+                    : "text-gray-300"
+                }`}
               />
             ))}
             <span className="font-semibold ml-1">{rating} Star Rating</span>
@@ -148,14 +179,19 @@ const ProductInfo = ({ product }: Props) => {
       {/* Price & WhatsApp Button */}
       <div className="flex items-center justify-between border-b border-gray-300 pb-6">
         <div className="flex items-center gap-3">
-          <span className="text-3xl font-bold text-slate-900">${pricing?.salePrice > 0 ? pricing.salePrice : pricing?.basePrice}</span>
+          <span className="text-3xl font-bold text-slate-900">
+            ${pricing?.salePrice > 0 ? pricing.salePrice : pricing?.basePrice}
+          </span>
           {pricing?.discountPercentage > 0 && (
             <span className="text-lg line-through text-gray-400 font-medium">
               ${pricing.basePrice}
             </span>
           )}
         </div>
-        <button className="bg-[#108c84] hover:bg-[#0d756e] text-white px-6 py-2.5 rounded-full font-semibold text-sm transition shadow-sm">
+        <button
+          onClick={handleWhatsAppOrder}
+          className="bg-[#108c84] hover:bg-[#0d756e] text-white px-6 py-2.5 rounded-full font-semibold text-sm transition shadow-sm"
+        >
           Order on WhatsApp
         </button>
       </div>
@@ -216,7 +252,8 @@ const ProductInfo = ({ product }: Props) => {
           />
         </div>
         <p className="text-xs text-slate-500 font-medium">
-          Available only: <span className="text-slate-900">{availableStock}</span>
+          Available only:{" "}
+          <span className="text-slate-900">{availableStock}</span>
         </p>
       </div>
 
@@ -224,14 +261,16 @@ const ProductInfo = ({ product }: Props) => {
       <div className="space-y-4 pt-2">
         <p className="font-semibold text-slate-700 text-sm">Quantity:</p>
         <div className="flex gap-4">
-
           {/*  Quantity Input */}
           <div className="flex items-center border border-gray-300 rounded-lg select-none">
             <button
               onClick={handleDecrease}
               disabled={quantity <= 1}
-              className={`px-3 py-2 text-gray-600 transition ${quantity <= 1 ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-50"
-                }`}
+              className={`px-3 py-2 text-gray-600 transition ${
+                quantity <= 1
+                  ? "opacity-50 cursor-not-allowed"
+                  : "hover:bg-gray-50"
+              }`}
             >
               <Minus size={16} />
             </button>
@@ -244,15 +283,21 @@ const ProductInfo = ({ product }: Props) => {
             <button
               onClick={handleIncrease}
               disabled={quantity >= availableStock}
-              className={`px-3 py-2 text-gray-600 transition ${quantity >= availableStock ? "opacity-50 cursor-not-allowed" : "hover:bg-gray-50"
-                }`}
+              className={`px-3 py-2 text-gray-600 transition ${
+                quantity >= availableStock
+                  ? "opacity-50 cursor-not-allowed"
+                  : "hover:bg-gray-50"
+              }`}
             >
               <Plus size={16} />
             </button>
           </div>
 
           {/* Add to Cart */}
-          <button className="flex-1 bg-[#235789] hover:bg-[#1a446d] text-white font-bold py-2.5 rounded-lg flex items-center justify-center gap-2 transition shadow-md">
+          <button
+            onClick={handleAddToCart}
+            className="flex-1 bg-[#235789] hover:bg-[#1a446d] text-white font-bold py-2.5 rounded-lg flex items-center justify-center gap-2 transition shadow-md"
+          >
             <ShoppingCart size={20} />
             Add To Cart
           </button>
@@ -260,7 +305,7 @@ const ProductInfo = ({ product }: Props) => {
 
         {/* Action Buttons  */}
         <div className="flex gap-2 pt-2">
-          <button 
+          <button
             onClick={handleToggleWishlist}
             className={`flex items-center gap-2 px-4 py-2 border rounded-lg text-xs font-semibold uppercase tracking-wider transition-colors ${
               isWishlisted
@@ -268,12 +313,16 @@ const ProductInfo = ({ product }: Props) => {
                 : "border-gray-200 text-slate-600 hover:bg-gray-50"
             }`}
           >
-            <Heart size={16} className={isWishlisted ? "fill-error" : ""} /> {isWishlisted ? "Wishlisted" : "Wishlist"}
+            <Heart size={16} className={isWishlisted ? "fill-error" : ""} />{" "}
+            {isWishlisted ? "Wishlisted" : "Wishlist"}
           </button>
           <button className="flex items-center gap-2 px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 text-xs font-semibold text-slate-600 uppercase tracking-wider">
             <Repeat2 size={16} /> Compare
           </button>
-          <button className="px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 text-slate-600 ml-auto">
+          <button
+            onClick={handleShare}
+            className="px-4 py-2 border border-gray-200 rounded-lg hover:bg-gray-50 text-slate-600 ml-auto"
+          >
             <Share2 size={16} />
           </button>
         </div>

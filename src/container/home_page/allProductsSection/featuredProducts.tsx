@@ -5,6 +5,7 @@ import { Star, ChevronRight } from "lucide-react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Pagination } from "swiper/modules";
 import { IFeatureProduct } from "@/types";
+import Link from "next/link";
 
 interface FeaturedProductsProps {
   title: string;
@@ -30,7 +31,9 @@ export default function FeaturedProducts({
       {/* Header Section */}
       <div className="p-5 border-b border-border/50 flex justify-between items-center">
         <div className="relative">
-          <h2 className="text-xl font-bold tracking-tight text-foreground">{title}</h2>
+          <h2 className="text-xl font-bold tracking-tight text-foreground">
+            {title}
+          </h2>
           <div className="absolute -bottom-1 left-0 h-1 w-12 bg-primary rounded-full"></div>
         </div>
         <button className="text-muted-foreground hover:text-primary transition-colors">
@@ -55,8 +58,9 @@ export default function FeaturedProducts({
           {slides.map((group, index) => (
             <SwiperSlide key={index}>
               <div className="flex flex-col gap-5">
-                {group.map((item) => (
-                  <div
+                {group?.map((item) => (
+                  <Link
+                    href={`/shop/${item?._id}`}
                     key={item._id}
                     className="group flex items-center gap-4 p-2 rounded-xl transition-all duration-300 hover:bg-muted/50"
                   >
@@ -98,14 +102,15 @@ export default function FeaturedProducts({
                         <span className="text-base font-bold text-primary">
                           ${item.pricing?.salePrice?.toFixed(2) || "0.00"}
                         </span>
-                        {item.pricing?.basePrice && item.pricing.basePrice > item.pricing.salePrice && (
-                          <span className="text-xs text-muted-foreground line-through decoration-muted-foreground/50">
-                            ${item.pricing.basePrice.toFixed(2)}
-                          </span>
-                        )}
+                        {item.pricing?.basePrice &&
+                          item.pricing.basePrice > item.pricing.salePrice && (
+                            <span className="text-xs text-muted-foreground line-through decoration-muted-foreground/50">
+                              ${item.pricing.basePrice.toFixed(2)}
+                            </span>
+                          )}
                       </div>
                     </div>
-                  </div>
+                  </Link>
                 ))}
               </div>
             </SwiperSlide>

@@ -2,7 +2,8 @@ import axios from 'axios'
 
 export const baseApi = axios.create({
     withCredentials: true,
-    baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1',
+    // baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:5000/api/v1',
+    baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://megamartserver-two.vercel.app/api/v1',
 })
 
 baseApi.interceptors.request.use((config) => {

@@ -21,7 +21,7 @@ const ProductDetailsView = ({ product }: Props) => {
         </div>
 
         <div className="lg:col-span-3">
-          <ProductMetaInfo />
+          <ProductMetaInfo product={product} />
         </div>
       </div>
     </div>

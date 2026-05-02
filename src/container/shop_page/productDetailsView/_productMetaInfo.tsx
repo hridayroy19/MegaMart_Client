@@ -8,7 +8,10 @@ import {
   Truck,
 } from "lucide-react";
 
-const ProductMetaInfo = () => {
+import Link from "next/link";
+import { IProduct } from "@/types";
+
+const ProductMetaInfo = ({ product }: { product: IProduct }) => {
   const items = [
     {
       icon: <Truck size={20} className="text-slate-600" />,
@@ -51,15 +54,17 @@ const ProductMetaInfo = () => {
             <Store size={24} className="text-slate-600" />
           </div>
           <div>
-            <span className=" text-background block">by</span>
-            <span className=" text-background ">Marketpro</span>
+            <span className=" text-background block text-xs">by</span>
+            <span className=" text-background font-bold">
+              {product.seller || "Marketpro"}
+            </span>
           </div>
         </div>
-        <button className=" w-32 bg-background text-black border border-gray-300 px-3  rounded-full hover:bg-gray-50 hover:text-black transition">
-          <h4 className="">
+        <Link href={`/shop?seller=${product.seller}`}>
+          <button className=" w-32 bg-background text-black border border-gray-300 px-3 py-2 rounded-full hover:bg-gray-50 hover:text-black transition text-xs font-bold">
             VIEW STORE
-          </h4>
-        </button>
+          </button>
+        </Link>
       </div>
 
       {/* Services List (Bottom Box) */}
@@ -68,9 +73,7 @@ const ProductMetaInfo = () => {
           <div key={index} className="flex gap-4 items-start">
             <div className="mt-1">{item.icon}</div>
             <div>
-              <h4 className="text-sm font-bold text-slate-800">
-                {item.title}
-              </h4>
+              <h4 className="text-sm font-bold text-slate-800">{item.title}</h4>
               <p className="text-xs text-gray-500 mt-1 leading-relaxed">
                 {item.desc}
               </p>

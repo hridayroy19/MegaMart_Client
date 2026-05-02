@@ -1,8 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { IHotDealsToday } from "@/types";
 import Image from "next/image";
-import React from "react";
+import { addItem, syncCartToServer } from "@/redux/features/cart/cartSlice";
+import toast from "react-hot-toast";
+import { useAppDispatch } from "@/redux/hooks";
+import Link from "next/link";
 
 type HotDealsTodaySliderProps = {
   items: IHotDealsToday[];
@@ -13,8 +17,9 @@ type HotDealsTodaySliderProps = {
 export const HotDealsTodaySlider = ({
   items,
   containerRef,
-  onAdd,
 }: HotDealsTodaySliderProps) => {
+  const dispatch = useAppDispatch();
+
   return (
     <div className="h-full">
       <div
@@ -70,8 +75,14 @@ export const HotDealsTodaySlider = ({
 
               {/* Add button */}
               <button
+                onClick={async () => {
+                  dispatch(addItem({ product: item._id, quantity: 1 }));
+                  try {
+                    await dispatch(syncCartToServer() as any).unwrap();
+                  } catch (err) {}
+                  toast.success("Added to Cart");
+                }}
                 className="absolute right-4 top-4 flex items-center gap-1 rounded-full bg-sky-100 px-4 py-1 text-xs font-semibold text-sky-700 shadow-sm"
-                onClick={() => onAdd(index, item._id)}
               >
                 Add
                 <span className="text-base">🛒</span>
@@ -92,8 +103,10 @@ export const HotDealsTodaySlider = ({
 
               {/* Rating */}
               <div className="mb-2 flex items-center gap-1 heading-7 text-foreground">
-                <span className="text-sm">{item.rating?.toFixed(1) ?? "4.8"}</span>
-                <span className="text-amber-400">★</span>
+                <span className="text-sm">
+                  {item.rating?.toFixed(1) ?? "4.8"}
+                </span>
+                <span className="text-popover-foreground">★</span>
                 <span>
                   (
                   {item.reviewsCount
@@ -104,9 +117,11 @@ export const HotDealsTodaySlider = ({
               </div>
 
               {/* Name */}
-              <h3 className="mb-4 line-clamp-2 heading-6 text-foreground">
-                {item.name}
-              </h3>
+              <Link href={`/shop/${item._id}`}>
+                <h3 className="mb-4 line-clamp-2 heading-6 text-foreground">
+                  {item.name}
+                </h3>
+              </Link>
 
               {/* Progress bar */}
               <div className="mt-auto">
